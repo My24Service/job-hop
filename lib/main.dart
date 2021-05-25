@@ -1,161 +1,83 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+import 'dart:io';
 
-// ignore_for_file: public_member_api_docs
-
-import 'dart:async';
-import 'dart:convert' show json;
-
-import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  // Optional clientId
-  // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
-  scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      title: 'Google Sign In',
-      home: SignInDemo(),
-    ),
-  );
+  runApp(MyApp());
 }
 
-class SignInDemo extends StatefulWidget {
+class MyApp extends StatefulWidget {
   @override
-  State createState() => SignInDemoState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class SignInDemoState extends State<SignInDemo> {
-  GoogleSignInAccount? _currentUser;
-  String _contactText = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      setState(() {
-        _currentUser = account;
-      });
-      if (_currentUser != null) {
-        _handleGetContact(_currentUser!);
-      }
-    });
-    _googleSignIn.signInSilently();
-  }
-
-  Future<void> _handleGetContact(GoogleSignInAccount user) async {
-    setState(() {
-      _contactText = "Loading contact info...";
-    });
-    final http.Response response = await http.get(
-      Uri.parse('https://people.googleapis.com/v1/people/me/connections'
-          '?requestMask.includeField=person.names'),
-      headers: await user.authHeaders,
-    );
-    if (response.statusCode != 200) {
-      setState(() {
-        _contactText = "People API gave a ${response.statusCode} "
-            "response. Check logs for details.";
-      });
-      print('People API ${response.statusCode} response: ${response.body}');
-      return;
-    }
-    final Map<String, dynamic> data = json.decode(response.body);
-    final String? namedContact = _pickFirstNamedContact(data);
-    setState(() {
-      if (namedContact != null) {
-        _contactText = "I see you know $namedContact!";
-      } else {
-        _contactText = "No contacts to display.";
-      }
-    });
-  }
-
-  String? _pickFirstNamedContact(Map<String, dynamic> data) {
-    final List<dynamic>? connections = data['connections'];
-    final Map<String, dynamic>? contact = connections?.firstWhere(
-          (dynamic contact) => contact['names'] != null,
-      orElse: () => null,
-    );
-    if (contact != null) {
-      final Map<String, dynamic>? name = contact['names'].firstWhere(
-            (dynamic name) => name['displayName'] != null,
-        orElse: () => null,
-      );
-      if (name != null) {
-        return name['displayName'];
-      }
-    }
-    return null;
-  }
-
-  Future<void> _handleSignIn() async {
-    try {
-      await _googleSignIn.signIn();
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
-
-  Widget _buildBody() {
-    GoogleSignInAccount? user = _currentUser;
-    if (user != null) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          ListTile(
-            leading: GoogleUserCircleAvatar(
-              identity: user,
-            ),
-            title: Text(user.displayName ?? ''),
-            subtitle: Text(user.email),
-          ),
-          const Text("Signed in successfully."),
-          Text(_contactText),
-          ElevatedButton(
-            child: const Text('SIGN OUT'),
-            onPressed: _handleSignOut,
-          ),
-          ElevatedButton(
-            child: const Text('REFRESH'),
-            onPressed: () => _handleGetContact(user),
-          ),
-        ],
-      );
-    } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          const Text("You are not currently signed in."),
-          ElevatedButton(
-            child: const Text('SIGN IN'),
-            onPressed: _handleSignIn,
-          ),
-        ],
-      );
-    }
-  }
-
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home: Scaffold(
         appBar: AppBar(
-          title: const Text('Google Sign In'),
+          title: const Text('Example app: Sign in with Apple'),
         ),
-        body: ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-          child: _buildBody(),
-        ));
+        body: Container(
+          padding: EdgeInsets.all(10),
+          child: Center(
+            child: SignInWithAppleButton(
+              onPressed: () async {
+                final credential = await SignInWithApple.getAppleIDCredential(
+                  scopes: [
+                    AppleIDAuthorizationScopes.email,
+                    AppleIDAuthorizationScopes.fullName,
+                  ],
+                  webAuthenticationOptions: WebAuthenticationOptions(
+                    // TODO: Set the `clientId` and `redirectUri` arguments to the values you entered in the Apple Developer portal during the setup
+                    clientId:
+                    'com.jobhop.app.jobhop',
+                    redirectUri: Uri.parse(
+                      'https://jobhop.my24service-dev.com/sign_in_with_apple/',
+                    ),
+                  ),
+                  // TODO: Remove these if you have no need for them
+                  // nonce: 'example-nonce',
+                  // state: 'example-state',
+                );
+
+                print(credential);
+
+                // This is the endpoint that will convert an authorization code obtained
+                // via Sign in with Apple into a session in your system
+                final signInWithAppleEndpoint = Uri(
+                  scheme: 'https',
+                  host: 'jobhop.my24service-dev.com',
+                  path: '/api/login/social/session/',
+                  queryParameters: <String, String>{
+                    'provider': 'apple-id',
+                    'code': credential.authorizationCode,
+                    if (credential.givenName != null)
+                      'firstName': credential.givenName!,
+                    if (credential.familyName != null)
+                      'lastName': credential.familyName!,
+                    'useBundleId':
+                    Platform.isIOS || Platform.isMacOS ? 'true' : 'false',
+                    if (credential.state != null) 'state': credential.state!,
+                  },
+                );
+
+                final session = await http.Client().post(
+                  signInWithAppleEndpoint,
+                );
+
+                // If we got this far, a session based on the Apple ID credential has been created in your system,
+                // and you can now set this as the app's session
+                print(session);
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
