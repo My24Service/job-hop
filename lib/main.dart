@@ -110,9 +110,9 @@ class JobHopHomeState extends State<JobHopHome> {
               final bool result = await _apple.login();
 
               if(!result) {
-                return displayDialog(context, 'Error logging in', 'There was an error logging you in using Apple');
                 _inAsyncCall = true;
                 setState(() {});
+                return displayDialog(context, 'Error logging in', 'There was an error logging you in using Apple');
               }
 
               await _setUserToken();
