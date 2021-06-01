@@ -37,22 +37,24 @@ class StudentUserProperty {
 }
 
 class StudentUser {
-  final int id;
-  final String email;
-  final String username;
-  final String fullName;
-  final String firstName;
-  final String lastName;
-  StudentUserProperty studentUser;
+  int? id;
+  String email;
+  String username;
+  String token;
+  String? fullName;
+  String? firstName;
+  String? lastName;
+  StudentUserProperty? studentUser;
 
   StudentUser({
-    required this.id,
+    this.id,
     required this.email,
     required this.username,
-    required this.fullName,
-    required this.firstName,
-    required this.lastName,
-    required this.studentUser,
+    required this.token,
+    this.fullName,
+    this.firstName,
+    this.lastName,
+    this.studentUser,
   });
 
   factory StudentUser.fromJson(Map<String, dynamic> parsedJson) {
@@ -62,6 +64,7 @@ class StudentUser {
       id: parsedJson['id'],
       email: parsedJson['email'],
       username: parsedJson['username'],
+      token: parsedJson['token'],
       fullName: parsedJson['full_name'],
       firstName: parsedJson['first_name'],
       lastName: parsedJson['last_name'],
