@@ -3,16 +3,6 @@ import 'package:jobhop/utils/state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
-  Future<bool> logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    await prefs.remove('email');
-    await prefs.remove('username');
-    await prefs.remove('token');
-
-    return true;
-  }
-
   Future<String?> getUserToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -38,5 +28,21 @@ class Auth {
     state.setUser(user);
 
     return true;
+  }
+
+  Future<bool> storeBackend(String backend) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('backend', backend);
+
+    return true;
+  }
+
+  Future<String?> getBackend() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? backend = prefs.getString('backend');
+
+    return backend;
   }
 }
