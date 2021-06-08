@@ -1,12 +1,20 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import 'package:jobhop/utils/auth.dart';
 
 class Apple {
+  Future<void> logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove('email');
+    await prefs.remove('username');
+    await prefs.remove('token');
+  }
+
   Future<bool> login() async {
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
@@ -52,6 +60,7 @@ class Apple {
 
     final Auth auth = Auth();
     await auth.storeUser(parsedResponse);
+    await auth.storeBackend('apple');
 
     return true;
   }
