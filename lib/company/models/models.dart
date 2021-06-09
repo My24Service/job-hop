@@ -4,10 +4,10 @@ class StudentUserProperty {
   final String city;
   final String countryCode;
   final String mobile;
-  final String remarks;
+  final String? remarks;
   final String iBan;
-  final String picture;
-  final String info;
+  final String? picture;
+  final String? info;
 
   StudentUserProperty({
     required this.address,
@@ -15,10 +15,10 @@ class StudentUserProperty {
     required this.city,
     required this.countryCode,
     required this.mobile,
-    required this.remarks,
+    this.remarks,
     required this.iBan,
-    required this.picture,
-    required this.info,
+    this.picture,
+    this.info,
   });
 
   factory StudentUserProperty.fromJson(Map<String, dynamic> parsedJson) {
@@ -40,7 +40,7 @@ class StudentUser {
   int? id;
   String email;
   String username;
-  String token;
+  String? token;
   String? fullName;
   String? firstName;
   String? lastName;
@@ -50,7 +50,7 @@ class StudentUser {
     this.id,
     required this.email,
     required this.username,
-    required this.token,
+    this.token,
     this.fullName,
     this.firstName,
     this.lastName,
