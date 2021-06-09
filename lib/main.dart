@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/utils/google.dart';
 import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/apple.dart';
 import 'package:jobhop/utils/facebook.dart';
 import 'package:jobhop/utils/widgets.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
-import 'package:provider/provider.dart';
 
 GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -16,14 +17,26 @@ GoogleSignIn googleSignIn = GoogleSignIn(
   ],
 );
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AppStateModel(),
-      child: MaterialApp(
-        title: 'Job-Hop',
-        home: JobHopHome(),
-      ),
+    EasyLocalization(
+        supportedLocales: [
+          Locale('nl', 'NL'),
+          Locale('en', 'US'),
+        ],
+        path: 'resources/langs',
+        fallbackLocale: Locale('en', 'US'),
+        child: ChangeNotifierProvider(
+            create: (context) => AppStateModel(),
+            child: MaterialApp(
+              title: 'Job-Hop',
+              home: JobHopHome(),
+            )
+        )
     ),
   );
 }
