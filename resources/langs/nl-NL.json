@@ -11,7 +11,21 @@
     "action_cancel": "Annuleer"
   },
   "profile": {
-    "header_profile": "Profiel",
-
+    "header": "Profiel",
+    "submit": "Verstuur",
+    "snackbar_saved": "Wijzigingen opgeslagen",
+    "snackbar_saving_error": "Fout bij het opslaan",
+    "username": "Gebruikersnaam",
+    "email": "Email",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "address": "Adres",
+    "postal": "Postcode",
+    "city": "Plaats",
+    "countryCode": "Land",
+    "mobile": "Mobiel",
+    "remarks": "Opmerkingen",
+    "iban": "IBAN",
+    "info": "Informatie over jezelf"
   }
 }

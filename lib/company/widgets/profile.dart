@@ -63,7 +63,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             child: SingleChildScrollView(
                 child: Column(
               children: [
-                createHeader('profile.header_profile'.tr()),
+                createHeader('profile.header'.tr()),
                 _createProfileForm(context),
                 _createSubmitButton(),
               ],
@@ -76,7 +76,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
         primary: Colors.blue, // background
         onPrimary: Colors.white, // foreground
       ),
-      child: Text('profile.submit_profile'.tr()),
+      child: Text('profile.submit'.tr()),
       onPressed: () async {
         if (this._formKey.currentState!.validate()) {
           this._formKey.currentState!.save();
@@ -112,9 +112,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
           });
 
           if (result) {
-            createSnackBar(context, 'profile.profile_saved'.tr());
+            createSnackBar(context, 'profile.saved'.tr());
           } else {
-            createSnackBar(context, 'orders.snackbar_order_saved'.tr());
+            createSnackBar(context, 'profile.snackbar_saving_error'.tr());
           }
         }
       },
