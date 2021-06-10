@@ -1,6 +1,17 @@
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/utils/state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'apple.dart';
+import 'facebook.dart';
+import 'google.dart';
+
+GoogleSignIn googleSignIn = GoogleSignIn(
+  scopes: <String>[
+    'email',
+  ],
+);
 
 class Auth {
   Future<String?> getUserToken() async {
@@ -45,4 +56,27 @@ class Auth {
 
     return backend;
   }
+
+  Future<bool> logout() async {
+    final String? _backend = await getBackend();
+
+    switch(_backend) {
+      case 'apple':
+        Apple _apple = Apple();
+        await _apple.logOut();
+        break;
+      case 'facebook':
+        Facebook _facebook = Facebook();
+        await _facebook.logOut();
+        break;
+      case 'google':
+        Google _google = Google(googleSignIn);
+        await _google.logOut();
+    }
+
+    return true;
+  }
+
 }
+
+Auth auth = Auth();
