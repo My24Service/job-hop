@@ -10,6 +10,14 @@
     "action_view": "Bekijk",
     "action_cancel": "Annuleer"
   },
+  "home": {
+    "welcome": "Welkom {firstName}",
+    "continue": "Ga verder",
+    "login_error_title": "Fout bij het aanmelden",
+    "error_facebook": "Fout bij het aanmelden met Facebook",
+    "error_google": "Fout bij het aanmelden met Google",
+    "error_apple": "Fout bij het aanmelden met Apple"
+  },
   "profile": {
     "header": "Profiel",
     "submit": "Verstuur",
@@ -24,8 +32,15 @@
     "city": "Plaats",
     "countryCode": "Land",
     "mobile": "Mobiel",
-    "remarks": "Opmerkingen",
+    "remarks": "Opmerkingen (doorverwezen door)",
     "iban": "IBAN",
     "info": "Informatie over jezelf"
+  },
+  "settings": {
+    "info_language_code": "Taal",
+    "app_bar_title": "Instellingen",
+    "header_settings": "Instellingen",
+    "button_save": "Instellingen opslaan",
+    "snackbar_saved": "Instellingen opgeslagen"
   }
 }
