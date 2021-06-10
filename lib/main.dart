@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
-import 'package:jobhop/company/widgets/home.dart';
+import 'package:jobhop/utils/state.dart';
+import 'package:jobhop/company/pages/home.dart';
 
 
 void main() async {
@@ -19,10 +20,7 @@ void main() async {
         fallbackLocale: Locale('en', 'US'),
         child: ChangeNotifierProvider(
             create: (context) => AppStateModel(),
-            child: MaterialApp(
-              title: 'Job-Hop',
-              home: JobHopHome(),
-            )
+            child: JobHopHome(),
         )
     ),
   );

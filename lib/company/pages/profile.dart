@@ -62,12 +62,12 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             alignment: Alignment.center,
             child: SingleChildScrollView(
                 child: Column(
-              children: [
-                createHeader('profile.header'.tr()),
-                _createProfileForm(context),
-                _createSubmitButton(),
-              ],
-            ))));
+                  children: [
+                    createHeader('profile.header'.tr()),
+                    _createProfileForm(context),
+                    _createSubmitButton(),
+                  ],
+                ))));
   }
 
   Widget _createSubmitButton() {

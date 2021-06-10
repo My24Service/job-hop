@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import 'package:jobhop/mobile/pages/assigned_list.dart';
+import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/utils/google.dart';
-import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/apple.dart';
 import 'package:jobhop/utils/facebook.dart';
 import 'package:jobhop/utils/widgets.dart';
@@ -23,28 +26,11 @@ class JobHopHome extends StatefulWidget {
 }
 
 class JobHopHomeState extends State<JobHopHome> {
-  Auth _auth = Auth();
   Apple _apple = Apple();
   Facebook _facebook = Facebook();
   Google _google = Google(googleSignIn);
   String? _token;
-  String? _backend;
   bool _inAsyncCall = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Job-Hop'),
-        ),
-        body: ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-          child: ModalProgressHUD(
-            child: _buildBody(),
-            inAsyncCall: _inAsyncCall
-          )
-        ));
-  }
 
   @override
   void initState() {
@@ -60,47 +46,50 @@ class JobHopHomeState extends State<JobHopHome> {
 
   _doAsync() async {
     await _setUserToken();
-    await _setBackend();
-  }
-
-  Future<void> _setBackend() async {
-    final Auth auth = Auth();
-    _backend = await auth.getBackend();
-
   }
 
   Future<String?> _setUserToken() async {
-    _token = await _auth.getUserToken();
+    _token = await auth.getUserToken();
     setState(() {});
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Job-Hop',
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Job-Hop'),
+          ),
+          body: ConstrainedBox(
+              constraints: const BoxConstraints.expand(),
+              child: ModalProgressHUD(
+                  child: _buildBody(),
+                  inAsyncCall: _inAsyncCall
+              )
+          ))
+    );
+  }
+
   Widget _buildBody() {
-    if (_token != null && _backend != null) {
-      // load orders or show menu?
+    if (_token != null) {
       return Column(
         children: [
-          Text('Yay you are logged in via $_backend'),
+          Consumer<AppStateModel>(
+            builder: (context, state, child) {
+              return Text('home.welcome'.tr(
+                  namedArgs: { 'firstName': state.user.firstName! }));
+            },
+          ),
           ElevatedButton(
-              child: Text('Logout'),
-              onPressed: () async {
-                _inAsyncCall = true;
-                setState(() {});
+              child: Text('home.continue'.tr()),
+              onPressed: () {
+                final page = AssignedOrderListPage();
 
-                switch(_backend) {
-                  case 'apple':
-                    await _apple.logOut();
-                    break;
-                  case 'facebook':
-                    await _facebook.logOut();
-                    break;
-                  case 'google':
-                    await _google.logOut();
-                }
-
-                await _setUserToken();
-
-                _inAsyncCall = false;
-                setState(() {});
+                Navigator.pop(context);
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => page)
+                );
               }
           )
         ],
@@ -124,14 +113,16 @@ class JobHopHomeState extends State<JobHopHome> {
             if(!result) {
               _inAsyncCall = false;
               setState(() {});
-              return displayDialog(context, 'Error logging in', 'There was an error logging you in using Facebook');
+              return displayDialog(
+                  context,
+                  'home.login_error_title'.tr(),
+                  'home.error_facebook'.tr()
+              );
             }
 
             await _setUserToken();
             _inAsyncCall = false;
             setState(() {});
-
-            _backend = 'facebook';
           },
           child: Container(
             child: ClipRRect(
@@ -148,14 +139,15 @@ class JobHopHomeState extends State<JobHopHome> {
             if(!result) {
               _inAsyncCall = false;
               setState(() {});
-              return displayDialog(context, 'Error logging in', 'There was an error logging you in using Google');
+              return displayDialog(context,
+                  'home.login_error_title'.tr(),
+                  'home.error_google'.tr()
+              );
             }
 
             await _setUserToken();
             _inAsyncCall = false;
             setState(() {});
-
-            _backend = 'google';
           },
           child: Container(
             child: ClipRRect(
@@ -172,13 +164,16 @@ class JobHopHomeState extends State<JobHopHome> {
             if(!result) {
               _inAsyncCall = false;
               setState(() {});
-              return displayDialog(context, 'Error logging in', 'There was an error logging you in using Apple');
+              return displayDialog(
+                  context,
+                  'home.login_error_title'.tr(),
+                  'home.error_apple'.tr()
+              );
             }
 
             await _setUserToken();
             _inAsyncCall = false;
             setState(() {});
-            _backend = 'apple';
           },
           child: Container(
             child: ClipRRect(
