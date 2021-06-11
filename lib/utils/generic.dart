@@ -11,3 +11,7 @@ Locale? lang2locale(String lang) {
 
   return null;
 }
+
+String formatDate(DateTime date) {
+  return "${date.toLocal()}".split(' ')[0];
+}

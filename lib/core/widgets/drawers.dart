@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/core/pages/settings.dart';
 import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
-import 'package:jobhop/company/widgets/home.dart';
+import 'package:jobhop/company/pages/home.dart';
 
 // Drawers
 Widget createDrawerHeader() {
