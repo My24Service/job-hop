@@ -58,7 +58,6 @@ class Apple {
 
     Map<String, dynamic> parsedResponse = json.decode(response.body);
 
-    final Auth auth = Auth();
     await auth.storeUser(parsedResponse);
     await auth.storeBackend('apple');
 

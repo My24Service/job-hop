@@ -49,7 +49,6 @@ class Google {
             return false;
           }
 
-          final Auth auth = Auth();
           await auth.storeUser(parsedResponse);
           await auth.storeBackend('google');
         });
