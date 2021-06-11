@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobhop/utils/state.dart';
+import 'package:jobhop/utils/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
-import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/core/widgets/drawers.dart';
 import 'package:jobhop/mobile/widgets/assigned_list.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';
@@ -18,7 +20,7 @@ class AssignedOrderListPage extends StatefulWidget {
 class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
   AssignedOrderBloc bloc = AssignedOrderBloc(AssignedOrderInitialState());
 
-  Future<String> _getFirstName() async {
+  Future<String?> _getFirstName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('first_name');
   }
@@ -39,64 +41,48 @@ class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
 
     return BlocProvider(
         create: (BuildContext context) => _initalBlocCall(),
-        child: FutureBuilder<Widget>(
-            future: getDrawerForUser(context),
-            builder: (ctx, snapshot) {
-              final Widget drawer = snapshot.data;
-              bloc = BlocProvider.of<AssignedOrderBloc>(ctx);
-
-              return FutureBuilder<String>(
-                  future: _getFirstName(),
-                  builder: (ctx, snapshot) {
-                    if (!snapshot.hasData) {
-                      return SizedBox(height: 0);
+        child: Scaffold(
+          drawer: createDrawer(context),
+          appBar: AppBar(
+            title: Consumer<AppStateModel>(
+              builder: (context, state, child) {
+                return Text('assigned_orders.list.app_bar_title'.tr(
+                    namedArgs: { 'firstName': state.user.firstName! }));
+              },
+            ),
+          ),
+          body: BlocListener<AssignedOrderBloc, AssignedOrderState>(
+              listener: (context, state) {
+              },
+              child: BlocBuilder<AssignedOrderBloc, AssignedOrderState>(
+                  builder: (context, state) {
+                    if (state is AssignedOrderInitialState) {
+                      return loadingNotice();
                     }
 
-                    final firstName = snapshot.data;
+                    if (state is AssignedOrderLoadingState) {
+                      return loadingNotice();
+                    }
 
-                    return Scaffold(
-                      drawer: drawer,
-                      appBar: AppBar(
-                        title: new Text(
-                            'assigned_orders.list.app_bar_title'.tr(
-                                namedArgs: {'firstName': firstName})),
-                      ),
-                      body: BlocListener<AssignedOrderBloc, AssignedOrderState>(
-                          listener: (context, state) {
-                          },
-                          child: BlocBuilder<AssignedOrderBloc, AssignedOrderState>(
-                              builder: (context, state) {
-                                if (state is AssignedOrderInitialState) {
-                                  return loadingNotice();
-                                }
+                    if (state is AssignedOrderErrorState) {
+                      return errorNoticeWithReload(
+                          state.message,
+                          bloc,
+                          AssignedOrderEvent(
+                              status: AssignedOrderEventStatus.FETCH_ALL)
+                      );
+                    }
 
-                                if (state is AssignedOrderLoadingState) {
-                                  return loadingNotice();
-                                }
+                    if (state is AssignedOrdersLoadedState) {
+                      return AssignedListWidget(
+                        orderList: state.assignedOrders.results
+                      );
+                    }
 
-                                if (state is AssignedOrderErrorState) {
-                                  return errorNoticeWithReload(
-                                      state.message,
-                                      bloc,
-                                      AssignedOrderEvent(
-                                          status: AssignedOrderEventStatus.FETCH_ALL)
-                                  );
-                                }
-
-                                if (state is AssignedOrdersLoadedState) {
-                                  return AssignedListWidget(
-                                    orderList: state.assignedOrders.results
-                                  );
-                                }
-
-                                return loadingNotice();
-                              }
-                          )
-                      )
-                    );
-                }
-              );
-            }
+                    return loadingNotice();
+                  }
+              )
+          )
         )
     );
   }

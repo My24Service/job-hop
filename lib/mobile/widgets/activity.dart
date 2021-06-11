@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:jobhop/utils/widgets.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:jobhop/core/utils.dart';
 
-import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/mobile/blocs/activity_bloc.dart';
 import 'package:jobhop/mobile/api/mobile_api.dart';
+import 'package:jobhop/utils/generic.dart';
 
 class ActivityWidget extends StatefulWidget {
   final AssignedOrderActivities activities;
   final int assignedOrderPk;
 
   ActivityWidget({
-    Key key,
-    this.activities,
-    this.assignedOrderPk
-  }) : super(key: key);
+    required this.activities,
+    required this.assignedOrderPk
+  });
 
   @override
   State<StatefulWidget> createState() => new _ActivityWidgetState(
@@ -32,8 +31,8 @@ class _ActivityWidgetState extends State<ActivityWidget> {
   final int assignedOrderPk;
 
   _ActivityWidgetState({
-    @required this.activities,
-    @required this.assignedOrderPk,
+    required this.activities,
+    required this.assignedOrderPk,
   }) : super();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -143,12 +142,12 @@ class _ActivityWidgetState extends State<ActivityWidget> {
       rows.add(TableRow(children: [
         Column(
             children: [
-              createTableColumnCell(activity.workStart + '/' + activity.workEnd)
+              createTableColumnCell("${activity.workStart}/${activity.workEnd}")
             ]
         ),
         Column(
             children: [
-              createTableColumnCell(activity.travelTo + '/' + activity.travelBack)
+              createTableColumnCell("${activity.travelTo}/${activity.travelBack}")
             ]
         ),
         Column(
@@ -202,7 +201,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
       }).toList(),
       onChanged: (newValue) {
         setState(() {
-          _workStartMin = newValue;
+          _workStartMin = newValue!;
         });
       },
     );
@@ -219,7 +218,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
       }).toList(),
       onChanged: (newValue) {
         setState(() {
-          _workEndMin = newValue;
+          _workEndMin = newValue!;
         });
       },
     );
@@ -236,7 +235,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
       }).toList(),
       onChanged: (newValue) {
         setState(() {
-          _travelToMin = newValue;
+          _travelToMin = newValue!;
         });
       },
     );
@@ -253,7 +252,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
       }).toList(),
       onChanged: (newValue) {
         setState(() {
-          _travelBackMin = newValue;
+          _travelBackMin = newValue!;
         });
       },
     );
@@ -286,7 +285,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                             controller: _startWorkHourController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'assigned_orders.activity.validator_start_work_hour'.tr();
                               }
                               return null;
@@ -323,7 +322,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                             controller: _endWorkHourController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'assigned_orders.activity.validator_end_work_hour'.tr();
                               }
                               return null;
@@ -360,7 +359,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                             controller: _travelToController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'assigned_orders.activity.validator_travel_to_hours'.tr();
                               }
                               return null;
@@ -397,7 +396,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                             controller: _travelBackController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'assigned_orders.activity.validator_travel_back_hours'.tr();
                               }
                               return null;
@@ -427,7 +426,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                 controller: _distanceToController,
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return 'assigned_orders.activity.validator_distance_to'.tr();
                   }
                   return null;
@@ -444,7 +443,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                 controller: _distanceBackController,
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return 'assigned_orders.activity.validator_distance_back'.tr();
                   }
                   return null;
@@ -472,8 +471,8 @@ class _ActivityWidgetState extends State<ActivityWidget> {
             ),
             child: Text('assigned_orders.activity.button_add_activity'.tr()),
             onPressed: () async {
-              if (this._formKey.currentState.validate()) {
-                this._formKey.currentState.save();
+              if (this._formKey.currentState!.validate()) {
+                this._formKey.currentState!.save();
 
                 // only continue if something is set
                 if (_startWorkHourController.text == '0' && _workStartMin == '00' &&
@@ -487,7 +486,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                 }
 
                 AssignedOrderActivity activity = AssignedOrderActivity(
-                  activityDate: utils.formatDate(_activityDate),
+                  activityDate: formatDate(_activityDate),
                   workStart: '${_startWorkHourController.text}:$_workStartMin:00}',
                   workEnd: '${_endWorkHourController.text}:$_workEndMin:00',
                   travelTo: '${_travelToController.text}:$_travelToMin:00',
@@ -500,7 +499,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                   _inAsyncCall = true;
                 });
 
-                AssignedOrderActivity newActivity = await mobileApi.insertAssignedOrderActivity(activity, assignedOrderPk);
+                AssignedOrderActivity? newActivity = await mobileApi.insertAssignedOrderActivity(activity, assignedOrderPk);
 
                 setState(() {
                   _inAsyncCall = false;

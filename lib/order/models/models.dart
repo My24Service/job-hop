@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 class Orderline {
-  final String product;
-  final String location;
-  final String remarks;
+  final String? product;
+  final String? location;
+  final String? remarks;
 
   Orderline({
     this.product,
@@ -21,7 +21,7 @@ class Orderline {
 }
 
 class Infoline {
-  final String info;
+  final String? info;
 
   Infoline({
     this.info,
@@ -35,11 +35,11 @@ class Infoline {
 }
 
 class Status {
-  final int id;
-  final int orderId;
-  final String status;
-  final String modified;
-  final String created;
+  final int? id;
+  final int? orderId;
+  final String? status;
+  final String? modified;
+  final String? created;
 
   Status({
     this.id,
@@ -61,40 +61,40 @@ class Status {
 }
 
 class Order {
-  final int id;
-  final String customerId;
-  final int customerRelation;
-  final String orderId;
-  final String serviceNumber;
-  final String orderReference;
-  final String orderType;
-  final String customerRemarks;
-  final String description;
-  final String startDate;
-  final String startTime;
-  final String endDate;
-  final String endTime;
-  final String orderDate;
-  final String lastStatus;
-  final String orderName;
-  final String orderAddress;
-  final String orderPostal;
-  final String orderCity;
-  final String orderCountryCode;
-  final String orderTel;
-  final String orderMobile;
-  final String orderEmail;
-  final String orderContact;
-  final String lastStatusFull;
-  final int requireUsers;
-  final String created;
-  final String totalPricePurchase;
-  final String totalPriceSelling;
-  final String workorderPdfUrl;
-  final bool customerOrderAccepted;
-  final List<Orderline> orderLines;
-  final List<Infoline> infoLines;
-  final List<Status> statusses;
+  final int? id;
+  final String? customerId;
+  final int? customerRelation;
+  final String? orderId;
+  final String? serviceNumber;
+  final String? orderReference;
+  final String? orderType;
+  final String? customerRemarks;
+  final String? description;
+  final String? startDate;
+  final String? startTime;
+  final String? endDate;
+  final String? endTime;
+  final String? orderDate;
+  final String? lastStatus;
+  final String? orderName;
+  final String? orderAddress;
+  final String? orderPostal;
+  final String? orderCity;
+  final String? orderCountryCode;
+  final String? orderTel;
+  final String? orderMobile;
+  final String? orderEmail;
+  final String? orderContact;
+  final String? lastStatusFull;
+  final int? requireUsers;
+  final String? created;
+  final String? totalPricePurchase;
+  final String? totalPriceSelling;
+  final String? workorderPdfUrl;
+  final bool? customerOrderAccepted;
+  final List<Orderline>? orderLines;
+  final List<Infoline>? infoLines;
+  final List<Status>? statusses;
 
   Order({
     this.id,
@@ -198,9 +198,9 @@ class Order {
 }
 
 class StartCode {
-  final int id;
-  final String statuscode;
-  final String description;
+  final int? id;
+  final String? statuscode;
+  final String? description;
 
   StartCode({
     this.id,
@@ -218,9 +218,9 @@ class StartCode {
 }
 
 class EndCode {
-  final int id;
-  final String statuscode;
-  final String description;
+  final int? id;
+  final String? statuscode;
+  final String? description;
 
   EndCode({
     this.id,

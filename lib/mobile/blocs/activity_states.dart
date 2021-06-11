@@ -22,7 +22,7 @@ class ActivityInsertedState extends AssignedOrderActivityState {
 class ActivityErrorState extends AssignedOrderActivityState {
   final String message;
 
-  ActivityErrorState({this.message});
+  ActivityErrorState({required this.message});
 
   @override
   List<Object> get props => [message];
@@ -31,7 +31,7 @@ class ActivityErrorState extends AssignedOrderActivityState {
 class ActivitiesLoadedState extends AssignedOrderActivityState {
   final AssignedOrderActivities activities;
 
-  ActivitiesLoadedState({this.activities});
+  ActivitiesLoadedState({required this.activities});
 
   @override
   List<Object> get props => [activities];
@@ -40,7 +40,7 @@ class ActivitiesLoadedState extends AssignedOrderActivityState {
 class ActivityLoadedState extends AssignedOrderActivityState {
   final AssignedOrderActivity activity;
 
-  ActivityLoadedState({this.activity});
+  ActivityLoadedState({required this.activity});
 
   @override
   List<Object> get props => [activity];
@@ -49,7 +49,7 @@ class ActivityLoadedState extends AssignedOrderActivityState {
 class ActivityDeletedState extends AssignedOrderActivityState {
   final bool result;
 
-  ActivityDeletedState({this.result});
+  ActivityDeletedState({required this.result});
 
   @override
   List<Object> get props => [result];

@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/mobile/pages/assigned.dart';
+import 'package:jobhop/utils/widgets.dart';
 
 class AssignedListWidget extends StatelessWidget {
   final List<AssignedOrder> orderList;
 
   AssignedListWidget({
-    Key key,
-    @required this.orderList,
-  }): super(key: key);
+    required this.orderList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +47,12 @@ class AssignedListWidget extends StatelessWidget {
           itemCount: orderList.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-                title: createOrderListHeader(orderList[index].order),
-                subtitle: createOrderListSubtitle(orderList[index].order),
+                title: createOrderListHeader(orderList[index].order!),
+                subtitle: createOrderListSubtitle(orderList[index].order!),
                 onTap: () {
                   // navigate to next page
-                  final page = AssignedOrderPage(assignedOrderPk: orderList[index].id);
-                  
+                  final page = AssignedOrderPage(assignedOrderPk: orderList[index].id!);
+
                   Navigator.push(context,
                       new MaterialPageRoute(builder: (context) => page
                       )

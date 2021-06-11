@@ -17,7 +17,7 @@ class AssignedOrderLoadingState extends AssignedOrderState {
 class AssignedOrderErrorState extends AssignedOrderState {
   final String message;
 
-  AssignedOrderErrorState({this.message});
+  AssignedOrderErrorState({required this.message});
 
   @override
   List<Object> get props => [message];
@@ -27,7 +27,7 @@ class AssignedOrderErrorState extends AssignedOrderState {
 class AssignedOrderLoadedState extends AssignedOrderState {
   final AssignedOrder assignedOrder;
 
-  AssignedOrderLoadedState({this.assignedOrder});
+  AssignedOrderLoadedState({required this.assignedOrder});
 
   @override
   List<Object> get props => [assignedOrder];
@@ -36,7 +36,7 @@ class AssignedOrderLoadedState extends AssignedOrderState {
 class AssignedOrdersLoadedState extends AssignedOrderState {
   final AssignedOrders assignedOrders;
 
-  AssignedOrdersLoadedState({this.assignedOrders});
+  AssignedOrdersLoadedState({required this.assignedOrders});
 
   @override
   List<Object> get props => [assignedOrders];
@@ -46,7 +46,7 @@ class AssignedOrdersLoadedState extends AssignedOrderState {
 class AssignedOrderReportStartCodeState extends AssignedOrderState {
   final bool result;
 
-  AssignedOrderReportStartCodeState({this.result});
+  AssignedOrderReportStartCodeState({required this.result});
 
   @override
   List<Object> get props => [result];
@@ -55,7 +55,7 @@ class AssignedOrderReportStartCodeState extends AssignedOrderState {
 class AssignedOrderReportEndCodeState extends AssignedOrderState {
   final bool result;
 
-  AssignedOrderReportEndCodeState({this.result});
+  AssignedOrderReportEndCodeState({required this.result});
 
   @override
   List<Object> get props => [result];
@@ -64,7 +64,7 @@ class AssignedOrderReportEndCodeState extends AssignedOrderState {
 class AssignedOrderReportExtraOrderState extends AssignedOrderState {
   final dynamic result;
 
-  AssignedOrderReportExtraOrderState({this.result});
+  AssignedOrderReportExtraOrderState({required this.result});
 
   @override
   List<Object> get props => [result];
@@ -73,7 +73,7 @@ class AssignedOrderReportExtraOrderState extends AssignedOrderState {
 class AssignedOrderReportNoWorkorderFinishedState extends AssignedOrderState {
   final bool result;
 
-  AssignedOrderReportNoWorkorderFinishedState({this.result});
+  AssignedOrderReportNoWorkorderFinishedState({required this.result});
 
   @override
   List<Object> get props => [result];

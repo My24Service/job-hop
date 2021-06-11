@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/mobile/blocs/activity_bloc.dart';
 import 'package:jobhop/mobile/blocs/activity_states.dart';
 import 'package:jobhop/mobile/widgets/activity.dart';
+import 'package:jobhop/utils/widgets.dart';
 
 
 class AssignedOrderActivityPage extends StatefulWidget {
   final int assignedOrderPk;
 
   AssignedOrderActivityPage({
-    Key key,
-    this.assignedOrderPk
-  }) : super(key: key);
+    required this.assignedOrderPk
+  });
 
   @override
   State<StatefulWidget> createState() => new _AssignedOrderActivityPageState();

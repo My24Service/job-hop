@@ -2,8 +2,8 @@ import 'package:jobhop/order/models/models.dart';
 import 'package:jobhop/customer/models/models.dart';
 
 class AssignedUserdata {
-  final String fullName;
-  final String mobile;
+  final String? fullName;
+  final String? mobile;
 
   AssignedUserdata({
     this.fullName,
@@ -19,16 +19,16 @@ class AssignedUserdata {
 }
 
 class AssignedOrder {
-  final int id;
-  final int engineer;
-  final int studentUser;
-  final Order order;
-  bool isStarted;
-  final bool isEnded;
-  final Customer customer;
-  final List<StartCode> startCodes;
-  final List<EndCode> endCodes;
-  final List<AssignedUserdata> assignedUserData;
+  final int? id;
+  final int? engineer;
+  final int? studentUser;
+  final Order? order;
+  bool? isStarted;
+  final bool? isEnded;
+  final Customer? customer;
+  final List<StartCode>? startCodes;
+  final List<EndCode>? endCodes;
+  final List<AssignedUserdata>? assignedUserData;
 
   AssignedOrder({
     this.id,
@@ -74,7 +74,6 @@ class AssignedOrder {
       studentUser: parsedJson['student_user'],
       isStarted: parsedJson['is_started'],
       isEnded: parsedJson['is_ended'],
-      customer: customer,
       startCodes: startCodes,
       endCodes: endCodes,
       assignedUserData: assignedUsers,
@@ -89,10 +88,10 @@ class AssignedOrders {
   final List<AssignedOrder> results;
 
   AssignedOrders({
-    this.count,
-    this.next,
-    this.previous,
-    this.results,
+    required this.count,
+    required this.next,
+    required this.previous,
+    required this.results,
   });
 
   factory AssignedOrders.fromJson(Map<String, dynamic> parsedJson) {
@@ -109,20 +108,20 @@ class AssignedOrders {
 }
 
 class AssignedOrderActivity  {
-  final int id;
-  final String activityDate;
-  final int assignedOrderId;
-  final String workStart;
-  final String workEnd;
-  final String travelTo;
-  final String travelBack;
-  final int odoReadingToStart;
-  final int odoReadingToEnd;
-  final int odoReadingBackStart;
-  final int odoReadingBackEnd;
-  final int distanceTo;
-  final int distanceBack;
-  final String fullName;
+  final int? id;
+  final String? activityDate;
+  final int? assignedOrderId;
+  final String? workStart;
+  final String? workEnd;
+  final String? travelTo;
+  final String? travelBack;
+  final int? odoReadingToStart;
+  final int? odoReadingToEnd;
+  final int? odoReadingBackStart;
+  final int? odoReadingBackEnd;
+  final int? distanceTo;
+  final int? distanceBack;
+  final String? fullName;
 
   AssignedOrderActivity({
     this.id,
@@ -167,10 +166,10 @@ class AssignedOrderActivities {
   final List<AssignedOrderActivity> results;
 
   AssignedOrderActivities({
-    this.count,
-    this.next,
-    this.previous,
-    this.results,
+    required this.count,
+    required this.next,
+    required this.previous,
+    required this.results,
   });
 
   factory AssignedOrderActivities.fromJson(Map<String, dynamic> parsedJson) {

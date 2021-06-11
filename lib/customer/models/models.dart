@@ -1,20 +1,20 @@
 import 'dart:convert';
 
 class Customer {
-  final int id;
-  final String name;
-  final String address;
-  final String postal;
-  final String city;
-  final String countryCode;
-  final String tel;
-  final String email;
-  final String contact;
-  final String mobile;
-  final String customerId;
-  final String maintenanceContract;
-  final String standardHours;
-  final String remarks;
+  final int? id;
+  final String? name;
+  final String? address;
+  final String? postal;
+  final String? city;
+  final String? countryCode;
+  final String? tel;
+  final String? email;
+  final String? contact;
+  final String? mobile;
+  final String? customerId;
+  final String? maintenanceContract;
+  final String? standardHours;
+  final String? remarks;
 
   Customer({
     this.id,

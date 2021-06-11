@@ -16,7 +16,7 @@ enum ActivityEventStatus {
 
 class ActivityEvent {
   final dynamic status;
-  final AssignedOrderActivity activity;
+  final AssignedOrderActivity? activity;
   final dynamic value;
 
   const ActivityEvent({this.status, this.activity, this.value});
