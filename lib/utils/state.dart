@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:jobhop/company/models/models.dart';
 
 class AppStateModel extends ChangeNotifier {
-  late StudentUser user;
+  StudentUser? user;
 
   AppStateModel();
 
