@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:jobhop/company/pages/profile.dart';
+import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
 import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/auth.dart';
@@ -31,6 +34,7 @@ class JobHopHomeState extends State<JobHopHome> {
   Google _google = Google(googleSignIn);
   String? _token;
   bool _inAsyncCall = false;
+  bool _showProfile = true;
 
   @override
   void initState() {
@@ -45,11 +49,22 @@ class JobHopHomeState extends State<JobHopHome> {
   }
 
   _doAsync() async {
-    await _setUserToken();
+    await _initState();
+  }
+
+  Future<void> _initState() async {
+    final StudentUser? user = await auth.initState(context);
+
+    if(user != null && user.id != null) {
+      _token = user.token;
+    }
+
+    context.locale = await getLocale();
+    setState(() {});
   }
 
   Future<String?> _setUserToken() async {
-    _token = await auth.getUserToken();
+    _token = await auth.getUserField('token');
     setState(() {});
   }
 
@@ -57,6 +72,9 @@ class JobHopHomeState extends State<JobHopHome> {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Job-Hop',
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         home: Scaffold(
           appBar: AppBar(
             title: const Text('Job-Hop'),
@@ -73,12 +91,17 @@ class JobHopHomeState extends State<JobHopHome> {
 
   Widget _buildBody() {
     if (_token != null) {
+      // first time let the user entter their full profile
+      if(_showProfile) {
+        return ProfileFormWidget();
+      }
+
       return Column(
         children: [
           Consumer<AppStateModel>(
             builder: (context, state, child) {
               return Text('home.welcome'.tr(
-                  namedArgs: { 'firstName': state.user.firstName! }));
+                  namedArgs: { 'firstName': state.user!.firstName! }));
             },
           ),
           ElevatedButton(
