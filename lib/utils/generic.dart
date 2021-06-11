@@ -40,3 +40,18 @@ Future<int?> getUserPk() async {
 
   return userPk;
 }
+
+Future<void> setFirstTimeProfie() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('firstTimeProfile', true);
+}
+
+Future<bool> getFirstTimeProfie() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  if(!prefs.containsKey('firstTimeProfile')) {
+    return false;
+  }
+
+  return true;
+}

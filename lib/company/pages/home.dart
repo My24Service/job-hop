@@ -29,6 +29,43 @@ class JobHopHome extends StatefulWidget {
 }
 
 class JobHopHomeState extends State<JobHopHome> {
+  @override
+  void initState() {
+    _doAsync();
+  }
+
+  _doAsync() async {
+    await _initState();
+  }
+
+  Future<void> _initState() async {
+    context.locale = await getLocale();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Job-Hop',
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Job-Hop'),
+          ),
+          body: Home()
+        )
+    );
+  }
+}
+
+
+class Home extends StatefulWidget {
+  @override
+  State createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   Apple _apple = Apple();
   Facebook _facebook = Facebook();
   Google _google = Google(googleSignIn);
@@ -59,7 +96,8 @@ class JobHopHomeState extends State<JobHopHome> {
       _token = user.token;
     }
 
-    context.locale = await getLocale();
+    _showProfile = await getFirstTimeProfie();
+
     setState(() {});
   }
 
@@ -70,33 +108,24 @@ class JobHopHomeState extends State<JobHopHome> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Job-Hop',
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Job-Hop'),
-          ),
-          body: ConstrainedBox(
-              constraints: const BoxConstraints.expand(),
-              child: ModalProgressHUD(
-                  child: _buildBody(),
-                  inAsyncCall: _inAsyncCall
-              )
-          ))
+    return Scaffold(
+      body: ModalProgressHUD(
+        child: _buildBody(),
+        inAsyncCall: _inAsyncCall
+      )
     );
   }
 
   Widget _buildBody() {
     if (_token != null) {
-      // first time let the user entter their full profile
+      // first time let the user enter their full profile
       if(_showProfile) {
         return ProfileFormWidget();
       }
 
+      // show welcome and continue button
       return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Consumer<AppStateModel>(
             builder: (context, state, child) {

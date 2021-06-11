@@ -9,6 +9,8 @@ import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/company/api/api.dart';
 import 'package:jobhop/utils/widgets.dart';
 import 'package:jobhop/utils/state.dart';
+import 'package:jobhop/utils/generic.dart';
+import 'package:jobhop/mobile/pages/assigned_list.dart';
 
 
 class ProfileFormWidget extends StatefulWidget {
@@ -137,6 +139,16 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
 
           if (result) {
             createSnackBar(context, 'profile.saved'.tr());
+
+            // store if this is the first time the user fills in this form
+            await setFirstTimeProfie();
+
+            // nav to assignedorders list
+            final page = AssignedOrderListPage();
+
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => page)
+            );
           } else {
             createSnackBar(context, 'profile.snackbar_saving_error'.tr());
           }

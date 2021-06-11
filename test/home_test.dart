@@ -6,10 +6,12 @@ import 'package:jobhop/company/pages/home.dart';
 
 Widget testWidget = MediaQuery(
       data: MediaQueryData(),
-      child: MaterialApp(home: JobHopHome())
+      child: MaterialApp(home: Home())
 );
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   testWidgets('Home widget shows login buttons', (WidgetTester tester) async {
     await tester.pumpWidget(testWidget);
 
