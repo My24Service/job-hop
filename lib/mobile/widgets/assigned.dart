@@ -67,14 +67,6 @@ class AssignedWidget extends StatelessWidget {
                   ),
                   TableRow(
                       children: [
-                        Text('orders.info_customer_id'.tr(),
-                            style: TextStyle(fontWeight: FontWeight.bold)
-                        ),
-                        Text("${assignedOrder.order!.orderName}"),
-                      ]
-                  ),
-                  TableRow(
-                      children: [
                         Text('orders.info_address'.tr(),
                             style: TextStyle(fontWeight: FontWeight.bold)
                         ),
@@ -125,17 +117,17 @@ class AssignedWidget extends StatelessWidget {
       children: [
         Column(
             children:[
-              createTableHeaderCell('generic.info_equipment'.tr())
+              createTableHeaderCell('orders.info_equipment'.tr())
             ]
         ),
         Column(
             children:[
-              createTableHeaderCell('generic.info_location'.tr())
+              createTableHeaderCell('orders.info_location'.tr())
             ]
         ),
         Column(
             children:[
-              createTableHeaderCell('generic.info_remarks'.tr())
+              createTableHeaderCell('orders.info_remarks'.tr())
             ]
         )
       ],

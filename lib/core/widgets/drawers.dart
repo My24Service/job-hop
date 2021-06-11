@@ -11,7 +11,7 @@ Widget createDrawerHeader() {
   return Container(
     height: 80.0,
     child: DrawerHeader(
-        child: Text('utils.drawer_options'.tr(), style: TextStyle(color: Colors.white)),
+        child: Text('core.drawer_options'.tr(), style: TextStyle(color: Colors.white)),
         decoration: BoxDecoration(
             color: Colors.grey
         ),
@@ -25,7 +25,7 @@ ListTile listTileSettings(context) {
   final page = SettingsPage();
 
   return ListTile(
-    title: Text('utils.drawer_settings'.tr()),
+    title: Text('core.drawer_settings'.tr()),
     onTap: () {
       // close the drawer and navigate
       Navigator.pop(context);
@@ -40,7 +40,7 @@ ListTile listTileLogout(context) {
   final page = JobHopHome();
 
   return ListTile(
-    title: Text('utils.drawer_logout'.tr()),
+    title: Text('core.drawer_logout'.tr()),
     onTap: () async {
       // close the drawer and navigate
       Navigator.pop(context);
@@ -77,7 +77,7 @@ Widget createDrawer(BuildContext context) {
       padding: EdgeInsets.all(0),
       children: <Widget>[
         createDrawerHeader(),
-        listTileAssignedOrdersListPage(context, 'utils.drawer_engineer_orders'.tr()),
+        listTileAssignedOrdersListPage(context, 'core.drawer_student_orders'.tr()),
         Divider(),
         listTileSettings(context),
         listTileLogout(context),

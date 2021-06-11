@@ -83,11 +83,11 @@ Widget loadingNotice() {
 showDeleteDialogWrapper(String title, String content, BuildContext context, Function deleteFunction) {
   // set up the button
   Widget cancelButton = TextButton(
-      child: Text('utils.button_cancel'.tr()),
+      child: Text('generic.action_cancel'.tr()),
       onPressed: () => Navigator.of(context).pop(false)
   );
   Widget deleteButton = TextButton(
-      child: Text('utils.button_delete'.tr()),
+      child: Text('generic.action_delete'.tr()),
       onPressed: () => Navigator.of(context).pop(true)
   );
 
@@ -151,7 +151,7 @@ Widget createTableHeaderCell(String content) {
   );
 }
 
-Widget createTableColumnCell(String content) {
+Widget createTableColumnCell(String? content) {
   return Padding(
     padding: EdgeInsets.all(4.0),
     child: Text(content != null ? content : ''),
