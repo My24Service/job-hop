@@ -89,13 +89,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 if (this._formKey.currentState!.validate()) {
                   this._formKey.currentState!.save();
 
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.setBool('skip_member_list', _skipMemberList);
-                  prefs.setString('prefered_language_code', _preferedLanguageCode);
+                  await setLocale(_preferedLanguageCode);
 
                   createSnackBar(context, 'settings.snackbar_saved'.tr());
 
-                  context.locale = lang2locale(_preferedLanguageCode)!;
+                  context.locale = lang2locale(_preferedLanguageCode);
 
                   Navigator.pushReplacement(context,
                       new MaterialPageRoute(builder: (context) => JobHopHome())

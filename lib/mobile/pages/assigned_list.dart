@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jobhop/core/widgets/drawers.dart';
@@ -42,7 +41,7 @@ class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
             title: Consumer<AppStateModel>(
               builder: (context, state, child) {
                 return Text('assigned_orders.list.app_bar_title'.tr(
-                    namedArgs: { 'firstName': state.user.firstName! }));
+                    namedArgs: { 'firstName': state.user!.firstName! }));
               },
             ),
           ),
