@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jobhop/company/models/models.dart';
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/utils/auth.dart';
+import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
+
+import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/company/api/api.dart';
+import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/utils/state.dart';
 
 
 class ProfileFormWidget extends StatefulWidget {
@@ -47,13 +52,32 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     setState(() {
       _inAsyncCall = true;
     });
+
     await _fetchUserData();
+
     setState(() {
       _inAsyncCall = false;
     });
   }
 
-  _fetchUserData() async {}
+  _fetchUserData() async {
+    final int? userPk = await auth.getUserField('userPk');
+
+    StudentUser user = await companyApi.fetchStudentUser(userPk!);
+
+    _usernameController.text = user.username;
+    _emailController.text = user.email;
+    _firstNameController.text = user.firstName!;
+    _lastNameController.text = user.lastName!;
+    _addressController.text = user.studentUser!.address;
+    _postalController.text = user.studentUser!.postal;
+    _cityController.text = user.studentUser!.city;
+    _countryCode = user.studentUser!.countryCode;
+    _mobileController.text = user.studentUser!.mobile;
+    _remarksController.text = user.studentUser!.remarks!;
+    _ibanController.text = user.studentUser!.iBan;
+    _infoController.text = user.studentUser!.info!;
+  }
 
   Widget _buildMainContainer() {
     return Container(
