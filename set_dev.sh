@@ -1,3 +1,7 @@
 #!/bin/bash
 
-cp lib/core/app_config-dev.dart lib/core/app_config.dart
+DIR=`pwd`
+
+$DIR/lib/core/app_config.dart
+
+ln -s $DIR/lib/core/app_config-dev.dart $DIR/lib/core/app_config.dart
