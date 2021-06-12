@@ -62,6 +62,85 @@ class CompanyApi with ApiMixin {
     throw Exception('orders.assign.exception_fetch_engineers'.tr());
   }
 
+  Future<bool> postDeviceToken() async {
+    final Map<String, String> envVars = Platform.environment;
+
+    if (envVars['TESTING'] != null) {
+      return null;
+    }
+
+    prefs = await SharedPreferences.getInstance();
+
+    final int userPk = prefs.getInt('userPk')!;
+    final bool isAllowed = prefs.getBool('fcm_allowed')!;
+
+    if (!isAllowed) {
+      return false;
+    }
+
+    final url = getUrl('/company/user-device-token/');
+
+    await Firebase.initializeApp();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    String messageingToken = await messaging.getToken();
+
+    final Map body = {
+      "user": userPk,
+      "device_token": messageingToken
+    };
+
+    final response = await _httpClient.post(
+      Uri.parse(url),
+      body: json.encode(body),
+      headers: await getHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<bool> postDemoDeviceToken() async {
+    final Map<String, String> envVars = Platform.environment;
+
+    if (envVars['TESTING'] != null) {
+      return null;
+    }
+
+    prefs = await SharedPreferences.getInstance();
+
+    final int userPk = prefs.getInt('userPk')!;
+    final bool isAllowed = prefs.getBool('fcm_allowed')!;
+
+    if (!isAllowed) {
+      return false;
+    }
+
+    final url = getUrl('/company/demo-device-token/');
+
+    await Firebase.initializeApp();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    String messageingToken = await messaging.getToken();
+
+    final Map body = {
+      "user": userPk,
+      "device_token": messageingToken
+    };
+
+    final response = await _httpClient.post(
+      Uri.parse(url),
+      body: json.encode(body),
+      headers: await getHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 CompanyApi companyApi = CompanyApi();
