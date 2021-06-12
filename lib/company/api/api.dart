@@ -16,9 +16,9 @@ class CompanyApi with ApiMixin {
   }
 
   Future<StudentUser> fetchStudentUser(int userPk) async {
-    final String? url = await getUrl('/company/studentuser/$userPk/');
+    final String url = getUrl('/company/studentuser/$userPk/');
     final response = await _httpClient.get(
-        Uri.parse(url!),
+        Uri.parse(url),
         headers: await getHeaders()
     );
 
@@ -29,8 +29,8 @@ class CompanyApi with ApiMixin {
     throw Exception('company.exception_fetch'.tr());
   }
 
-  Future<bool> updateStudentUser(StudentUser user) async {
-    final String? url = await getUrl('/company/studentuser/${user.id}/');
+  Future<bool> updateStudentUser(StudentUser user, int userPk) async {
+    final String url = getUrl('/company/studentuser/$userPk/');
 
     final Map studentUserBody = {
       'address': user.studentUser!.address,
@@ -50,7 +50,7 @@ class CompanyApi with ApiMixin {
     };
 
     final response = await _httpClient.put(
-        Uri.parse(url!),
+        Uri.parse(url),
         body: json.encode(body),
         headers: await getHeaders()
     );

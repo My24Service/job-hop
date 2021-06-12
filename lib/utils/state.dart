@@ -1,18 +1,39 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:jobhop/company/models/models.dart';
 
-class AppStateModel extends ChangeNotifier {
-  StudentUser? user;
 
-  AppStateModel();
+abstract class AppModel extends ChangeNotifier {
+  void setUserBasic(StudentUser user, String token);
+  void setUserFull(StudentUser user, String token);
 
-  void setUser(StudentUser _user) {
-    user = StudentUser(
-        id: _user.id,
-        username: _user.username,
-        email: _user.email,
-        token: _user.token,
+  StudentUser get user => user;
+}
+
+class AppModelImplementation extends AppModel {
+  late StudentUser _user;
+
+  AppModelImplementation();
+
+  @override
+  StudentUser get user => _user;
+
+  @override
+  void setUserBasic(StudentUser user, String token) {
+    _user = StudentUser(
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      token: token,
     );
+
+    notifyListeners();
+  }
+
+  @override
+  void setUserFull(StudentUser user, String token) {
+    user.token = token;
+    _user = user;
 
     notifyListeners();
   }

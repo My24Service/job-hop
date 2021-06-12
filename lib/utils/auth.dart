@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_it/get_it.dart';
 
+import 'package:jobhop/company/api/api.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/utils/state.dart';
 import 'apple.dart';
 import 'facebook.dart';
+import 'generic.dart';
 import 'google.dart';
+
+GetIt getIt = GetIt.instance;
 
 GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -15,7 +20,15 @@ GoogleSignIn googleSignIn = GoogleSignIn(
 );
 
 class Auth {
-  Future<dynamic> getUserField(String whichField) async {
+  Future<int?> getUserFieldInt(String whichField) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    int? field = prefs.getInt(whichField);
+
+    return field;
+  }
+
+  Future<String?> getUserFieldString(String whichField) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? field = prefs.getString(whichField);
@@ -25,34 +38,46 @@ class Auth {
 
   Future<StudentUser?> initState(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    AppStateModel state = AppStateModel();
 
-    final int? id = prefs.getInt('id');
-    final String? email = prefs.getString('email');
-    final String? username = prefs.getString('username');
-    final String? token = prefs.getString('token');
+    final bool isFirstTime = await isFirstTimeProfile();
 
-    if (id == null || email == null || username == null || token == null) {
-      return null;
+    if (isFirstTime) {
+      print('firstTime');
+      final int? id = prefs.getInt('userPk');
+      final String? email = prefs.getString('email');
+      final String? username = prefs.getString('username');
+      final String? token = prefs.getString('token');
+
+      if (id == null || email == null || username == null || token == null) {
+        return null;
+      }
+
+      StudentUser user = StudentUser(
+        id: id,
+        email: email,
+        username: username,
+      );
+
+      getIt<AppModel>().setUserBasic(user, token);
+
+      return getIt<AppModel>().user;
     }
 
-    StudentUser user = StudentUser(
-      id: id,
-      email: email,
-      username: username,
-      token: token,
-    );
+    // fetch from backend and store in state
+    print('not firstTime, fetch from server');
+    final int userPk = prefs.getInt('userPk')!;
+    final String token = prefs.getString('token')!;
+    StudentUser user = await companyApi.fetchStudentUser(userPk);
 
-    state.setUser(user);
+    getIt<AppModel>().setUserFull(user, token);
 
-    return user;
+    return getIt<AppModel>().user;
   }
 
-  Future<bool> storeUser(Map<String, dynamic> userData) async {
+  Future<StudentUser> storeUser(Map<String, dynamic> userData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    AppStateModel state = AppStateModel();
 
-    await prefs.setString('userPk', userData['id']);
+    await prefs.setInt('userPk', userData['id']);
     await prefs.setString('email', userData['email']);
     await prefs.setString('username', userData['username']);
     await prefs.setString('token', userData['token']);
@@ -61,12 +86,11 @@ class Auth {
       id: userData['id'],
       email: userData['email'],
       username: userData['username'],
-      token: userData['token'],
     );
 
-    state.setUser(user);
+    getIt<AppModel>().setUserBasic(user, userData['token']);
 
-    return true;
+    return getIt<AppModel>().user;
   }
 
   Future<bool> storeBackend(String backend) async {
@@ -86,7 +110,13 @@ class Auth {
   }
 
   Future<bool> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? _backend = await getBackend();
+
+    prefs.remove('userPk');
+    prefs.remove('email');
+    prefs.remove('username');
+    prefs.remove('token');
 
     switch(_backend) {
       case 'apple':

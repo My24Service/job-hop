@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/widgets.dart';
-import 'package:provider/provider.dart';
-
 import 'package:jobhop/core/widgets/drawers.dart';
 import 'package:jobhop/mobile/widgets/assigned_list.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_states.dart';
 
+GetIt getIt = GetIt.instance;
 
 class AssignedOrderListPage extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class AssignedOrderListPage extends StatefulWidget {
 
 class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
   AssignedOrderBloc bloc = AssignedOrderBloc(AssignedOrderInitialState());
+  String _firstName = getIt<AppModel>().user.firstName ?? 'guest';
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +40,8 @@ class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
         child: Scaffold(
           drawer: createDrawer(context),
           appBar: AppBar(
-            title: Consumer<AppStateModel>(
-              builder: (context, state, child) {
-                return Text('assigned_orders.list.app_bar_title'.tr(
-                    namedArgs: { 'firstName': state.user!.firstName! }));
-              },
-            ),
+            title: Text('assigned_orders.list.app_bar_title'.tr(
+                    namedArgs: { 'firstName': _firstName }))
           ),
           body: BlocListener<AssignedOrderBloc, AssignedOrderState>(
               listener: (context, state) {

@@ -3,8 +3,8 @@ import 'package:jobhop/company/pages/profile.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
@@ -15,6 +15,7 @@ import 'package:jobhop/utils/apple.dart';
 import 'package:jobhop/utils/facebook.dart';
 import 'package:jobhop/utils/widgets.dart';
 
+GetIt getIt = GetIt.instance;
 
 GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -31,6 +32,7 @@ class JobHopHome extends StatefulWidget {
 class JobHopHomeState extends State<JobHopHome> {
   @override
   void initState() {
+    super.initState();
     _doAsync();
   }
 
@@ -71,7 +73,8 @@ class _HomeState extends State<Home> {
   Google _google = Google(googleSignIn);
   String? _token;
   bool _inAsyncCall = false;
-  bool _showProfile = true;
+  bool _isFirstTimeProfile = true;
+  String? _firstName;
 
   @override
   void initState() {
@@ -94,15 +97,16 @@ class _HomeState extends State<Home> {
 
     if(user != null && user.id != null) {
       _token = user.token;
+      _firstName = getIt<AppModel>().user.firstName ?? 'guest';
     }
 
-    _showProfile = await getFirstTimeProfie();
+    _isFirstTimeProfile = await isFirstTimeProfile();
 
     setState(() {});
   }
 
   Future<String?> _setUserToken() async {
-    _token = await auth.getUserField('token');
+    _token = await auth.getUserFieldString('token');
     setState(() {});
   }
 
@@ -119,19 +123,16 @@ class _HomeState extends State<Home> {
   Widget _buildBody() {
     if (_token != null) {
       // first time let the user enter their full profile
-      if(_showProfile) {
+      if(_isFirstTimeProfile) {
         return ProfileFormWidget();
       }
 
       // show welcome and continue button
       return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Consumer<AppStateModel>(
-            builder: (context, state, child) {
-              return Text('home.welcome'.tr(
-                  namedArgs: { 'firstName': state.user!.firstName! }));
-            },
+          Text('home.welcome'.tr(
+                  namedArgs: { 'firstName': _firstName ?? 'guest' })
           ),
           ElevatedButton(
               child: Text('home.continue'.tr()),

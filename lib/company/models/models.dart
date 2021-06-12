@@ -1,22 +1,22 @@
 class StudentUserProperty {
-  final String address;
-  final String postal;
-  final String city;
-  final String countryCode;
-  final String mobile;
+  final String? address;
+  final String? postal;
+  final String? city;
+  final String? countryCode;
+  final String? mobile;
   final String? remarks;
-  final String iBan;
+  final String? iBan;
   final String? picture;
   final String? info;
 
   StudentUserProperty({
-    required this.address,
-    required this.postal,
-    required this.city,
-    required this.countryCode,
-    required this.mobile,
+    this.address,
+    this.postal,
+    this.city,
+    this.countryCode,
+    this.mobile,
     this.remarks,
-    required this.iBan,
+    this.iBan,
     this.picture,
     this.info,
   });

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:jobhop/utils/auth.dart';
-import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:provider/provider.dart';
+import 'package:iban/iban.dart';
+import 'package:get_it/get_it.dart';
 
+import 'package:jobhop/utils/auth.dart';
+import 'package:jobhop/utils/generic.dart';
+import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/company/api/api.dart';
 import 'package:jobhop/utils/widgets.dart';
-import 'package:jobhop/utils/state.dart';
-import 'package:jobhop/utils/generic.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
 
+GetIt getIt = GetIt.instance;
 
 class ProfileFormWidget extends StatefulWidget {
   @override
@@ -20,6 +21,8 @@ class ProfileFormWidget extends StatefulWidget {
 
 class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  int? userPk;
 
   String _countryCode = 'NL';
 
@@ -51,34 +54,45 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   }
 
   _doAsync() async {
+    await _fetchUserData();
+  }
+
+  _fetchUserData() async {
+    userPk = await auth.getUserFieldInt('userPk');
+
     setState(() {
       _inAsyncCall = true;
     });
 
-    await _fetchUserData();
+    StudentUser user = await companyApi.fetchStudentUser(userPk!);
+
+    _usernameController.text = user.username;
+    _emailController.text = user.email;
+    _firstNameController.text = user.firstName ?? '';
+    _lastNameController.text = user.lastName ?? '';
+    _addressController.text = user.studentUser!.address ?? '';
+    _postalController.text = user.studentUser!.postal ?? '';
+    _cityController.text = user.studentUser!.city ?? '';
+    _countryCode = user.studentUser!.countryCode ?? 'NL';
+    _mobileController.text = user.studentUser!.mobile ?? '0612345678';
+    _remarksController.text = user.studentUser!.remarks ?? '';
+    _ibanController.text = user.studentUser!.iBan ?? 'NL71ABNA0476692105';
+    _infoController.text = user.studentUser!.info ?? '';
 
     setState(() {
       _inAsyncCall = false;
     });
   }
 
-  _fetchUserData() async {
-    final int? userPk = await auth.getUserField('userPk');
+  String? validateMobile(String value) {
+    String patttern = r'(^[+][0-9]{11}$)';
+    RegExp regExp = new RegExp(patttern);
 
-    StudentUser user = await companyApi.fetchStudentUser(userPk!);
+    if (!regExp.hasMatch(value)) {
+      return 'profile.mobile_invalid'.tr();
+    }
 
-    _usernameController.text = user.username;
-    _emailController.text = user.email;
-    _firstNameController.text = user.firstName!;
-    _lastNameController.text = user.lastName!;
-    _addressController.text = user.studentUser!.address;
-    _postalController.text = user.studentUser!.postal;
-    _cityController.text = user.studentUser!.city;
-    _countryCode = user.studentUser!.countryCode;
-    _mobileController.text = user.studentUser!.mobile;
-    _remarksController.text = user.studentUser!.remarks!;
-    _ibanController.text = user.studentUser!.iBan;
-    _infoController.text = user.studentUser!.info!;
+    return null;
   }
 
   Widget _buildMainContainer() {
@@ -131,26 +145,38 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             studentUser: studentUserProperty,
           );
 
-          final bool result = await companyApi.updateStudentUser(user);
+          try {
+            final bool result = await companyApi.updateStudentUser(user, userPk!);
 
-          setState(() {
-            _inAsyncCall = false;
-          });
+            setState(() {
+              _inAsyncCall = false;
+            });
 
-          if (result) {
-            createSnackBar(context, 'profile.saved'.tr());
+            if (result) {
+              createSnackBar(context, 'profile.snackbar_saved'.tr());
 
-            // store if this is the first time the user fills in this form
-            await setFirstTimeProfie();
+              // store if this is the first time the user fills in this form
+              await setFirstTimeProfile();
 
-            // nav to assignedorders list
-            final page = AssignedOrderListPage();
+              // store in app state
+              final String token = await getToken();
+              getIt<AppModel>().setUserFull(user, token);
 
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => page)
-            );
-          } else {
+              // nav to assignedorders list
+              final page = AssignedOrderListPage();
+
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => page)
+              );
+            } else {
+              createSnackBar(context, 'profile.snackbar_saving_error'.tr());
+            }
+          } catch(e) {
             createSnackBar(context, 'profile.snackbar_saving_error'.tr());
+
+            setState(() {
+              _inAsyncCall = false;
+            });
           }
         }
       },
@@ -284,9 +310,10 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 controller: _mobileController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'profile.mobile'.tr();
+                    return 'profile.mobile_empty'.tr();
                   }
-                  return null;
+
+                  return validateMobile(value);
                 }),
           ]),
           TableRow(children: [
@@ -311,8 +338,13 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 controller: _ibanController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'profile.iban'.tr();
+                    return 'profile.iban_empty'.tr();
                   }
+
+                  if (!isValid(value)) {
+                    return 'profile.iban_invalid'.tr();
+                  }
+
                   return null;
                 }),
           ]),

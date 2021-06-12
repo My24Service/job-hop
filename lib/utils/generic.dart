@@ -41,17 +41,22 @@ Future<int?> getUserPk() async {
   return userPk;
 }
 
-Future<void> setFirstTimeProfie() async {
+Future<String> getToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('firstTimeProfile', true);
+  return prefs.getString('token')!;
 }
 
-Future<bool> getFirstTimeProfie() async {
+Future<void> setFirstTimeProfile() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('isFirstTimeProfile', '1');
+}
+
+Future<bool> isFirstTimeProfile() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  if(!prefs.containsKey('firstTimeProfile')) {
-    return false;
+  if(!prefs.containsKey('isFirstTimeProfile')) {
+    return true;
   }
 
-  return true;
+  return false;
 }

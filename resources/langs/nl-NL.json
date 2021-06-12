@@ -35,7 +35,11 @@
     "mobile": "Mobiel",
     "remarks": "Opmerkingen (doorverwezen door)",
     "iban": "IBAN",
-    "info": "Informatie over jezelf"
+    "info": "Informatie over jezelf",
+    "iban_empty": "Vul een IBAN in",
+    "iban_invalid": "IBAN niet valide",
+    "mobile_empty": "Vul een mobiel nummer in",
+    "mobile_invalid": "Mobiel nummber invalide\n(bijv. +316.. voor NL)"
   },
   "settings": {
     "info_language_code": "Taal",
