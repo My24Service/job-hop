@@ -24,7 +24,7 @@ class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
   @override
   Widget build(BuildContext context) {
 
-    _initalBlocCall() {
+    _initialBlocCall() {
       final bloc = AssignedOrderBloc(AssignedOrderInitialState());
 
       bloc.add(AssignedOrderEvent(status: AssignedOrderEventStatus.DO_ASYNC));
@@ -36,7 +36,7 @@ class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
     }
 
     return BlocProvider(
-        create: (BuildContext context) => _initalBlocCall(),
+        create: (BuildContext context) => _initialBlocCall(),
         child: Scaffold(
           drawer: createDrawer(context),
           appBar: AppBar(
@@ -67,8 +67,8 @@ class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
 
                     if (state is AssignedOrdersLoadedState) {
                       return AssignedListWidget(
-                        orderList: state.assignedOrders.results
-                      );
+                          orderList: state.assignedOrders.results
+                        );
                     }
 
                     return loadingNotice();
