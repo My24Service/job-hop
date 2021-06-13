@@ -114,7 +114,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ModalProgressHUD(
-        child: _buildBody(),
+        child: Align(
+          alignment: Alignment.center,
+          child: _buildBody(),
+        ),
         inAsyncCall: _inAsyncCall
       )
     );
@@ -129,18 +132,18 @@ class _HomeState extends State<Home> {
 
       // show welcome and continue button
       return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           createHeader('home.welcome'.tr(
                   namedArgs: { 'firstName': _firstName ?? 'guest' })
           ),
+          SizedBox(height: 50),
           ElevatedButton(
               child: Text('home.continue'.tr()),
               onPressed: () {
                 final page = AssignedOrderListPage();
-
-                Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) => page)
                 );
               }

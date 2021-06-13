@@ -41,7 +41,7 @@ Future<int?> getUserPk() async {
   return userPk;
 }
 
-Future<String> getToken() async {
+Future<String?> getToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString('token')!;
 }

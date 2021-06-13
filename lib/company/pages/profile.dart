@@ -159,8 +159,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               await setFirstTimeProfile();
 
               // store in app state
-              final String token = await getToken();
-              getIt<AppModel>().setUserFull(user, token);
+              final String? token = await getToken();
+              getIt<AppModel>().setUserFull(user, token!);
 
               // nav to assignedorders list
               final page = AssignedOrderListPage();
