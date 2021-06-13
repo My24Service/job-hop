@@ -83,8 +83,8 @@ class AssignedOrder {
 
 class AssignedOrders {
   final int count;
-  final String next;
-  final String previous;
+  final String? next;
+  final String? previous;
   final List<AssignedOrder> results;
 
   AssignedOrders({
@@ -161,8 +161,8 @@ class AssignedOrderActivity  {
 
 class AssignedOrderActivities {
   final int count;
-  final String next;
-  final String previous;
+  final String? next;
+  final String? previous;
   final List<AssignedOrderActivity> results;
 
   AssignedOrderActivities({
@@ -177,6 +177,109 @@ class AssignedOrderActivities {
     List<AssignedOrderActivity> results = list.map((i) => AssignedOrderActivity.fromJson(i)).toList();
 
     return AssignedOrderActivities(
+      count: parsedJson['count'],
+      next: parsedJson['next'],
+      previous: parsedJson['previous'],
+      results: results,
+    );
+  }
+}
+
+// {"next":null,"previous":null,"count":1,"num_pages":1,"results":[
+// {"id":9,
+// "description":"tets",
+// "required_users":5,
+// "trip_orders":[{"id":18,"order":62,"name":"De Kerstmarktspecialist","address":"Metaalweg 4","city":"Bunschoten","date":"14/06/2021","modified":"13/06/2021 10:32","created":"13/06/2021 10:32"}],
+// "start_date":"2021-06-21",
+// "start_time":"12:15:00",
+// "end_date":"2021-06-23",
+// "end_time":"13:00:00",
+// "trip_date":"21/06/2021 12:15 - 23/06/2021 13:00",
+// "user_trip_is_available":true,
+// "required_assigned":"-",
+// "assigned_user_count":0,
+// "num_orders":1,
+// "users_trip_set_as_available":0,
+// "number_still_available":5
+// }
+// ]}
+class Trip {
+  final int id;
+  final String description;
+  final int requiredUsers;
+  final String startDate;
+  final String startTime;
+  final String endDate;
+  final String endTime;
+  final String tripDate;
+  final bool userTripIsAvailable;
+  final String requiredAssigned;
+  final int assignedUserCount;
+  final int numOrders;
+  final int usersTripSetAsAvailable;
+  final int numberStillAvailable;
+  final List<Order> tripOrders;
+
+  Trip({
+    required this.id,
+    required this.description,
+    required this.requiredUsers,
+    required this.startDate,
+    required this.startTime,
+    required this.endDate,
+    required this.endTime,
+    required this.tripDate,
+    required this.userTripIsAvailable,
+    required this.requiredAssigned,
+    required this.assignedUserCount,
+    required this.numOrders,
+    required this.usersTripSetAsAvailable,
+    required this.numberStillAvailable,
+    required this.tripOrders
+  });
+
+  factory Trip.fromJson(Map<String, dynamic> parsedJson) {
+    var orders = parsedJson['tripOrders'] as List;
+    List<Order> tripOrders = orders.map((i) => Order.fromJson(i)).toList();
+
+    return Trip(
+      id: parsedJson['id'],
+      description: parsedJson['description'],
+      requiredUsers: parsedJson['required_users'],
+      startDate: parsedJson['start_date'],
+      startTime: parsedJson['start_time'],
+      endDate: parsedJson['end_date'],
+      endTime: parsedJson['end_time'],
+      tripDate: parsedJson['trip_date'],
+      usersTripSetAsAvailable: parsedJson['user_trip_is_available'],
+      requiredAssigned: parsedJson['required_assigned'],
+      assignedUserCount: parsedJson['assigned_user_count'],
+      numOrders: parsedJson['num_orders'],
+      userTripIsAvailable: parsedJson['num_orders'],
+      numberStillAvailable: parsedJson['number_still_available'],
+      tripOrders: tripOrders,
+    );
+  }
+}
+
+class Trips {
+  final int count;
+  final String? next;
+  final String? previous;
+  final List<Trip> results;
+
+  Trips({
+    required this.count,
+    required this.next,
+    required this.previous,
+    required this.results,
+  });
+
+  factory Trips.fromJson(Map<String, dynamic> parsedJson) {
+    var list = parsedJson['results'] as List;
+    List<Trip> results = list.map((i) => Trip.fromJson(i)).toList();
+
+    return Trips(
       count: parsedJson['count'],
       next: parsedJson['next'],
       previous: parsedJson['previous'],

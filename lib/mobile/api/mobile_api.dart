@@ -24,10 +24,10 @@ class MobileApi with ApiMixin {
     // send device token
     // await localUtils.postDeviceToken();
 
-    final String? url = await getUrl('/mobile/assignedorder/list_app/');
+    final String url = getUrl('/mobile/assignedorder/list_app/');
 
     final response = await _httpClient.get(
-      Uri.parse(url!),
+      Uri.parse(url),
       headers: await getHeaders()
     );
 
@@ -39,9 +39,9 @@ class MobileApi with ApiMixin {
   }
 
   Future<AssignedOrder> fetchAssignedOrder(int assignedorderPk) async {
-    final String? url = await getUrl('/mobile/assignedorder/$assignedorderPk/detail_device/');
+    final String url = getUrl('/mobile/assignedorder/$assignedorderPk/detail_device/');
     final response = await _httpClient.get(
-        Uri.parse(url!),
+        Uri.parse(url),
         headers: await getHeaders()
     );
 
@@ -53,14 +53,14 @@ class MobileApi with ApiMixin {
   }
 
   Future<bool> reportStartCode(StartCode startCode, int assignedorderPk) async {
-    final String? url = await getUrl('/mobile/assignedorder/$assignedorderPk/report_statuscode/');
+    final String url = getUrl('/mobile/assignedorder/$assignedorderPk/report_statuscode/');
 
     final Map body = {
       'statuscode_pk': startCode.id,
     };
 
     final response = await _httpClient.post(
-      Uri.parse(url!),
+      Uri.parse(url),
       body: json.encode(body),
       headers: await getHeaders(),
     );
@@ -73,14 +73,14 @@ class MobileApi with ApiMixin {
   }
 
   Future<bool> reportEndCode(EndCode endCode, int assignedorderPk) async {
-    final String? url = await getUrl('/mobile/assignedorder/$assignedorderPk/report_statuscode/');
+    final String url = getUrl('/mobile/assignedorder/$assignedorderPk/report_statuscode/');
 
     final Map body = {
       'statuscode_pk': endCode.id,
     };
 
     final response = await _httpClient.post(
-      Uri.parse(url!),
+      Uri.parse(url),
       body: json.encode(body),
       headers: await getHeaders(),
     );
@@ -94,9 +94,9 @@ class MobileApi with ApiMixin {
 
   // activity
   Future<AssignedOrderActivities> fetchAssignedOrderActivities(int assignedorderPk) async {
-    final String? url = await getUrl('/mobile/assignedorderactivity/?assigned_order=$assignedorderPk');
+    final String url = getUrl('/mobile/assignedorderactivity/?assigned_order=$assignedorderPk');
     final response = await _httpClient.get(
-      Uri.parse(url!),
+      Uri.parse(url),
       headers: await getHeaders()
     );
 
@@ -135,9 +135,9 @@ class MobileApi with ApiMixin {
   }
 
   Future<bool> deleteAssignedOrderActivity(int activityPk) async {
-    final String? url = await getUrl('/mobile/assignedorderactivity/$activityPk/');
+    final String url = getUrl('/mobile/assignedorderactivity/$activityPk/');
     final response = await _httpClient.delete(
-      Uri.parse(url!),
+      Uri.parse(url),
       headers: await getHeaders()
     );
 
@@ -146,6 +146,42 @@ class MobileApi with ApiMixin {
     }
 
     return false;
+  }
+
+  Future<Trips> fetchTrips() async {
+    final String url = getUrl('/mobile/trip/');
+
+    final response = await _httpClient.get(
+        Uri.parse(url),
+        headers: await getHeaders()
+    );
+
+    if (response.statusCode == 200) {
+      return Trips.fromJson(json.decode(response.body));
+    }
+
+    throw Exception('assigned_orders.list.exception_fetch'.tr());
+  }
+
+  Future<bool> setAvailable(int tripPk) async {
+    final String url = getUrl('/mobile/user-trip-availability/');
+
+    final Map body = {
+      'trip': tripPk,
+    };
+
+    final response = await _httpClient.post(
+        Uri.parse(url),
+        body: json.encode(body),
+        headers: await getHeaders()
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    throw false;
+
   }
 }
 
