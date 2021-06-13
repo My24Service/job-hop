@@ -2,6 +2,8 @@
 
 DIR=`pwd`
 
-rm -f $DIR/lib/core/app_config.dart
+if [ -f "$DIR/lib/core/app_config.dart" ]; then
+  rm -f $DIR/lib/core/app_config.dart
+fi
 
 ln -s $DIR/lib/core/app_config-live.dart $DIR/lib/core/app_config.dart
