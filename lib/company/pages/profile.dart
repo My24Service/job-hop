@@ -9,7 +9,7 @@ import 'package:jobhop/utils/generic.dart';
 import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/company/api/api.dart';
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
 
 GetIt getIt = GetIt.instance;

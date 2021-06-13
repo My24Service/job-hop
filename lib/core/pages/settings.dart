@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:jobhop/company/pages/home.dart';
 

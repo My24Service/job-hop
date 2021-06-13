@@ -6,7 +6,7 @@ import 'package:jobhop/mobile/widgets/assigned.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_states.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/core/widgets/widgets.dart';
 
 
 class AssignedOrderPage extends StatefulWidget {

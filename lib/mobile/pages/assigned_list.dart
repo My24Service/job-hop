@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:jobhop/utils/state.dart';
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/core/widgets/drawers.dart';
 import 'package:jobhop/mobile/widgets/assigned_list.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';

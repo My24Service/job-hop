@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show Platform;
 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/company/models/models.dart';
@@ -66,10 +70,10 @@ class CompanyApi with ApiMixin {
     final Map<String, String> envVars = Platform.environment;
 
     if (envVars['TESTING'] != null) {
-      return null;
+      return true;
     }
 
-    prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final int userPk = prefs.getInt('userPk')!;
     final bool isAllowed = prefs.getBool('fcm_allowed')!;
@@ -82,7 +86,7 @@ class CompanyApi with ApiMixin {
 
     await Firebase.initializeApp();
     FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String messageingToken = await messaging.getToken();
+    String? messageingToken = await messaging.getToken();
 
     final Map body = {
       "user": userPk,
@@ -106,10 +110,10 @@ class CompanyApi with ApiMixin {
     final Map<String, String> envVars = Platform.environment;
 
     if (envVars['TESTING'] != null) {
-      return null;
+      return true;
     }
 
-    prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final int userPk = prefs.getInt('userPk')!;
     final bool isAllowed = prefs.getBool('fcm_allowed')!;
@@ -122,7 +126,7 @@ class CompanyApi with ApiMixin {
 
     await Firebase.initializeApp();
     FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String messageingToken = await messaging.getToken();
+    String? messageingToken = await messaging.getToken();
 
     final Map body = {
       "user": userPk,

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobhop/mobile/blocs/activity_bloc.dart';
 import 'package:jobhop/mobile/blocs/activity_states.dart';
 import 'package:jobhop/mobile/widgets/activity.dart';
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/core/widgets/widgets.dart';
 
 
 class AssignedOrderActivityPage extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/mobile/pages/activity.dart';
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/core/widgets/widgets.dart';
 
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';
 import 'package:jobhop/mobile/models/models.dart';

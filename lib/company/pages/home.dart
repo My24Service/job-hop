@@ -13,7 +13,7 @@ import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/utils/google.dart';
 import 'package:jobhop/utils/apple.dart';
 import 'package:jobhop/utils/facebook.dart';
-import 'package:jobhop/utils/widgets.dart';
+import 'package:jobhop/core/widgets/widgets.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -129,9 +129,9 @@ class _HomeState extends State<Home> {
 
       // show welcome and continue button
       return Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text('home.welcome'.tr(
+          createHeader('home.welcome'.tr(
                   namedArgs: { 'firstName': _firstName ?? 'guest' })
           ),
           ElevatedButton(
