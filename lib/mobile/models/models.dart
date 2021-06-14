@@ -1,3 +1,4 @@
+import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/order/models/models.dart';
 import 'package:jobhop/customer/models/models.dart';
 
@@ -185,24 +186,41 @@ class AssignedOrderActivities {
   }
 }
 
-// {"next":null,"previous":null,"count":1,"num_pages":1,"results":[
-// {"id":9,
-// "description":"tets",
-// "required_users":5,
-// "trip_orders":[{"id":18,"order":62,"name":"De Kerstmarktspecialist","address":"Metaalweg 4","city":"Bunschoten","date":"14/06/2021","modified":"13/06/2021 10:32","created":"13/06/2021 10:32"}],
-// "start_date":"2021-06-21",
-// "start_time":"12:15:00",
-// "end_date":"2021-06-23",
-// "end_time":"13:00:00",
-// "trip_date":"21/06/2021 12:15 - 23/06/2021 13:00",
-// "user_trip_is_available":true,
-// "required_assigned":"-",
-// "assigned_user_count":0,
-// "num_orders":1,
-// "users_trip_set_as_available":0,
-// "number_still_available":5
-// }
-// ]}
+class TripOrder {
+  final int id;
+  final int order;
+  final String name;
+  final String address;
+  final String postal;
+  final String city;
+  final String countryCode;
+  final String date;
+
+  TripOrder({
+    required this.id,
+    required this.order,
+    required this.name,
+    required this.address,
+    required this.postal,
+    required this.city,
+    required this.countryCode,
+    required this.date,
+  });
+
+  factory TripOrder.fromJson(Map<String, dynamic> parsedJson) {
+    return TripOrder(
+      id: parsedJson['id'],
+      order: parsedJson['order'],
+      name: parsedJson['name'],
+      address: parsedJson['address'],
+      postal: parsedJson['postal'],
+      city: parsedJson['city'],
+      countryCode: parsedJson['country_code'],
+      date: parsedJson['date'],
+    );
+  }
+}
+
 class Trip {
   final int id;
   final String description;
@@ -212,13 +230,13 @@ class Trip {
   final String endDate;
   final String endTime;
   final String tripDate;
-  final bool userTripIsAvailable;
-  final String requiredAssigned;
-  final int assignedUserCount;
-  final int numOrders;
-  final int usersTripSetAsAvailable;
-  final int numberStillAvailable;
-  final List<Order> tripOrders;
+  final bool userTripIsAvailable;  // if the user has already set this trip as being available
+  final String requiredAssigned;  // text field with num_assigned, required_users, and a percentage of those
+  final int assignedUserCount;  // the number of users already assigned to this trip
+  final int numOrders;  // this number of orders in this trip
+  final int usersTripSetAsAvailable;  // the number of users that has set this trip as being available
+  final int numberStillAvailable;  // required_users - users_trip_set_as_available
+  final List<TripOrder> tripOrders;
 
   Trip({
     required this.id,
@@ -239,8 +257,8 @@ class Trip {
   });
 
   factory Trip.fromJson(Map<String, dynamic> parsedJson) {
-    var orders = parsedJson['tripOrders'] as List;
-    List<Order> tripOrders = orders.map((i) => Order.fromJson(i)).toList();
+    var tripOrdersList = parsedJson['trip_orders'] as List;
+    List<TripOrder> tripOrders = tripOrdersList.map((i) => TripOrder.fromJson(i)).toList();
 
     return Trip(
       id: parsedJson['id'],
@@ -251,12 +269,12 @@ class Trip {
       endDate: parsedJson['end_date'],
       endTime: parsedJson['end_time'],
       tripDate: parsedJson['trip_date'],
-      usersTripSetAsAvailable: parsedJson['user_trip_is_available'],
+      userTripIsAvailable: parsedJson['user_trip_is_available'],
       requiredAssigned: parsedJson['required_assigned'],
       assignedUserCount: parsedJson['assigned_user_count'],
       numOrders: parsedJson['num_orders'],
-      userTripIsAvailable: parsedJson['num_orders'],
       numberStillAvailable: parsedJson['number_still_available'],
+      usersTripSetAsAvailable: parsedJson['users_trip_set_as_available'],
       tripOrders: tripOrders,
     );
   }
@@ -280,6 +298,63 @@ class Trips {
     List<Trip> results = list.map((i) => Trip.fromJson(i)).toList();
 
     return Trips(
+      count: parsedJson['count'],
+      next: parsedJson['next'],
+      previous: parsedJson['previous'],
+      results: results,
+    );
+  }
+}
+
+class TripUserAvailability {
+  final int id;
+  final StudentUser user;
+  final Trip trip;
+  final bool isAccepted;
+  final String created;
+  final String modified;
+
+  TripUserAvailability({
+    required this.id,
+    required this.user,
+    required this.trip,
+    required this.isAccepted,
+    required this.created,
+    required this.modified,
+  });
+
+  factory TripUserAvailability.fromJson(Map<String, dynamic> parsedJson) {
+    StudentUser user = StudentUser.fromJson(parsedJson['user']);
+
+    return TripUserAvailability(
+        id: parsedJson['id'],
+        user: user,
+        trip: parsedJson['trip'],
+        isAccepted:parsedJson['is_accepted'],
+        created:parsedJson['created'],
+        modified:parsedJson['modified'],
+    );
+  }
+}
+
+class TripUserAvailabilities {
+  final int count;
+  final String? next;
+  final String? previous;
+  final List<TripUserAvailability> results;
+
+  TripUserAvailabilities({
+    required this.count,
+    required this.next,
+    required this.previous,
+    required this.results,
+  });
+
+  factory TripUserAvailabilities.fromJson(Map<String, dynamic> parsedJson) {
+    var list = parsedJson['results'] as List;
+    List<TripUserAvailability> results = list.map((i) => TripUserAvailability.fromJson(i)).toList();
+
+    return TripUserAvailabilities(
       count: parsedJson['count'],
       next: parsedJson['next'],
       previous: parsedJson['previous'],

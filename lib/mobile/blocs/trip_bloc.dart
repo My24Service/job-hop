@@ -9,14 +9,14 @@ import 'package:jobhop/mobile/models/models.dart';
 enum TripEventStatus {
   DO_ASYNC,
   FETCH_ALL,
+  SET_AVAILABLE,
 }
 
 class TripEvent {
   final dynamic status;
-  final Trip? trip;
   final dynamic value;
 
-  const TripEvent({this.status, this.trip, this.value});
+  const TripEvent({this.status, this.value});
 }
 
 class TripBloc extends Bloc<TripEvent, TripState> {
@@ -34,6 +34,15 @@ class TripBloc extends Bloc<TripEvent, TripState> {
         final Trips trips = await localMobileApi.fetchTrips();
         yield TripsLoadedState(trips: trips);
       } catch(e) {
+        yield TripErrorState(message: e.toString());
+      }
+    }
+
+    if (event.status == TripEventStatus.SET_AVAILABLE) {
+      try {
+        final bool result = await localMobileApi.setAvailable(event.value);
+        yield TripSetAvailableState(result: result);
+      } catch (e) {
         yield TripErrorState(message: e.toString());
       }
     }

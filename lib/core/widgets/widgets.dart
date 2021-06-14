@@ -162,16 +162,12 @@ Widget createOrderListHeader(Order order) {
   return Table(
     children: [
       TableRow(
-          children: [
-            Text('orders.info_order_date'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${order.orderDate}')
-          ]
+          children: createTableRowPair(
+              'orders.info_order_date'.tr(), '${order.orderDate}')
       ),
       TableRow(
-          children: [
-            Text('orders.info_order_id'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${order.orderId}')
-          ]
+          children: createTableRowPair(
+              'orders.info_order_id'.tr(), '${order.orderId}')
       ),
       TableRow(
           children: [
@@ -187,10 +183,8 @@ Widget createOrderListSubtitle(Order order) {
   return Table(
     children: [
       TableRow(
-          children: [
-            Text('orders.info_customer'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${order.orderName}'),
-          ]
+          children: createTableRowPair(
+              'orders.info_customer'.tr(), '${order.orderName}'),
       ),
       TableRow(
           children: [
@@ -199,10 +193,8 @@ Widget createOrderListSubtitle(Order order) {
           ]
       ),
       TableRow(
-          children: [
-            Text('orders.info_address'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${order.orderAddress}'),
-          ]
+          children: createTableRowPair(
+              'orders.info_address'.tr(), '${order.orderAddress}'),
       ),
       TableRow(
           children: [
@@ -211,10 +203,9 @@ Widget createOrderListSubtitle(Order order) {
           ]
       ),
       TableRow(
-          children: [
-            Text('orders.info_postal_city'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${order.orderCountryCode}-${order.orderPostal} ${order.orderCity}'),
-          ]
+          children: createTableRowPair(
+              'orders.info_postal_city'.tr(),
+              '${order.orderCountryCode}-${order.orderPostal} ${order.orderCity}'),
       ),
       TableRow(
           children: [
@@ -223,10 +214,8 @@ Widget createOrderListSubtitle(Order order) {
           ]
       ),
       TableRow(
-          children: [
-            Text('orders.info_order_type'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${order.orderType}'),
-          ]
+          children: createTableRowPair(
+              'orders.info_order_type'.tr(), '${order.orderType}'),
       ),
       TableRow(
           children: [
@@ -235,11 +224,22 @@ Widget createOrderListSubtitle(Order order) {
           ]
       ),
       TableRow(
-          children: [
-            Text('orders.info_last_status'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('${order.lastStatusFull}')
-          ]
+          children: createTableRowPair(
+              'orders.info_last_status'.tr(), '${order.lastStatusFull}')
       )
     ],
   );
+}
+
+List<Widget> createTableRowPair(String label, String value) {
+  return [
+    Padding(
+      padding: EdgeInsets.all(2),
+      child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+    ),
+    Padding(
+      padding: EdgeInsets.all(2),
+      child: Text(value),
+    ),
+  ];
 }

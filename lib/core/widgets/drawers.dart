@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:jobhop/core/pages/settings.dart';
+import 'package:jobhop/mobile/pages/availability.dart';
 import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
+import 'package:jobhop/mobile/pages/trip.dart';
 import 'package:jobhop/company/pages/home.dart';
 
 // Drawers
@@ -70,6 +72,36 @@ ListTile listTileAssignedOrdersListPage(BuildContext context, String text) {
   );
 }
 
+ListTile listTileTripListPage(BuildContext context, String text) {
+  final page = TripListPage();
+
+  return ListTile(
+    title: Text(text),
+    onTap: () {
+      // close the drawer and navigate
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => page)
+      );
+    },
+  );
+}
+
+ListTile listTileAvailabilityListPage(BuildContext context, String text) {
+  final page = AvailabilityListPage();
+
+  return ListTile(
+    title: Text(text),
+    onTap: () {
+      // close the drawer and navigate
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => page)
+      );
+    },
+  );
+}
+
 Widget createDrawer(BuildContext context) {
   return Drawer(
     child: ListView(
@@ -78,6 +110,8 @@ Widget createDrawer(BuildContext context) {
       children: <Widget>[
         createDrawerHeader(),
         listTileAssignedOrdersListPage(context, 'core.drawer_student_orders'.tr()),
+        listTileTripListPage(context, 'core.drawer_trips'.tr()),
+        listTileAvailabilityListPage(context, 'core.drawer_availability_list'),
         Divider(),
         listTileSettings(context),
         listTileLogout(context),

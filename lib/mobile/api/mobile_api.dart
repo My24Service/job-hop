@@ -160,7 +160,7 @@ class MobileApi with ApiMixin {
       return Trips.fromJson(json.decode(response.body));
     }
 
-    throw Exception('assigned_orders.list.exception_fetch'.tr());
+    throw Exception('trips.exception_fetch_trips'.tr());
   }
 
   Future<bool> setAvailable(int tripPk) async {
@@ -182,6 +182,36 @@ class MobileApi with ApiMixin {
 
     throw false;
 
+  }
+
+  Future<TripUserAvailabilities> fetchTripUserAvailability() async {
+    final String url = getUrl('/mobile/user-trip-availability/');
+
+    final response = await _httpClient.get(
+        Uri.parse(url),
+        headers: await getHeaders()
+    );
+
+    if (response.statusCode == 200) {
+      return TripUserAvailabilities.fromJson(json.decode(response.body));
+    }
+
+    throw Exception('trips.exception_fetch_availability'.tr());
+  }
+
+  Future<bool> deleteTripUserAvailability(int availabilityPk) async {
+    final String url = getUrl('/mobile/user-trip-availability/$availabilityPk/');
+
+    final response = await _httpClient.delete(
+        Uri.parse(url),
+        headers: await getHeaders()
+    );
+
+    if (response.statusCode == 204) {
+      return true;
+    }
+
+    return false;
   }
 }
 

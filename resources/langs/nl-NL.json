@@ -52,7 +52,9 @@
     "drawer_options": "Opties",
     "drawer_settings": "Instellingen",
     "drawer_logout": "Uitloggen",
-    "drawer_student_orders": "Jobs"
+    "drawer_student_orders": "Jobs",
+    "drawer_trips": "Trips",
+    "drawer_availability_list": "Jouw beschikbaarheid"
   },
   "assigned_orders": {
     "list": {
@@ -110,13 +112,29 @@
     "info_order_date": "Job datum",
     "info_customer": "Klant",
     "info_address": "Adres",
-    "info_postal": "Postcode",
-    "info_postal_city": "Postcode/plaats",
-    "info_country_city": "Land/Plaats",
     "info_order_type": "Job type",
     "info_equipment": "Work",
     "info_location": "Locatie",
     "info_remarks": "Opmerkingen",
     "info_last_status": "Status"
+  },
+  "trips": {
+    "notice_set_available": "By clicking \"yes\" you will be set available for this trip. You can only cancel by calling the office.",
+    "app_bar_title": "Trips",
+    "notice_no_trips": "Geen trips aanwezig",
+    "header_orders": "Jobs",
+    "header_trip_info": "Trip {id}",
+    "info_trip_date": "Datum",
+    "info_number_required": "Benodigd",
+    "info_number_still_available": "Plekken beschikbaar",
+    "button_set_available": "Ik meld me aan voor deze trip",
+    "action_set_available": "Meld mij aan",
+    "dialog_title_set_available": "Meld je aan",
+    "dialog_content_set_available": "Door het klikken op 'Meld mij aan' wordt je beschikbaarheid voor deze trip doorgegeven. Annuleren kan alleen door contact op te nemen met de planning van Job-Hop.",
+    "notice_user_has_set_available": "Je hebt je aangemeld voor deze trip",
+    "snackbar_set_available": "Je bent aangemeld voor deze trip",
+    "error_set_available_dialog_content": "Fout bij het aanmelden voor deze trip",
+    "exception_fetch_trips": "Fout bij het laden van de trips",
+    "exception_fetch_availability": "Fout bij het laden van de beschikbaarheid"
   }
 }
