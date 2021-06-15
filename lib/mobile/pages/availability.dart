@@ -40,15 +40,17 @@ class _AvailabilityListPageState extends State<AvailabilityListPage> {
         child: Scaffold(
             drawer: createDrawer(context),
             appBar: AppBar(
-                title: Text('trips.app_bar_title'.tr())
+                title: Text('availability.app_bar_title'.tr())
             ),
             body: BlocListener<TripUserAvailabilityBloc, TripUserAvailabilityState>(
                 listener: (context, state) {
                   if (state is TripUserAvailabilityDeletedState) {
                     if (state.result == true) {
+                      bloc = BlocProvider.of<TripUserAvailabilityBloc>(context);
+
                       createSnackBar(
                           context,
-                          'trips.snackbar_set_available'.tr());
+                          'availability.snackbar_availability_deleted'.tr());
 
                       bloc.add(TripUserAvailabilityEvent(
                           status: TripUserAvailabilityEventStatus.DO_ASYNC));
@@ -57,7 +59,7 @@ class _AvailabilityListPageState extends State<AvailabilityListPage> {
                     } else {
                       displayDialog(context,
                           'generic.error_dialog_title'.tr(),
-                          'trips.error_set_available_dialog_content'.tr());
+                          'availability.error_availability_deleted_dialog_content'.tr());
                     }
                   }
                 },

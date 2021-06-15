@@ -108,7 +108,7 @@ class MobileApi with ApiMixin {
   }
 
   Future<AssignedOrderActivity?> insertAssignedOrderActivity(AssignedOrderActivity activity, int assignedorderPk) async {
-    final String? url = await getUrl('/mobile/assignedorderactivity/');
+    final String url = getUrl('/mobile/assignedorderactivity/');
 
     final Map body = {
       'activity_date': activity.activityDate,
@@ -122,7 +122,7 @@ class MobileApi with ApiMixin {
     };
 
     final response = await _httpClient.post(
-      Uri.parse(url!),
+      Uri.parse(url),
       body: json.encode(body),
       headers: await getHeaders(),
     );
@@ -176,12 +176,11 @@ class MobileApi with ApiMixin {
         headers: await getHeaders()
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return true;
     }
 
-    throw false;
-
+    return false;
   }
 
   Future<TripUserAvailabilities> fetchTripUserAvailability() async {

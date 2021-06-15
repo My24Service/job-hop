@@ -45,6 +45,8 @@ class _TripListPageState extends State<TripListPage> {
                 listener: (context, state) {
                   if (state is TripSetAvailableState) {
                     if (state.result == true) {
+                      bloc = BlocProvider.of<TripBloc>(context);
+
                       createSnackBar(
                           context,
                           'trips.snackbar_set_available'.tr());

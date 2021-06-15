@@ -60,11 +60,11 @@ class AvailabilityListWidget extends StatelessWidget {
       children: [
         TableRow(
             children: createTableRowPair(
-                'trips.info_trip_date'.tr(), '${availability.trip.tripDate}')
+                'trips.info_trip_date'.tr(), '${availability.tripDate}')
         ),
         TableRow(
             children: createTableRowPair(
-                'trips.info_description'.tr(), '${availability.trip.description}')
+                'trips.info_description'.tr(), '${availability.description}')
         ),
         TableRow(
             children: [
@@ -87,7 +87,9 @@ class AvailabilityListWidget extends StatelessWidget {
         children: [
           TableRow(
             children: createTableRowPair(
-                'availability.info_accepted'.tr(), '${availability.isAccepted}'),
+                'availability.info_accepted'.tr(),
+                availability.isAccepted ? 'availability.info_yes'.tr() : 'availability.info_no'.tr()
+            ),
           ),
           TableRow(
             children: createTableRowPair(
@@ -100,7 +102,7 @@ class AvailabilityListWidget extends StatelessWidget {
         ]
     );
 
-    if (!availability.isAccepted) {
+    if (availability.isAccepted) {
       return Column(
         children: [
           table
@@ -108,6 +110,7 @@ class AvailabilityListWidget extends StatelessWidget {
       );
     }
 
+    // not yet accepted, the user can still delete it
     return Column(
       children: [
         table,
@@ -125,8 +128,8 @@ class AvailabilityListWidget extends StatelessWidget {
 
   _showDeleteDialog(BuildContext context, int availabilityPk) {
     showDeleteDialogWrapper(
-        'customers.list.delete_dialog_title'.tr(),
-        'customers.list.delete_dialog_content'.tr(),
+        'availability.delete_dialog_title'.tr(),
+        'availability.delete_dialog_content'.tr(),
         context, () => _doDelete(context, availabilityPk));
   }
 

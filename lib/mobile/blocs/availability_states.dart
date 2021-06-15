@@ -29,7 +29,7 @@ class TripUserAvailabilitiesLoadedState extends TripUserAvailabilityState {
   TripUserAvailabilitiesLoadedState({required this.tripUserAvailabilities});
 
   @override
-  List<Object> get props => [TripUserAvailabilities];
+  List<Object> get props => [tripUserAvailabilities];
 }
 
 class TripUserAvailabilityDeletedState extends TripUserAvailabilityState {

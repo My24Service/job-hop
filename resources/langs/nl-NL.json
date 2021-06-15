@@ -127,6 +127,7 @@
     "info_trip_date": "Datum",
     "info_number_required": "Benodigd",
     "info_number_still_available": "Plekken beschikbaar",
+    "info_description": "Omschrijving",
     "button_set_available": "Ik meld me aan voor deze trip",
     "action_set_available": "Meld mij aan",
     "dialog_title_set_available": "Meld je aan",
@@ -136,5 +137,20 @@
     "error_set_available_dialog_content": "Fout bij het aanmelden voor deze trip",
     "exception_fetch_trips": "Fout bij het laden van de trips",
     "exception_fetch_availability": "Fout bij het laden van de beschikbaarheid"
+  },
+  "availability": {
+    "app_bar_title": "Jouw beschikbaarheid",
+    "snackbar_availability_deleted": "Beschikbaarheid verwijderd",
+    "error_availability_deleted_dialog_content": "Fout bij het verwijderen van jouw beschikbaarheid",
+    "notice_no_availability": "Nog geen beschikbaarheid aanwezig. Kijk bij trips en meld je ergens aan.",
+    "info_accepted": "Geaccepteerd?",
+    "info_created": "Aangemaakt",
+    "info_modified": "Gewijzigd",
+    "info_yes": "Geaccepteerd",
+    "info_no": "Nog niet geaccepteerd",
+    "button_delete": "Verwijder beschikbaarheid",
+    "delete_dialog_title": "Verwijder beschikbaarheid",
+    "delete_dialog_content": "Wil je je beschikbaarheid verwijderen?"
+
   }
 }

@@ -136,25 +136,26 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> parsedJson) {
     // order lines
     List<Orderline> orderlines = [];
-    var parsedOrderlines = parsedJson['orderlines'] as List;
+    if (parsedJson.containsKey('orderlines')) {
+      var parsedOrderlines = parsedJson['orderlines'] as List;
 
-    if (parsedOrderlines != null) {
-      orderlines = parsedOrderlines.map((i) => Orderline.fromJson(i)).toList();
+      orderlines =
+          parsedOrderlines.map((i) => Orderline.fromJson(i)).toList();
     }
 
     // info lines
     List<Infoline> infolines = [];
-    var parsedInfolines = parsedJson['infolines'] as List;
+    if (parsedJson.containsKey('infolines')) {
+      var parsedInfolines = parsedJson['infolines'] as List;
 
-    if (parsedInfolines != null) {
       infolines = parsedInfolines.map((i) => Infoline.fromJson(i)).toList();
     }
 
     // statusses
     List<Status> statusses = [];
-    var parsedStatusses = parsedJson['statusses'] as List;
+    if (parsedJson.containsKey('statusses')) {
+      var parsedStatusses = parsedJson['statusses'] as List;
 
-    if (parsedStatusses != null) {
       statusses = parsedStatusses.map((i) => Status.fromJson(i)).toList();
     }
 

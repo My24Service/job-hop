@@ -21,7 +21,6 @@ class AssignedUserdata {
 
 class AssignedOrder {
   final int? id;
-  final int? engineer;
   final int? studentUser;
   final Order? order;
   bool? isStarted;
@@ -33,7 +32,6 @@ class AssignedOrder {
 
   AssignedOrder({
     this.id,
-    this.engineer,
     this.studentUser,
     this.order,
     this.isStarted,
@@ -46,32 +44,32 @@ class AssignedOrder {
 
   factory AssignedOrder.fromJson(Map<String, dynamic> parsedJson) {
     List<StartCode> startCodes = [];
-    var parsedStartCodesList = parsedJson['start_codes'] as List;
-    if (parsedStartCodesList != null) {
+    if (parsedJson.containsKey('start_codes')) {
+      var parsedStartCodesList = parsedJson['start_codes'] as List;
       startCodes = parsedStartCodesList.map((i) => StartCode.fromJson(i)).toList();
     }
 
     List<EndCode> endCodes = [];
-    var parsedEndCodesList = parsedJson['end_codes'] as List;
-    if (parsedEndCodesList != null) {
+    if (parsedJson.containsKey('end_codes')) {
+      var parsedEndCodesList = parsedJson['end_codes'] as List;
       endCodes = parsedEndCodesList.map((i) => EndCode.fromJson(i)).toList();
     }
 
     Customer customer;
-    if (parsedJson['customer'] != null) {
+    if (parsedJson.containsKey('customer')) {
       customer = Customer.fromJson(parsedJson['customer']);
     }
 
     List<AssignedUserdata> assignedUsers = [];
-    var parsedUserData = parsedJson['assigned_userdata'] as List;
-    if (parsedUserData != null) {
-      assignedUsers = parsedUserData.map((i) => AssignedUserdata.fromJson(i)).toList();
+    if (parsedJson.containsKey('assigned_userdata')) {
+      var parsedUserData = parsedJson['assigned_userdata'] as List;
+      assignedUsers =
+          parsedUserData.map((i) => AssignedUserdata.fromJson(i)).toList();
     }
 
     return AssignedOrder(
       id: parsedJson['id'],
       order: Order.fromJson(parsedJson['order']),
-      engineer: parsedJson['engineer'],
       studentUser: parsedJson['student_user'],
       isStarted: parsedJson['is_started'],
       isEnded: parsedJson['is_ended'],
@@ -309,16 +307,20 @@ class Trips {
 class TripUserAvailability {
   final int id;
   final StudentUser user;
-  final Trip trip;
+  final int tripPk;
   final bool isAccepted;
+  final String description;
+  final String tripDate;
   final String created;
   final String modified;
 
   TripUserAvailability({
     required this.id,
     required this.user,
-    required this.trip,
+    required this.tripPk,
     required this.isAccepted,
+    required this.description,
+    required this.tripDate,
     required this.created,
     required this.modified,
   });
@@ -329,8 +331,10 @@ class TripUserAvailability {
     return TripUserAvailability(
         id: parsedJson['id'],
         user: user,
-        trip: parsedJson['trip'],
-        isAccepted:parsedJson['is_accepted'],
+        tripPk: parsedJson['trip'],
+        isAccepted: parsedJson['is_accepted'],
+        description: parsedJson['description'],
+        tripDate: parsedJson['trip_date'],
         created:parsedJson['created'],
         modified:parsedJson['modified'],
     );

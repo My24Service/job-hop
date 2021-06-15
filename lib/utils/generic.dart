@@ -43,7 +43,11 @@ Future<int?> getUserPk() async {
 
 Future<String?> getToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('token')!;
+  if (prefs.containsKey('token')) {
+    return prefs.getString('token')!;
+  }
+
+  return null;
 }
 
 Future<void> setFirstTimeProfile() async {

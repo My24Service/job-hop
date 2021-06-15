@@ -111,7 +111,7 @@ Widget createDrawer(BuildContext context) {
         createDrawerHeader(),
         listTileAssignedOrdersListPage(context, 'core.drawer_student_orders'.tr()),
         listTileTripListPage(context, 'core.drawer_trips'.tr()),
-        listTileAvailabilityListPage(context, 'core.drawer_availability_list'),
+        listTileAvailabilityListPage(context, 'core.drawer_availability_list'.tr()),
         Divider(),
         listTileSettings(context),
         listTileLogout(context),
