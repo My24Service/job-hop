@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/mobile/blocs/availability_bloc.dart';
@@ -10,6 +11,9 @@ import 'availability_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({});
+
   test('Test fetch availability', () async {
     final client = MockClient();
     final TripUserAvailabilityBloc availabilityBloc = TripUserAvailabilityBloc(
