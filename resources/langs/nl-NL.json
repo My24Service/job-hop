@@ -19,6 +19,12 @@
     "error_google": "Fout bij het aanmelden met Google",
     "error_apple": "Fout bij het aanmelden met Apple"
   },
+  "demo": {
+    "text1": "Zonder met Facebook, Google of Apple te hoeven inloggen kun je rustig rond kijken in deze App",
+    "text2": "Wanneer je op 'Ga verder' klikt wordt er een speciale omgeving aangemaakt binnen Job-Hop.",
+    "text3": "Er wordt dan gevraagd om push-notifications toe te staan, dit is nodig zodat we je een bericht kunnen sturen zodra de omgeving klaar is.",
+    ""
+  },
   "profile": {
     "header": "Profiel",
     "submit": "Verstuur",

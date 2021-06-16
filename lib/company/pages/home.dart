@@ -246,6 +246,19 @@ class _HomeState extends State<Home> {
             ),),
         ),
         SizedBox(height: 20),
+        InkWell(
+          onTap: (){
+            final page = AssignedOrderListPage();
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => page)
+            );
+          },
+          child: Container(
+            child: ClipRRect(
+              child: Image(image: AssetImage('assets/buttons/jobhop-sign-in.png')),
+            ),),
+        ),
+        SizedBox(height: 20),
       ],
     );
   }
