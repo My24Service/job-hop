@@ -11,14 +11,14 @@ import 'package:jobhop/company/pages/home.dart';
 // Drawers
 Widget createDrawerHeader() {
   return Container(
-    height: 80.0,
+    height: 40.0,
     child: DrawerHeader(
         child: Text('core.drawer_options'.tr(), style: TextStyle(color: Colors.white)),
         decoration: BoxDecoration(
             color: Colors.grey
         ),
         margin: EdgeInsets.all(0),
-        padding: EdgeInsets.all(6.35)
+        padding: EdgeInsets.only(top: 15, left: 20)
     ),
   );
 }
