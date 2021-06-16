@@ -14,6 +14,7 @@ void main() {
 
   testWidgets('Home widget shows login buttons', (WidgetTester tester) async {
     await tester.pumpWidget(testWidget);
+    await tester.pumpAndSettle(Duration(seconds: 2));
 
     const facebookKey = Key('facebookButton');
     expect(find.byKey(facebookKey), findsOneWidget);
