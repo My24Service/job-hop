@@ -8,3 +8,4 @@ Dart/Flutter App for Job-Hop available for Android and iOS.
 ##
 
 This is a native App for Job-Hop where you can keep track of your jobs.
+
