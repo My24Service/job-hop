@@ -75,18 +75,10 @@ class AssignedWidget extends StatelessWidget {
                   ),
                   TableRow(
                       children: [
-                        Text('orders.info_postal'.tr(),
+                        Text('orders.info_location'.tr(),
                             style: TextStyle(fontWeight: FontWeight.bold)
                         ),
-                        Text("${assignedOrder.order!.orderPostal}"),
-                      ]
-                  ),
-                  TableRow(
-                      children: [
-                        Text('orders.info_country_city'.tr(),
-                            style: TextStyle(fontWeight: FontWeight.bold)
-                        ),
-                        Text("${assignedOrder.order!.orderCountryCode}/${assignedOrder.order!.orderCity}"),
+                        Text("${assignedOrder.order!.orderCountryCode}-${assignedOrder.order!.orderPostal} ${assignedOrder.order!.orderCity}"),
                       ]
                   ),
                 ],
