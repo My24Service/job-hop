@@ -75,6 +75,7 @@ class _HomeState extends State<Home> {
   bool _inAsyncCall = false;
   bool _isFirstTimeProfile = true;
   String? _firstName;
+  bool _isLoaded = false;
 
   @override
   void initState() {
@@ -90,6 +91,10 @@ class _HomeState extends State<Home> {
 
   _doAsync() async {
     await _initState();
+    await Future.delayed(Duration(milliseconds: 100));
+    _isLoaded = true;
+
+    setState(() {});
   }
 
   Future<void> _initState() async {
@@ -116,11 +121,15 @@ class _HomeState extends State<Home> {
       body: ModalProgressHUD(
         child: Align(
           alignment: Alignment.center,
-          child: _buildBody(),
+          child: !_isLoaded ? _blankScreen() : _buildBody(),
         ),
         inAsyncCall: _inAsyncCall
       )
     );
+  }
+
+  Widget _blankScreen() {
+    return Image(image: AssetImage('assets/logo-small.png'));
   }
 
   Widget _buildBody() {
