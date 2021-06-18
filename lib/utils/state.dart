@@ -8,12 +8,12 @@ abstract class AppModel extends ChangeNotifier {
   void setUserFull(StudentUser user, String token);
   void setIsDemo(bool isDemo);
 
-  StudentUser get user => user;
+  StudentUser? get user => user;
   bool get isDemo => isDemo;
 }
 
 class AppModelImplementation extends AppModel {
-  late StudentUser _user;
+  StudentUser? _user;
   bool _isDemo = false;
 
   AppModelImplementation();
@@ -27,7 +27,7 @@ class AppModelImplementation extends AppModel {
   }
 
   @override
-  StudentUser get user => _user;
+  StudentUser? get user => _user;
 
   @override
   void setUserBasic(StudentUser user, String token) {
