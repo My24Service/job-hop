@@ -9,21 +9,28 @@
     "action_open": "Open",
     "action_view": "Bekijk",
     "action_cancel": "Annuleer",
+    "action_continue": "Ga verder",
     "empty_table": "Geen resultaten gevonden."
   },
   "home": {
     "welcome": "Welkom {firstName}",
-    "continue": "Ga verder",
     "login_error_title": "Fout bij het aanmelden",
     "error_facebook": "Fout bij het aanmelden met Facebook",
     "error_google": "Fout bij het aanmelden met Google",
     "error_apple": "Fout bij het aanmelden met Apple"
   },
   "demo": {
-    "text1": "Zonder met Facebook, Google of Apple te hoeven inloggen kun je rustig rond kijken in deze App",
+    "text1": "Zonder met Facebook, Google of Apple te hoeven inloggen kun je rustig rond kijken in deze App.",
     "text2": "Wanneer je op 'Ga verder' klikt wordt er een speciale omgeving aangemaakt binnen Job-Hop.",
     "text3": "Er wordt dan gevraagd om push-notifications toe te staan, dit is nodig zodat we je een bericht kunnen sturen zodra de omgeving klaar is.",
-    "text4": ""
+    "text4": "",
+    "continue": "Ga verder",
+    "error_title_creating_user": "Fout bij het verifiëren van jouw toestel",
+    "error_content_creating_user": "Er is iets fout gegaan bij het verifiëren van jouw toestel. Probeer het nog eens of neem contact op met Job-Hop.",
+    "error_title_creating_environment": "Fout bij aanmaken van de omgeving",
+    "error_content_creating_environment": "Er is iets fout gegaan bij het aanmaken van de omgeving. Probeer het nog eens of neem contact op met Job-Hop.",
+    "alert_title_environment_created": "Omgeving aangemaakt",
+    "alert_content_environment_created": "Jouw Job-Hop omgeving is aangemaakt. Je kunt hier nu gebruik van maken"
   },
   "profile": {
     "header": "Profiel",

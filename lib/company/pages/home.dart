@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jobhop/company/pages/demo.dart';
 import 'package:jobhop/company/pages/profile.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -173,6 +174,7 @@ class _HomeState extends State<Home> {
           onTap: () async {
             _inAsyncCall = true;
             setState(() {});
+            setIsNotDemo();
             final bool result = await _facebook.login();
 
             if(!result) {
@@ -184,6 +186,9 @@ class _HomeState extends State<Home> {
                   'home.error_facebook'.tr()
               );
             }
+
+            // request permissions
+            await requestFCMPermissions();
 
             await _setUserToken();
             _inAsyncCall = false;
@@ -199,6 +204,7 @@ class _HomeState extends State<Home> {
           onTap: () async {
             _inAsyncCall = true;
             setState(() {});
+            setIsNotDemo();
             final bool result = await _google.login();
 
             if(!result) {
@@ -209,6 +215,9 @@ class _HomeState extends State<Home> {
                   'home.error_google'.tr()
               );
             }
+
+            // request permissions
+            await requestFCMPermissions();
 
             await _setUserToken();
             _inAsyncCall = false;
@@ -224,6 +233,7 @@ class _HomeState extends State<Home> {
           onTap: () async {
             _inAsyncCall = true;
             setState(() {});
+            setIsNotDemo();
             final bool result = await _apple.login();
 
             if(!result) {
@@ -236,6 +246,9 @@ class _HomeState extends State<Home> {
               );
             }
 
+            // request permissions
+            await requestFCMPermissions();
+
             await _setUserToken();
             _inAsyncCall = false;
             setState(() {});
@@ -247,9 +260,11 @@ class _HomeState extends State<Home> {
         ),
         SizedBox(height: 20),
         InkWell(
-          onTap: (){
-            final page = AssignedOrderListPage();
-            Navigator.pushReplacement(
+          onTap: () async {
+            setIsDemo();
+
+            final page = DemoPage();
+            Navigator.push(
                 context, MaterialPageRoute(builder: (context) => page)
             );
           },
