@@ -204,7 +204,7 @@ Widget createOrderListSubtitle(Order order) {
       ),
       TableRow(
           children: createTableRowPair(
-              'orders.info_postal_city'.tr(),
+              'orders.info_location'.tr(),
               '${order.orderCountryCode}-${order.orderPostal} ${order.orderCity}'),
       ),
       TableRow(
