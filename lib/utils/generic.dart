@@ -87,7 +87,6 @@ Future<void> setIsNotDemo() async {
 Future<void> requestFCMPermissions() async {
   // request permissions
   SharedPreferences _prefs = await SharedPreferences.getInstance();
-  _prefs.remove('fcm_allowed');
 
   if (!_prefs.containsKey('fcm_allowed')) {
     bool isAllowed = false;
@@ -110,21 +109,6 @@ Future<void> requestFCMPermissions() async {
     }
 
     _prefs.setBool('fcm_allowed', isAllowed);
-
-    if (isAllowed) {
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        if (message.data.containsKey('demo_okay')) {
-
-        }
-
-        print('Got a message whilst in the foreground!');
-        print('Message data: ${message.data}');
-
-        if (message.notification != null) {
-          print('Message also contained a notification: ${message.notification}');
-        }
-      });
-    }
   }
 }
 
