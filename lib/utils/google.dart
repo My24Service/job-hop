@@ -10,7 +10,7 @@ import 'auth.dart';
 
 class Google {
   late GoogleSignIn _googleSignIn;
-  late GoogleSignInAccount? _currentUser;
+  GoogleSignInAccount? _currentUser;
 
   Google(GoogleSignIn googleSignIn) {
     this._googleSignIn = googleSignIn;
@@ -18,41 +18,47 @@ class Google {
 
   Future<bool> login() async {
     try {
-      await _googleSignIn.signIn().then((result) {
-        result!.authentication.then((googleKey) async {
-          final registerByTokenEndpoint = Uri(
-            scheme: 'https',
-            host: 'jobhop.my24service-dev.com',
-            path: '/register-by-token/google-oauth2/',
-          );
+      GoogleSignInAccount? result = await _googleSignIn.signIn();
+      if (result != null) {
+        GoogleSignInAuthentication authResult = await result.authentication;
 
-          final Map<String, String?> body = {
-            'access_token': googleKey.accessToken,
-            'email': _currentUser!.email,
-          };
+        if (_currentUser == null) {
+          print('_currentUser null after signin');
+          return false;
+        }
 
-          final Map<String, String> headers = {"Content-Type": "application/json; charset=UTF-8"};
+        final registerByTokenEndpoint = Uri(
+          scheme: 'https',
+          host: 'jobhop.my24service-dev.com',
+          path: '/register-by-token/google-oauth2/',
+        );
 
-          final response = await http.Client().post(
-            registerByTokenEndpoint,
-            body: json.encode(body),
-            headers: headers,
-          );
+        final Map<String, String?> body = {
+          'access_token': authResult.accessToken,
+          'email': _currentUser!.email,
+        };
 
-          if(response.statusCode != 200) {
-            return false;
-          }
+        final Map<String, String> headers = {"Content-Type": "application/json; charset=UTF-8"};
 
-          Map<String, dynamic> parsedResponse = json.decode(response.body);
+        final response = await http.Client().post(
+          registerByTokenEndpoint,
+          body: json.encode(body),
+          headers: headers,
+        );
 
-          if(parsedResponse['result'] == false) {
-            return false;
-          }
+        if(response.statusCode != 200) {
+          return false;
+        }
 
-          await auth.storeUser(parsedResponse);
-          await auth.storeBackend('google');
-        });
-      });
+        Map<String, dynamic> parsedResponse = json.decode(response.body);
+
+        if (parsedResponse['result'] == false) {
+          return false;
+        }
+
+        await auth.storeUser(parsedResponse);
+        await auth.storeBackend('google');
+      }
 
       return true;
     } catch (error) {
