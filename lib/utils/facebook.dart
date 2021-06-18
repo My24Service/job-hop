@@ -7,8 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'auth.dart';
 
 class Facebook {
-  Map<String, dynamic>? _userData;
-
   Future<bool> login() async {
     final LoginResult result = await FacebookAuth.instance.login(); // by the fault we request the email and the public profile
 
@@ -18,7 +16,6 @@ class Facebook {
       final userData = await FacebookAuth.instance.getUserData();
       // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
       AccessToken? _accessToken = result.accessToken;
-      _userData = userData;
 
       final registerByTokenEndpoint = Uri(
         scheme: 'https',
@@ -31,12 +28,10 @@ class Facebook {
         'email': userData['email'],
       };
 
-      final Map<String, String> headers = {"Content-Type": "application/json; charset=UTF-8"};
-
       final response = await http.Client().post(
         registerByTokenEndpoint,
         body: json.encode(body),
-        headers: headers,
+        headers: {"Content-Type": "application/json; charset=UTF-8"},
       );
 
       if(response.statusCode != 200) {

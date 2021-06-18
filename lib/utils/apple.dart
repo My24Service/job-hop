@@ -50,8 +50,6 @@ class Apple {
       headers: headers,
     );
 
-    // If we got this far, a session based on the Apple ID credential has been created in your system,
-    // and you can now set this as the app's session
     if(response.statusCode != 200) {
       return false;
     }

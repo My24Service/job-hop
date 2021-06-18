@@ -3,17 +3,23 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/mobile/blocs/trip_bloc.dart';
 import 'package:jobhop/mobile/blocs/trip_states.dart';
+import 'package:jobhop/utils/state.dart';
 import 'trips_test.mocks.dart';
+
+final GetIt getIt = GetIt.instance;
 
 @GenerateMocks([http.Client])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
-  
+  getIt.registerSingleton<AppModel>(AppModelImplementation(),
+      signalsReady: true);
+
   test('Test fetch trips', () async {
     final client = MockClient();
     final TripBloc tripBloc = TripBloc(

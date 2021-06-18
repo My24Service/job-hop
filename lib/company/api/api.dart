@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
+import 'package:encrypt/encrypt.dart';
+import 'package:jobhop/utils/generic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/core/api/api.dart';
-
+import 'package:jobhop/core/secret.dart';
 
 class CompanyApi with ApiMixin {
   // default and setable for tests
@@ -106,36 +108,50 @@ class CompanyApi with ApiMixin {
     return false;
   }
 
-  Future<bool> postDemoDeviceToken() async {
+  Future<Map<String, dynamic>?> createDemoUser() async {
     final Map<String, String> envVars = Platform.environment;
 
     if (envVars['TESTING'] != null) {
-      return true;
+      return null;
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final int userPk = prefs.getInt('userPk')!;
     final bool isAllowed = prefs.getBool('fcm_allowed')!;
 
     if (!isAllowed) {
-      return false;
+      return null;
     }
 
-    final url = getUrl('/company/demo-device-token/');
+    final url = getUrl('/company/setup-demo-user-temps/');
 
     await Firebase.initializeApp();
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     String? messageingToken = await messaging.getToken();
 
     final Map body = {
-      "user": userPk,
-      "device_token": messageingToken
+      "secret": encryptText(messageingToken!)
     };
 
     final response = await _httpClient.post(
       Uri.parse(url),
       body: json.encode(body),
+      headers: await getHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+
+    return null;
+  }
+
+  Future<bool> createDemoEnvironment() async {
+    final url = getUrl('/company/setup-demo-environment-temps/');
+
+    final response = await _httpClient.post(
+      Uri.parse(url),
+      body: json.encode({}),
       headers: await getHeaders(),
     );
 
