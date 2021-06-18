@@ -162,13 +162,23 @@ class _HomeState extends State<Home> {
       );
     }
 
+    return ListView(
+      shrinkWrap: false,
+      padding: EdgeInsets.all(0.0),
+      children: [
+        Image(image: AssetImage('assets/logo-big.png')),
+        SizedBox(height: 20),
+        _showButtons(),
+      ]
+    );
+  }
+
+  Widget _showButtons() {
     const facebookKey = Key('facebookButton');
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        Image(image: AssetImage('assets/logo-big.png')),
-        Spacer(),
         InkWell(
           key: facebookKey,
           onTap: () async {
@@ -275,6 +285,6 @@ class _HomeState extends State<Home> {
         ),
         SizedBox(height: 20),
       ],
-    );
+    );    
   }
 }
