@@ -19,7 +19,7 @@ class AssignedOrderListPage extends StatefulWidget {
 
 class _AssignedOrderListPageState extends State<AssignedOrderListPage> {
   AssignedOrderBloc bloc = AssignedOrderBloc(AssignedOrderInitialState());
-  String _firstName = getIt<AppModel>().user.firstName ?? 'guest';
+  String _firstName = getIt<AppModel>().user!.firstName ?? 'guest';
 
   @override
   Widget build(BuildContext context) {

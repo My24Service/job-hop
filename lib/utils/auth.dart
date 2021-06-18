@@ -88,7 +88,7 @@ class Auth {
 
     getIt<AppModel>().setUserBasic(user, userData['token']);
 
-    return getIt<AppModel>().user;
+    return getIt<AppModel>().user!;
   }
 
   Future<bool> storeBackend(String backend) async {
