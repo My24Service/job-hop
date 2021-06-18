@@ -26,12 +26,15 @@ class AvailabilityListWidget extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   children: [
                     Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20),
                         child: Column(
                           children: [
                             SizedBox(height: 30),
                             Text('availability.notice_no_availability'.tr())
                           ],
                         )
+                      )
                     )
                   ]
               )
