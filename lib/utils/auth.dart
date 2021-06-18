@@ -42,7 +42,6 @@ class Auth {
     final bool isFirstTime = await isFirstTimeProfile();
 
     if (isFirstTime) {
-      print('firstTime');
       final int? id = prefs.getInt('userPk');
       final String? email = prefs.getString('email');
       final String? username = prefs.getString('username');
@@ -64,7 +63,6 @@ class Auth {
     }
 
     // fetch from backend and store in state
-    print('not firstTime, fetch from server');
     final int userPk = prefs.getInt('userPk')!;
     final String token = prefs.getString('token')!;
     StudentUser user = await companyApi.fetchStudentUser(userPk);
@@ -117,6 +115,7 @@ class Auth {
     prefs.remove('email');
     prefs.remove('username');
     prefs.remove('token');
+    prefs.remove('isFirstTimeProfile');
 
     switch(_backend) {
       case 'apple':
