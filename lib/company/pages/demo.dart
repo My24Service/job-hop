@@ -23,26 +23,43 @@ class _DemoPageState extends State<DemoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ModalProgressHUD(
-        child: Align(
-          alignment: Alignment.center,
-          child: _buildBody(),
+    return MaterialApp(
+        title: 'Job-Hop',
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        home: Scaffold(
+            appBar: AppBar(
+            title: const Text('Job-Hop omgeving'),
         ),
-        inAsyncCall: _inAsyncCall
-      )
-    );
+        body: Scaffold(
+          body: ModalProgressHUD(
+            child: Align(
+              alignment: Alignment.center,
+              child: _buildBody(),
+            ),
+            inAsyncCall: _inAsyncCall
+          )
+        )
+    ));
   }
 
   Widget _buildBody() {
     return Column(
       children: [
         createHeader('Tijdelijke Job-Hop omgeving'),
-        Text('demo.text1'.tr()),
-        SizedBox(height: 10),
-        Text('demo.text2'.tr()),
-        SizedBox(height: 10),
-        Text('demo.text3'.tr()),
+        Padding(
+          padding: EdgeInsets.only(left: 30, top: 20, right: 30),
+          child: Column(
+            children: [
+              Text('demo.text1'.tr()),
+              SizedBox(height: 10),
+              Text('demo.text2'.tr()),
+              SizedBox(height: 10),
+              Text('demo.text3'.tr()),
+            ],
+          ),
+        ),
         SizedBox(height: 50),
         ElevatedButton(
             child: Text('generic.action_continue'.tr()),

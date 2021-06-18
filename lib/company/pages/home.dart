@@ -101,9 +101,9 @@ class _HomeState extends State<Home> {
   Future<void> _initState() async {
     final StudentUser? user = await auth.initState(context);
 
-    if(user != null && user.id != null) {
+    if (user != null && user.id != null) {
       _token = user.token;
-      _firstName = getIt<AppModel>().user.firstName ?? 'guest';
+      _firstName = getIt<AppModel>().user!.firstName ?? 'guest';
     }
 
     _isFirstTimeProfile = await isFirstTimeProfile();
@@ -150,7 +150,7 @@ class _HomeState extends State<Home> {
           ),
           SizedBox(height: 50),
           ElevatedButton(
-              child: Text('home.continue'.tr()),
+              child: Text('generic.action_continue'.tr()),
               onPressed: () {
                 final page = AssignedOrderListPage();
                 Navigator.pushReplacement(
@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
             setIsNotDemo();
             final bool result = await _google.login();
 
-            if(!result) {
+            if (!result) {
               _inAsyncCall = false;
               setState(() {});
               return displayDialog(context,
