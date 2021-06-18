@@ -269,22 +269,22 @@ class _HomeState extends State<Home> {
             ),),
         ),
         SizedBox(height: 20),
-        InkWell(
-          onTap: () async {
-            setIsDemo();
-
-            final page = DemoPage();
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => page)
-            );
-          },
-          child: Container(
-            child: ClipRRect(
-              child: Image(image: AssetImage('assets/buttons/jobhop-sign-in.png')),
-            ),),
-        ),
-        SizedBox(height: 20),
+        // InkWell(
+        //   onTap: () async {
+        //     setIsDemo();
+        //
+        //     final page = DemoPage();
+        //     Navigator.push(
+        //         context, MaterialPageRoute(builder: (context) => page)
+        //     );
+        //   },
+        //   child: Container(
+        //     child: ClipRRect(
+        //       child: Image(image: AssetImage('assets/buttons/jobhop-sign-in.png')),
+        //     ),),
+        // ),
+        // SizedBox(height: 20),
       ],
-    );    
+    );
   }
 }
