@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,9 +38,10 @@ class Apple {
       path: '/api/login/social/token_user/',
     );
 
-    final Map<String, String> body = {
+    final Map<String, dynamic> body = {
       'provider': 'apple-id',
       'code': credential.authorizationCode,
+      'appleUseBundleId': Platform.isIOS || Platform.isMacOS ? true : false
     };
 
     final Map<String, String> headers = {"Content-Type": "application/json; charset=UTF-8"};
