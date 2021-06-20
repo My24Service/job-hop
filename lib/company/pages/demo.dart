@@ -27,6 +27,10 @@ class _DemoPageState extends State<DemoPage> {
         title: 'Job-Hop',
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            primaryColor: Color.fromRGBO(38, 34, 97, 1)
+        ),
         locale: context.locale,
         home: Scaffold(
             appBar: AppBar(

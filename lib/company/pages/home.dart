@@ -52,6 +52,7 @@ class JobHopHomeState extends State<JobHopHome> {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primaryColor: Color.fromRGBO(38, 34, 97, 1)
         ),
