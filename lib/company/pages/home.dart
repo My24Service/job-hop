@@ -52,6 +52,9 @@ class JobHopHomeState extends State<JobHopHome> {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
+        theme: ThemeData(
+            primaryColor: Color.fromRGBO(38, 34, 97, 1)
+        ),
         home: Scaffold(
           appBar: AppBar(
             title: const Text('Job-Hop'),
