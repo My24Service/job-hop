@@ -71,12 +71,12 @@ class _AssignedOrderPageState extends State<AssignedOrderPage> {
                         if (state.result == true) {
                           createSnackBar(context, 'assigned_orders.detail.snackbar_ended'.tr());
 
-                          bloc.add(AssignedOrderEvent(
-                              status: AssignedOrderEventStatus.FETCH_DETAIL,
-                              value: widget.assignedOrderPk
-                          ));
-
-                          setState(() {});
+                          final page = AssignedOrderListPage();
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(
+                                  builder: (context) => page
+                              )
+                          );
                         } else {
                           displayDialog(context,
                               'generic.error_dialog_title'.tr(),

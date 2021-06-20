@@ -155,35 +155,6 @@ class AssignedWidget extends StatelessWidget {
     return createTable(rows);
   }
 
-  _startCodePressed(BuildContext context, StartCode startCode) {
-    final bloc = BlocProvider.of<AssignedOrderBloc>(context);
-    bloc.add(AssignedOrderEvent(status: AssignedOrderEventStatus.DO_ASYNC));
-    bloc.add(AssignedOrderEvent(
-        status: AssignedOrderEventStatus.REPORT_STARTCODE,
-        code: startCode,
-        value: assignedOrder.id
-    ));
-  }
-
-  _endCodePressed(BuildContext context, EndCode endCode) async {
-    final bloc = BlocProvider.of<AssignedOrderBloc>(context);
-    bloc.add(AssignedOrderEvent(status: AssignedOrderEventStatus.DO_ASYNC));
-    bloc.add(AssignedOrderEvent(
-        status: AssignedOrderEventStatus.REPORT_ENDCODE,
-        code: endCode,
-        value: assignedOrder.id
-    ));
-  }
-
-  _activityPressed(BuildContext context) {
-    final page = AssignedOrderActivityPage(assignedOrderPk: assignedOrder.id!);
-    Navigator.push(context,
-        MaterialPageRoute(
-            builder: (context) => page
-        )
-    );
-  }
-
   Widget _buildButtons(BuildContext context) {
     // if not started, only show first startCode as a button
     if (!assignedOrder.isStarted!) {
@@ -192,9 +163,22 @@ class AssignedWidget extends StatelessWidget {
       return Container(
         child: Column(
           children: <Widget>[
-            createBlueElevatedButton(
-                startCode.description!, () => _startCodePressed(context, startCode)
-            )
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              child: new Text(startCode.description!),
+              onPressed: () {
+                final bloc = BlocProvider.of<AssignedOrderBloc>(context);
+                bloc.add(AssignedOrderEvent(status: AssignedOrderEventStatus.DO_ASYNC));
+                bloc.add(AssignedOrderEvent(
+                    status: AssignedOrderEventStatus.REPORT_STARTCODE,
+                    code: startCode,
+                    value: assignedOrder.id
+                ));
+              },
+            ),
           ],
         ),
       );
@@ -202,14 +186,40 @@ class AssignedWidget extends StatelessWidget {
 
     if (assignedOrder.isStarted!) {
       // started, show 'Register time/km' and 'Finish order'
-      ElevatedButton activityButton = createBlueElevatedButton(
-          'assigned_orders.detail.button_register_time_km'.tr(),
-          () => _activityPressed(context));
+      ElevatedButton activityButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.blue, // background
+          onPrimary: Colors.white, // foreground
+        ),
+        child: new Text('assigned_orders.detail.button_register_time_km'.tr()),
+        onPressed: () {
+          final page = AssignedOrderActivityPage(assignedOrderPk: assignedOrder.id!);
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (context) => page
+              )
+          );
+        },
+      );
 
       EndCode endCode = assignedOrder.endCodes![0];
 
-      ElevatedButton finishButton = createBlueElevatedButton(
-          endCode.description!, () => _endCodePressed(context, endCode));
+      ElevatedButton finishButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.blue, // background
+          onPrimary: Colors.white, // foreground
+        ),
+        child: new Text(endCode.description!),
+        onPressed: () {
+          final bloc = BlocProvider.of<AssignedOrderBloc>(context);
+          bloc.add(AssignedOrderEvent(status: AssignedOrderEventStatus.DO_ASYNC));
+          bloc.add(AssignedOrderEvent(
+              status: AssignedOrderEventStatus.REPORT_ENDCODE,
+              code: endCode,
+              value: assignedOrder.id
+          ));
+        },
+      );
 
       // no ended yet, show a subset of the buttons
       if (!assignedOrder.isEnded!) {
