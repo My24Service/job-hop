@@ -11,7 +11,7 @@ import 'package:jobhop/company/pages/home.dart';
 // Drawers
 Widget createDrawerHeader() {
   return Container(
-    height: 90.0,
+    height: 110.0,
     child: DrawerHeader(
         child: Text('core.drawer_options'.tr(), style: TextStyle(color: Colors.white)),
         decoration: BoxDecoration(
