@@ -14,8 +14,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String _preferedLanguageCode;
-  bool _skipMemberList = false;
+  late String _preferedLanguageCode = 'nl';
 
   @override
   void initState() {
@@ -25,7 +24,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   _doAsync() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _preferedLanguageCode = prefs.getString('prefered_language_code')!;
+
+    if (prefs.containsKey('prefered_language_code')) {
+      _preferedLanguageCode = prefs.getString('prefered_language_code')!;
+    }
 
     setState(() {});
   }
