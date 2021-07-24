@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:add_2_calendar/add_2_calendar.dart';
 
 import 'package:jobhop/core/secret.dart';
 import 'package:jobhop/utils/state.dart';
@@ -120,4 +121,16 @@ String encryptText(String text) {
   final encryptedToken = encrypter.encrypt(text);
 
   return encryptedToken.base64;
+}
+
+void createCalendarEvent(String title, String description, String location, DateTime startDate, DateTime endDate) {
+  final Event event = Event(
+      title: title,
+      description: description,
+      location: location,
+      startDate: startDate,
+      endDate: endDate
+  );
+
+  Add2Calendar.addEvent2Cal(event);
 }
