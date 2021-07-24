@@ -161,6 +161,7 @@ class CompanyApi with ApiMixin {
 
     return false;
   }
+
 }
 
 CompanyApi companyApi = CompanyApi();

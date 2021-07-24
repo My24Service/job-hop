@@ -1,1 +1,1 @@
-Initial release
+Students can now also login without FaceBook, Apple or Google

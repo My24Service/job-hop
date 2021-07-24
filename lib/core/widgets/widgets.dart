@@ -133,7 +133,7 @@ ElevatedButton createBlueElevatedButton(String text, Function callback, { primar
       onPrimary: onPrimary, // foreground
     ),
     child: new Text(text),
-    onPressed: () => callback,
+    onPressed: () => callback(),
   );
 }
 

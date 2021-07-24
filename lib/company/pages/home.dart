@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobhop/company/pages/demo.dart';
+import 'package:jobhop/company/pages/login.dart';
 import 'package:jobhop/company/pages/profile.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -273,21 +273,22 @@ class _HomeState extends State<Home> {
             ),),
         ),
         SizedBox(height: 20),
-        // InkWell(
-        //   onTap: () async {
-        //     setIsDemo();
-        //
-        //     final page = DemoPage();
-        //     Navigator.push(
-        //         context, MaterialPageRoute(builder: (context) => page)
-        //     );
-        //   },
-        //   child: Container(
-        //     child: ClipRRect(
-        //       child: Image(image: AssetImage('assets/buttons/jobhop-sign-in.png')),
-        //     ),),
-        // ),
-        // SizedBox(height: 20),
+        InkWell(
+          onTap: () async {
+            setState(() {});
+            setIsNotDemo();
+
+            final page = LoginPage();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => page)
+            );
+          },
+          child: Container(
+            child: ClipRRect(
+              child: Image(image: AssetImage('assets/buttons/jobhop-sign-in.png')),
+            ),),
+        ),
+        SizedBox(height: 20),
       ],
     );
   }
