@@ -47,6 +47,12 @@ class CompanyApi with ApiMixin {
       'remarks': user.studentUser!.remarks,
       'iban': user.studentUser!.iBan,
       'info': user.studentUser!.info,
+      'gender': user.studentUser!.bsn,
+      'dob': user.studentUser!.dayOfBirth,
+      'drivers_licence': user.studentUser!.driversLicence,
+      'drivers_licence_type': user.studentUser!.driversLicenceType,
+      'box_truck': user.studentUser!.boxTruck,
+      'bsn': user.studentUser!.bsn,
     };
 
     final Map body = {

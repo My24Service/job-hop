@@ -47,7 +47,7 @@ class TripListWidget extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
                 title: _createTripTitle(tripList[index]),
-                subtitle: _createTripSubTitle(tripList[index], context),
+                subtitle: _createTripOrders(tripList[index], context),
             );
           } // itemBuilder
       ),
@@ -88,7 +88,7 @@ class TripListWidget extends StatelessWidget {
     );
   }
 
-  Widget _createTripSubTitle(Trip trip, BuildContext context) {
+  Widget _createTripOrders(Trip trip, BuildContext context) {
     List<Widget> ordersColumn = [
       createHeader('trips.header_orders'.tr())
     ];
@@ -198,7 +198,6 @@ class TripListWidget extends StatelessWidget {
     bloc.add(TripEvent(status: TripEventStatus.DO_ASYNC));
     bloc.add(TripEvent(
         status: TripEventStatus.SET_AVAILABLE, value: tripPk));
-
   }
 
   _doRefresh(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/order/models/models.dart';
 import 'package:jobhop/customer/models/models.dart';
@@ -193,6 +194,8 @@ class TripOrder {
   final String city;
   final String countryCode;
   final String date;
+  final DateTime startDate;
+  final DateTime endDate;
 
   TripOrder({
     required this.id,
@@ -203,9 +206,19 @@ class TripOrder {
     required this.city,
     required this.countryCode,
     required this.date,
+    required this.startDate,
+    required this.endDate,
   });
 
   factory TripOrder.fromJson(Map<String, dynamic> parsedJson) {
+    final parsedStartDate = parsedJson['start_date'];
+    final parsedStartTime = parsedJson['start_time'];
+    final parsedEndDate = parsedJson['end_date'];
+    final parsedEndTime = parsedJson['end_time'];
+
+    final startDate = DateFormat('yyyy-M-d H:m:s').parse('$parsedStartDate $parsedStartTime');
+    final endDate = DateFormat('yyyy-M-d H:m:s').parse('$parsedEndDate $parsedEndTime');
+
     return TripOrder(
       id: parsedJson['id'],
       order: parsedJson['order'],
@@ -215,6 +228,8 @@ class TripOrder {
       city: parsedJson['city'],
       countryCode: parsedJson['country_code'],
       date: parsedJson['date'],
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobhop/company/pages/login.dart';
-import 'package:jobhop/company/pages/profile.dart';
+import 'package:jobhop/company/widgets/profile.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:google_sign_in/google_sign_in.dart';

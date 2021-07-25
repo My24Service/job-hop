@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:jobhop/company/pages/profile.dart';
 
 import 'package:jobhop/core/pages/settings.dart';
 import 'package:jobhop/mobile/pages/availability.dart';
@@ -11,7 +12,7 @@ import 'package:jobhop/company/pages/home.dart';
 // Drawers
 Widget createDrawerHeader() {
   return Container(
-    height: 110.0,
+    height: 80.0,
     child: DrawerHeader(
         child: Text('core.drawer_options'.tr(), style: TextStyle(color: Colors.white)),
         decoration: BoxDecoration(
@@ -27,6 +28,21 @@ ListTile listTileSettings(context) {
 
   return ListTile(
     title: Text('core.drawer_settings'.tr()),
+    onTap: () {
+      // close the drawer and navigate
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => page)
+      );
+    }, // onTap
+  );
+}
+
+ListTile listTileProfile(context) {
+  final page = ProfilePage();
+
+  return ListTile(
+    title: Text('core.drawer_profile'.tr()),
     onTap: () {
       // close the drawer and navigate
       Navigator.pop(context);
@@ -112,6 +128,7 @@ Widget createDrawer(BuildContext context) {
         listTileTripListPage(context, 'core.drawer_trips'.tr()),
         listTileAvailabilityListPage(context, 'core.drawer_availability_list'.tr()),
         Divider(),
+        listTileProfile(context),
         listTileSettings(context),
         listTileLogout(context),
       ],

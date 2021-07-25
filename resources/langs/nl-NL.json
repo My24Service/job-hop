@@ -43,6 +43,7 @@
     "alert_content_environment_created": "Jouw Job-Hop omgeving is aangemaakt. Je kunt hier nu gebruik van maken"
   },
   "profile": {
+    "app_bar_title": "Jouw profiel",
     "header": "Profiel",
     "submit": "Verstuur",
     "snackbar_saved": "Wijzigingen opgeslagen",
@@ -51,6 +52,18 @@
     "email": "Email",
     "firstName": "Voornaam",
     "lastName": "Achternaam",
+    "gender": "Geslacht",
+    "gender_male": "Man",
+    "gender_female": "Vrouw",
+    "gender_other": "Anders",
+    "date_of_birth": "Geboortedatum",
+    "drivers_licence": "Ben je in het bezit van een rijbewijs?",
+    "drivers_licence_type": "Type",
+    "drivers_licence_type_empty": "Vul het type in",
+    "box_truck": "Ben je bereid een bakwagen te rijden?",
+    "bsn": "BSN",
+    "picture": "Foto",
+    "bsn_empty": "Vul je BSN in",
     "address": "Adres",
     "postal": "Postcode",
     "city": "Plaats",
@@ -62,7 +75,9 @@
     "iban_empty": "Vul een IBAN in",
     "iban_invalid": "IBAN niet valide",
     "mobile_empty": "Vul een mobiel nummer in",
-    "mobile_invalid": "Mobiel nummber invalide\n(bijv. +316.. voor NL)"
+    "mobile_invalid": "Mobiel nummber invalide\n(bijv. +316.. voor NL)",
+    "button_choose_image": "Selecteer een foto",
+    "button_take_picture": "Neem een foto"
   },
   "settings": {
     "info_language_code": "Taal",
@@ -77,7 +92,8 @@
     "drawer_logout": "Uitloggen",
     "drawer_student_orders": "Jobs",
     "drawer_trips": "Trips",
-    "drawer_availability_list": "Jouw beschikbaarheid"
+    "drawer_availability_list": "Jouw beschikbaarheid",
+    "drawer_profile": "Profiel"
   },
   "assigned_orders": {
     "list": {
@@ -142,7 +158,6 @@
     "info_last_status": "Status"
   },
   "trips": {
-    "notice_set_available": "By clicking \"yes\" you will be set available for this trip. You can only cancel by calling the office.",
     "app_bar_title": "Trips",
     "notice_no_trips": "Geen trips aanwezig",
     "header_orders": "Jobs",
@@ -154,12 +169,18 @@
     "button_set_available": "Ik meld me aan voor deze trip",
     "action_set_available": "Meld mij aan",
     "dialog_title_set_available": "Meld je aan",
-    "dialog_content_set_available": "Door het klikken op 'Meld mij aan' wordt je beschikbaarheid voor deze trip doorgegeven. Annuleren kan alleen door contact op te nemen met de planning van Job-Hop.",
+    "dialog_content_set_available": "Door het klikken op “Meld mij aan” wordt je beschikbaarheid voor deze trip doorgegeven. Afmelden kan tot 24 uur voor de start van de trip. Zelf moet je zorgen voor vervanging. Door op “Meld mij aan” te klikken ga je hiermee akkoord.",
     "notice_user_has_set_available": "Je hebt je aangemeld voor deze trip",
     "snackbar_set_available": "Je bent aangemeld voor deze trip",
     "error_set_available_dialog_content": "Fout bij het aanmelden voor deze trip",
     "exception_fetch_trips": "Fout bij het laden van de trips",
-    "exception_fetch_availability": "Fout bij het laden van de beschikbaarheid"
+    "exception_fetch_availability": "Fout bij het laden van de beschikbaarheid",
+    "exception_fetch_trip": "Fout bij het laden van de trip",
+    "button_add_calendar_entries": "Maak kalender items aan",
+    "dialog_title_create_calendar_entries": "Kalender items aanmaken?",
+    "dialog_content_create_calendar_entries": "Wil je kalender items voor de jobs ({numOrders}) aanmaken op je telefoon?",
+    "calendar_title": "Job-Hop job",
+    "calendar_description": "Job bij: ${trip.name}. Datum: ${trip.date}."
   },
   "availability": {
     "app_bar_title": "Jouw beschikbaarheid",
@@ -174,6 +195,5 @@
     "button_delete": "Verwijder beschikbaarheid",
     "delete_dialog_title": "Verwijder beschikbaarheid",
     "delete_dialog_content": "Wil je je beschikbaarheid verwijderen?"
-
   }
 }

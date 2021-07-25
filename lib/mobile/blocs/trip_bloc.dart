@@ -41,7 +41,8 @@ class TripBloc extends Bloc<TripEvent, TripState> {
     if (event.status == TripEventStatus.SET_AVAILABLE) {
       try {
         final bool result = await localMobileApi.setAvailable(event.value);
-        yield TripSetAvailableState(result: result);
+        final Trip trip = await localMobileApi.fetchTripDetail(event.value);
+        yield TripSetAvailableState(result: result, trip: trip);
       } catch (e) {
         yield TripErrorState(message: e.toString());
       }

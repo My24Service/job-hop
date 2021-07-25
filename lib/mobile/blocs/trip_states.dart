@@ -34,9 +34,10 @@ class TripsLoadedState extends TripState {
 
 class TripSetAvailableState extends TripState {
   final bool result;
+  final Trip trip;
 
-  TripSetAvailableState({required this.result});
+  TripSetAvailableState({required this.result, required this.trip});
 
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [result, trip];
 }

@@ -163,6 +163,21 @@ class MobileApi with ApiMixin {
     throw Exception('trips.exception_fetch_trips'.tr());
   }
 
+  Future<Trip> fetchTripDetail(int tripPk) async {
+    final String url = getUrl('/mobile/trip/$tripPk/');
+
+    final response = await _httpClient.get(
+        Uri.parse(url),
+        headers: await getHeaders()
+    );
+
+    if (response.statusCode == 200) {
+      return Trip.fromJson(json.decode(response.body));
+    }
+
+    throw Exception('trips.exception_fetch_trips'.tr());
+  }
+
   Future<bool> setAvailable(int tripPk) async {
     final String url = getUrl('/mobile/user-trip-availability/');
 

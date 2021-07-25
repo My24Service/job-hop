@@ -6,8 +6,14 @@ class StudentUserProperty {
   final String? mobile;
   final String? remarks;
   final String? iBan;
-  final String? picture;
+  String? picture;
   final String? info;
+  final String? gender;
+  final String? dayOfBirth;
+  final String? driversLicence;
+  final String? driversLicenceType;
+  final String? boxTruck;
+  final String? bsn;
 
   StudentUserProperty({
     this.address,
@@ -19,6 +25,12 @@ class StudentUserProperty {
     this.iBan,
     this.picture,
     this.info,
+    this.gender,
+    this.dayOfBirth,
+    this.driversLicence,
+    this.driversLicenceType,
+    this.boxTruck,
+    this.bsn
   });
 
   factory StudentUserProperty.fromJson(Map<String, dynamic> parsedJson) {
@@ -32,6 +44,12 @@ class StudentUserProperty {
       iBan: parsedJson['iban'],
       picture: parsedJson['picture'],
       info: parsedJson['info'],
+      gender: parsedJson['gender'],
+      dayOfBirth: parsedJson['dob'],
+      driversLicence: parsedJson['drivers_licence'],
+      driversLicenceType: parsedJson['drivers_licence_type'],
+      boxTruck: parsedJson['box_truck'],
+      bsn: parsedJson['bsn'],
     );
   }
 }

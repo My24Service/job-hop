@@ -1,12 +1,12 @@
-import 'dart:convert';
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:jobhop/mobile/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:jobhop/core/secret.dart';
 import 'package:jobhop/utils/state.dart';
@@ -123,13 +123,18 @@ String encryptText(String text) {
   return encryptedToken.base64;
 }
 
-void createCalendarEvent(String title, String description, String location, DateTime startDate, DateTime endDate) {
+void createCalendarEvent(TripOrder tripOrder) {
+  final String title = 'calendar_title'.tr();
+  final String description = 'calendar_description'.tr(
+      namedArgs: {'name': tripOrder.name, 'date': tripOrder.date});
+  final String location = '${tripOrder.address}, ${tripOrder.postal}, ${tripOrder.postal}, ${tripOrder.countryCode}';
+
   final Event event = Event(
       title: title,
       description: description,
       location: location,
-      startDate: startDate,
-      endDate: endDate
+      startDate: tripOrder.startDate,
+      endDate: tripOrder.endDate
   );
 
   Add2Calendar.addEvent2Cal(event);
