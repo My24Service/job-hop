@@ -216,8 +216,15 @@ class TripOrder {
     final parsedEndDate = parsedJson['end_date'];
     final parsedEndTime = parsedJson['end_time'];
 
-    final startDate = DateFormat('yyyy-M-d H:m:s').parse('$parsedStartDate $parsedStartTime');
-    final endDate = DateFormat('yyyy-M-d H:m:s').parse('$parsedEndDate $parsedEndTime');
+    DateTime startDate = DateFormat('yyyy-M-d H:m:s').parse('1970-01-01 00:00:00');
+    if (parsedStartDate != null && parsedStartTime != null) {
+      startDate = DateFormat('yyyy-M-d H:m:s').parse('$parsedStartDate $parsedStartTime');
+    }
+
+    DateTime endDate = DateFormat('yyyy-M-d H:m:s').parse('1970-01-01 00:00:00');
+    if (parsedEndDate != null && parsedEndTime != null) {
+      endDate = DateFormat('yyyy-M-d H:m:s').parse('$parsedEndDate $parsedEndTime');
+    }
 
     return TripOrder(
       id: parsedJson['id'],

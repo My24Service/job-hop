@@ -218,9 +218,12 @@ class Order {
 
     // documents
     List<OrderDocument> documents = [];
-    var parsedDocuments = parsedJson['documents'] as List;
+    if (parsedJson.containsKey('statusses')) {
+      var parsedDocuments = parsedJson['documents'] as List;
 
-    documents = parsedDocuments.map((i) => OrderDocument.fromJson(i)).toList();
+      documents =
+          parsedDocuments.map((i) => OrderDocument.fromJson(i)).toList();
+    }
 
     return Order(
       id: parsedJson['id'],
