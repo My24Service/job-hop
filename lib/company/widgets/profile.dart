@@ -29,7 +29,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
 
   int? userPk;
 
-  File? _image;
+  File? _imagePickedFile;
+  Image _defaultImageImage = Image(image: AssetImage('assets/blank-profile-picture.png'));
+  Image? _imageShownImage;
   final picker = ImagePicker();
 
   String _countryCode = 'NL';
@@ -40,9 +42,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   var _lastNameController = TextEditingController();
   String _gender = 'profile.gender_male'.tr();
   DateTime _dayOfBirth = DateTime.now();
-  String _driversLicence = 'N';
+  String _driversLicence = 'profile.no'.tr();
   var _driversLicenceTypeController = TextEditingController();
-  String _boxTruck = 'N';
+  String _boxTruck = 'profile.no'.tr();
   var _bsnController = TextEditingController();
 
   var _addressController = TextEditingController();
@@ -58,11 +60,16 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
-        child: _buildMainContainer(), inAsyncCall: _inAsyncCall);
+        child: _buildMainContainer(),
+        inAsyncCall: _inAsyncCall
+    );
   }
 
   @override
   void initState() {
+    // default image
+    _imageShownImage = _defaultImageImage;
+
     super.initState();
     _doAsync();
   }
@@ -95,11 +102,11 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     _gender = _genderToApp(user.studentUser!.gender ?? 'M');
 
     if (user.studentUser!.dayOfBirth != null) {
-      _dayOfBirth = DateFormat('yyyy-M-d H:m:s').parse('${user.studentUser!.dayOfBirth!}');
+      _dayOfBirth = DateFormat('yyyy-M-d').parse('${user.studentUser!.dayOfBirth!}');
     }
 
     if (user.studentUser!.driversLicence != null) {
-      _driversLicence = user.studentUser!.driversLicence!;
+      _driversLicence = _yesNoToApp(user.studentUser!.driversLicence!);
     }
 
     if (user.studentUser!.driversLicenceType != null) {
@@ -107,11 +114,15 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     }
 
     if (user.studentUser!.boxTruck != null) {
-      _boxTruck = user.studentUser!.boxTruck!;
+      _boxTruck = _yesNoToApp(user.studentUser!.boxTruck!);
     }
 
     if (user.studentUser!.bsn != null) {
       _bsnController.text = user.studentUser!.bsn!;
+    }
+
+    if (user.studentUser!.picture != null) {
+      _imageShownImage = Image.network(user.studentUser!.picture!);
     }
 
     setState(() {
@@ -151,12 +162,37 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     throw('Help unknown gender: $valIn');
   }
 
+  _yesNoToInternal(String valIn) {
+    if (valIn == 'profile.yes'.tr()) {
+      return 'Y';
+    }
+
+    if (valIn == 'profile.no'.tr()) {
+      return 'N';
+    }
+
+    throw('Help unknown yes/no: $valIn');
+  }
+
+  _yesNoToApp(String valIn) {
+    if (valIn == 'Y') {
+      return 'profile.yes'.tr();
+    }
+
+    if (valIn == 'N') {
+      return 'profile.no'.tr();
+    }
+
+    throw('Help unknown yes/no: $valIn');
+  }
+
   _openImageCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        _imagePickedFile = File(pickedFile.path);
+        _imageShownImage = Image.file(File(pickedFile.path));
       } else {
         print('No image selected.');
       }
@@ -168,7 +204,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        _imagePickedFile = File(pickedFile.path);
+        _imageShownImage = Image.file(File(pickedFile.path));
       } else {
         print('No image selected.');
       }
@@ -188,8 +225,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   _selectDayOfBirth(BuildContext context) async {
     DatePicker.showDatePicker(context,
         showTitleActions: true,
+        maxTime: DateTime.now(),
         theme: DatePickerTheme(
-            headerColor: Colors.orange,
+            headerColor: Colors.blueAccent,
             backgroundColor: Colors.blue,
             itemStyle: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
@@ -201,13 +239,13 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             _dayOfBirth = date;
           });
         },
-        currentTime: DateTime.now(),
+        currentTime: _dayOfBirth,
         locale: LocaleType.en
     );
   }
 
   String? validateMobile(String value) {
-    String patttern = r'(^[+][0-9]{11}$)';
+    String patttern = r'(^\+[0-9]{11}$)';
     RegExp regExp = new RegExp(patttern);
 
     if (!regExp.hasMatch(value)) {
@@ -226,10 +264,14 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 child: Column(
                   children: [
                     createHeader('profile.header'.tr()),
+                    _createPictureSection(),
                     _createProfileForm(context),
                     _createSubmitButton(),
                   ],
-                ))));
+                )
+            )
+        )
+    );
   }
 
   Widget _createSubmitButton() {
@@ -259,14 +301,14 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               info: _infoController.text,
               gender: _genderToInternal(_gender),
               dayOfBirth: "${_dayOfBirth.toLocal()}".split(' ')[0],
-              driversLicence: _driversLicence,
+              driversLicence: _yesNoToInternal(_driversLicence),
               driversLicenceType: _driversLicenceTypeController.text,
-              boxTruck: _boxTruck,
+              boxTruck: _yesNoToInternal(_boxTruck),
               bsn: _bsnController.text,
           );
 
-          if (_image != null) {
-            studentUserProperty.picture = base64Encode(_image!.readAsBytesSync());
+          if (_imagePickedFile != null) {
+            studentUserProperty.picture = base64Encode(_imagePickedFile!.readAsBytesSync());
           }
 
           StudentUser user = StudentUser(
@@ -338,7 +380,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     style: TextStyle(fontWeight: FontWeight.bold))),
             TextFormField(
                 controller: _emailController,
-                readOnly: true,
+                // readOnly: true,
                 validator: (value) {
                   return null;
                 }),
@@ -376,20 +418,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 padding: EdgeInsets.only(top: 16),
                 child: Text('profile.gender'.tr(),
                     style: TextStyle(fontWeight: FontWeight.bold))),
-            TextFormField(
-                controller: _lastNameController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'profile.validator_lastName'.tr();
-                  }
-                  return null;
-                }),
-          ]),
-          TableRow(children: [
-            Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('profile.gender'.tr(),
-                    style: TextStyle(fontWeight: FontWeight.bold))),
             DropdownButtonFormField<String>(
               value: _gender,
               items: ['profile.gender_male'.tr(), 'profile.gender_female'.tr(), 'profile.gender_other'.tr()].map((String value) {
@@ -412,72 +440,27 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                   child: Text('profile.date_of_birth'.tr(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
-                createBlueElevatedButton(
-                    "${_dayOfBirth.toLocal()}".split(' ')[0],
-                    () => _selectDayOfBirth(context),
-                    primaryColor: Colors.white,
-                    onPrimary: Colors.black)
+                InkWell(
+                  onTap: () => _selectDayOfBirth(context),
+                  child: SizedBox(
+                    height: 45,
+                    width: 100,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+
+                      ),
+                      child: Text(
+                        "${_dayOfBirth.toLocal()}".split(' ')[0],
+                        textAlign: TextAlign.left,
+                        style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.1),
+                      ),
+                    ),
+                  ),
+                ),
               ]
           ),
-          TableRow(children: [
-            Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('profile.drivers_licence'.tr(),
-                    style: TextStyle(fontWeight: FontWeight.bold))),
-            DropdownButtonFormField<String>(
-              value: _driversLicence,
-              items: ['Y', 'N'].map((String value) {
-                return new DropdownMenuItem<String>(
-                  child: new Text(value),
-                  value: value,
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  _driversLicence = newValue!;
-                });
-              },
-            )
-          ]),
-          if (_driversLicence == 'Y')
-            TableRow(children: [
-              Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Text('profile.drivers_licence_type'.tr(),
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              TextFormField(
-                  controller: _driversLicenceTypeController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'profile.drivers_licence_type_empty'.tr();
-                    }
-                    return null;
-                  }),
-            ]),
-          TableRow(children: [
-            Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('profile.box_truck'.tr(),
-                    style: TextStyle(fontWeight: FontWeight.bold))),
-            DropdownButtonFormField<String>(
-              value: _boxTruck,
-              items: ['Y', 'N'].map((String value) {
-                return new DropdownMenuItem<String>(
-                  child: new Text(value),
-                  value: value,
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  _boxTruck = newValue!;
-                });
-              },
-            )
-          ]),
-          TableRow(children: [
-            SizedBox(height: 5),
-            SizedBox(height: 5),
-          ]),
           TableRow(children: [
             Padding(
                 padding: EdgeInsets.only(top: 16),
@@ -542,23 +525,19 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 }),
           ]),
           TableRow(children: [
-            Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('profile.remarks'.tr(),
-                    style: TextStyle(fontWeight: FontWeight.bold))),
-            Container(
-                width: 300.0,
-                child: TextFormField(
-                  controller: _remarksController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                )),
+            SizedBox(height: 2, width: 2),
+            Text(
+                'profile.mobile_info_text'.tr(),
+                style: TextStyle(fontStyle: FontStyle.italic)
+            )
           ]),
           TableRow(children: [
             Padding(
                 padding: EdgeInsets.only(top: 16),
                 child: Text('profile.iban'.tr(),
-                    style: TextStyle(fontWeight: FontWeight.bold))),
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                )
+            ),
             TextFormField(
                 controller: _ibanController,
                 validator: (value) {
@@ -591,11 +570,79 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
           TableRow(children: [
             Padding(
                 padding: EdgeInsets.only(top: 16),
+                child: Text('profile.drivers_licence'.tr(),
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            DropdownButtonFormField<String>(
+              value: _driversLicence,
+              items: ['profile.yes'.tr(), 'profile.no'.tr()].map((String value) {
+                return new DropdownMenuItem<String>(
+                  child: new Text(value),
+                  value: value,
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _driversLicence = newValue!;
+                });
+              },
+            )
+          ]),
+          if (_driversLicence == 'profile.yes'.tr())
+            TableRow(children: [
+              Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text('profile.drivers_licence_type'.tr(),
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              TextFormField(
+                  controller: _driversLicenceTypeController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'profile.drivers_licence_type_empty'.tr();
+                    }
+                    return null;
+                  }),
+            ]),
+          TableRow(children: [
+            Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('profile.box_truck'.tr(),
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            DropdownButtonFormField<String>(
+              value: _boxTruck,
+              items: ['profile.yes'.tr(), 'profile.no'.tr()].map((String value) {
+                return new DropdownMenuItem<String>(
+                  child: new Text(value),
+                  value: value,
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _boxTruck = newValue!;
+                });
+              },
+            )
+          ]),
+          TableRow(children: [
+            Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('profile.remarks'.tr(),
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            Container(
+                width: 300.0,
+                child: TextFormField(
+                  controller: _remarksController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                )),
+          ]),
+          TableRow(children: [
+            Padding(
+                padding: EdgeInsets.only(top: 16),
                 child: Text('profile.info'.tr(),
                     style: TextStyle(fontWeight: FontWeight.bold))),
             Container(
                 width: 300.0,
-                height: 300.0,
+                height: 160.0,
                 child: TextFormField(
                   controller: _infoController,
                   keyboardType: TextInputType.multiline,
@@ -605,25 +652,31 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                   ),
                 )),
           ]),
-          TableRow(children: [
-            Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('profile.picture'.tr(),
-                    style: TextStyle(fontWeight: FontWeight.bold))),
-            Column(
-              children: [
-                _buildChooseImageButton(),
-                _buildTakePictureButton(),
-                Divider(),
-                if (_image != null)
-                  Container(
-                    width: 200,
-                    height: 200,
-                    child: Image.file(_image!),
-                  )
-              ],
-            )
-          ]),
-        ]));
+        ])
+    );
+  }
+
+  Widget _createPictureSection() {
+    return Column(
+      children: [
+        Padding(
+            padding: EdgeInsets.only(top: 16),
+            child: Text('profile.picture'.tr(),
+                style: TextStyle(fontWeight: FontWeight.bold))
+        ),
+        Container(
+          width: 200,
+          height: 200,
+          child: _imageShownImage,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildChooseImageButton(),
+            _buildTakePictureButton(),
+          ],
+        )
+      ],
+    );
   }
 }

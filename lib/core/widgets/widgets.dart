@@ -84,11 +84,11 @@ showDeleteDialogWrapper(String title, String content, BuildContext context, Func
   // set up the button
   Widget cancelButton = TextButton(
       child: Text('generic.action_cancel'.tr()),
-      onPressed: () => Navigator.of(context).pop(false)
+      onPressed: () => Navigator.of(context, rootNavigator: true).pop(false) // Navigator.pop(context, false)
   );
   Widget deleteButton = TextButton(
       child: Text('generic.action_delete'.tr()),
-      onPressed: () => Navigator.of(context).pop(true)
+      onPressed: () => Navigator.of(context, rootNavigator: true).pop(true) // Navigator.pop(context, false)
   );
 
   // set up the AlertDialog

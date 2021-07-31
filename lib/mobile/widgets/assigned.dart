@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:jobhop/core/api/api.dart';
 import 'package:jobhop/mobile/pages/activity.dart';
 import 'package:jobhop/core/widgets/widgets.dart';
 
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/order/models/models.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class AssignedWidget extends StatelessWidget {
@@ -90,10 +92,73 @@ class AssignedWidget extends StatelessWidget {
               createHeader('assigned_orders.detail.header_orderlines'.tr()),
               _createOrderlinesTable(),
               Divider(),
+              createHeader('assigned_orders.detail.header_documents'.tr()),
+              _buildDocumentsTable(),
+              Divider(),
               _buildButtons(context),
             ]
         )
     );
+  }
+
+  // documents
+  Widget _buildDocumentsTable() {
+    if(assignedOrder.order!.documents!.length == 0) {
+      return buildEmptyListFeedback();
+    }
+
+    List<TableRow> rows = [];
+
+    // header
+    rows.add(TableRow(
+      children: [
+        Column(children: [
+          createTableHeaderCell('generic.info_name'.tr())
+        ]),
+        Column(children: [
+          createTableHeaderCell('generic.info_description'.tr())
+        ]),
+        Column(children: [
+          createTableHeaderCell('generic.info_document'.tr())
+        ]),
+        Column(children: [
+          createTableHeaderCell('generic.action_open'.tr())
+        ])
+      ],
+    ));
+
+    for (int i = 0; i < assignedOrder.order!.documents!.length; ++i) {
+      OrderDocument document = assignedOrder.order!.documents![i];
+
+      rows.add(TableRow(children: [
+        Column(
+            children: [
+              createTableColumnCell(document.name)
+            ]
+        ),
+        Column(
+            children: [
+              createTableColumnCell(document.description)
+            ]
+        ),
+        Column(
+            children: [
+              createTableColumnCell(document.file!.split('/').last)
+            ]
+        ),
+        Column(children: [
+          IconButton(
+            icon: Icon(Icons.view_agenda, color: Colors.red),
+            onPressed: () async {
+              String url = coreApi.getUrl(document!.url!);
+              launch(url);
+            },
+          )
+        ]),
+      ]));
+    }
+
+    return createTable(rows);
   }
 
   // orderlines

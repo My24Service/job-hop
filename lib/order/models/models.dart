@@ -60,6 +60,61 @@ class Status {
   }
 }
 
+class OrderDocument {
+  final int? id;
+  final int? orderId;
+  final String? name;
+  final String? description;
+  final String? file;
+  final String? url;
+
+  OrderDocument({
+    this.id,
+    this.orderId,
+    this.name,
+    this.description,
+    this.file,
+    this.url,
+  });
+
+  factory OrderDocument.fromJson(Map<String, dynamic> parsedJson) {
+    return OrderDocument(
+      id: parsedJson['id'],
+      orderId: parsedJson['order'],
+      name: parsedJson['name'],
+      description: parsedJson['description'],
+      file: parsedJson['file'],
+      url: parsedJson['url'],
+    );
+  }
+}
+
+class OrderDocuments {
+  final int? count;
+  final String? next;
+  final String? previous;
+  final List<OrderDocument>? results;
+
+  OrderDocuments({
+    this.count,
+    this.next,
+    this.previous,
+    this.results,
+  });
+
+  factory OrderDocuments.fromJson(Map<String, dynamic> parsedJson) {
+    var list = parsedJson['results'] as List;
+    List<OrderDocument> results = list.map((i) => OrderDocument.fromJson(i)).toList();
+
+    return OrderDocuments(
+        count: parsedJson['count'],
+        next: parsedJson['next'],
+        previous: parsedJson['previous'],
+        results: results
+    );
+  }
+}
+
 class Order {
   final int? id;
   final String? customerId;
@@ -95,6 +150,7 @@ class Order {
   final List<Orderline>? orderLines;
   final List<Infoline>? infoLines;
   final List<Status>? statusses;
+  final List<OrderDocument>? documents;
 
   Order({
     this.id,
@@ -131,6 +187,7 @@ class Order {
     this.orderLines,
     this.infoLines,
     this.statusses,
+    this.documents,
   });
 
   factory Order.fromJson(Map<String, dynamic> parsedJson) {
@@ -158,6 +215,12 @@ class Order {
 
       statusses = parsedStatusses.map((i) => Status.fromJson(i)).toList();
     }
+
+    // documents
+    List<OrderDocument> documents = [];
+    var parsedDocuments = parsedJson['documents'] as List;
+
+    documents = parsedDocuments.map((i) => OrderDocument.fromJson(i)).toList();
 
     return Order(
       id: parsedJson['id'],
@@ -194,6 +257,7 @@ class Order {
       orderLines: orderlines,
       infoLines: infolines,
       statusses: statusses,
+      documents: documents,
     );
   }
 }

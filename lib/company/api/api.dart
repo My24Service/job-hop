@@ -47,15 +47,18 @@ class CompanyApi with ApiMixin {
       'remarks': user.studentUser!.remarks,
       'iban': user.studentUser!.iBan,
       'info': user.studentUser!.info,
-      'gender': user.studentUser!.bsn,
+      'gender': user.studentUser!.gender,
       'dob': user.studentUser!.dayOfBirth,
       'drivers_licence': user.studentUser!.driversLicence,
       'drivers_licence_type': user.studentUser!.driversLicenceType,
       'box_truck': user.studentUser!.boxTruck,
       'bsn': user.studentUser!.bsn,
+      if (user.studentUser!.picture != null)
+        'picture': user.studentUser!.picture,
     };
 
     final Map body = {
+      'email': user.email,
       'first_name': user.firstName,
       'last_name': user.lastName,
       'student_user': studentUserBody,

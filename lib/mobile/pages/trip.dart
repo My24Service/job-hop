@@ -25,11 +25,11 @@ class _TripListPageState extends State<TripListPage> {
     // set up the buttons
     Widget cancelButton = TextButton(
         child: Text('generic.action_cancel'.tr()),
-        onPressed: () => Navigator.of(context).pop(false)
+        onPressed: () => Navigator.of(context, rootNavigator: true).pop(false) // Navigator.pop(context, false)
     );
     Widget setAvailableButton = TextButton(
         child: Text('trips.button_add_calendar_entries'.tr()),
-        onPressed: () => Navigator.of(context).pop(true)
+        onPressed: () => Navigator.of(context, rootNavigator: true).pop(true) // Navigator.pop(context, false)
     );
 
     // set up the AlertDialog

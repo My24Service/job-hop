@@ -72,10 +72,13 @@
     "remarks": "Via wie ken je Job-Hop?",
     "iban": "IBAN",
     "info": "Informatie over jezelf",
+    "yes": "Ja",
+    "no": "Nee",
     "iban_empty": "Vul een IBAN in",
     "iban_invalid": "IBAN niet valide",
     "mobile_empty": "Vul een mobiel nummer in",
-    "mobile_invalid": "Mobiel nummber invalide\n(bijv. +316.. voor NL)",
+    "mobile_invalid": "Mobiel nummber invalide",
+    "mobile_info_text": "Internationale notatie (bijv. +316.. voor NL)",
     "button_choose_image": "Selecteer een foto",
     "button_take_picture": "Neem een foto"
   },
@@ -143,7 +146,8 @@
       "info_no_one_else_assigned": "Niemand anders toegewezen",
       "app_bar_title": "Job details",
       "header_also_assigned": "Ook toegewezen",
-      "header_orderlines": "Job regels"
+      "header_orderlines": "Job regels",
+      "header_documents": "Documenten"
     }
   },
   "orders": {

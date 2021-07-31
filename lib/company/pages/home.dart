@@ -111,6 +111,7 @@ class _HomeState extends State<Home> {
     }
 
     _isFirstTimeProfile = await isFirstTimeProfile();
+    print('_isFirstTimeProfile: $_isFirstTimeProfile');
 
     setState(() {});
   }

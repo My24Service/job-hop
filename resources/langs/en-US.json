@@ -59,10 +59,13 @@
     "remarks": "Remarks (referred by)",
     "iban": "IBAN",
     "info": "Information about yourself",
+    "yes": "Yes",
+    "no": "No",
     "iban_empty": "Enter your IBAN",
     "iban_invalid": "IBAN not valid",
     "mobile_empty": "Enter your mobile",
-    "mobile_invalid": "Mobile not valid \n(e.g. +316.. for NL)",
+    "mobile_invalid": "Mobile not valid",
+    "mobile_info_text": "International notation (e.g. +316.. for NL)",
     "button_choose_image": "Select a picture",
     "button_take_picture": "Take a picture"
   },
@@ -128,7 +131,8 @@
       "info_no_one_else_assigned": "No no else assigned",
       "app_bar_title": "Job details",
       "header_also_assigned": "Also assigned",
-      "header_orderlines": "Job lines"
+      "header_orderlines": "Job lines",
+      "header_documents": "Documents",
     }
   },
   "orders": {

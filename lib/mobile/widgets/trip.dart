@@ -159,11 +159,11 @@ class TripListWidget extends StatelessWidget {
     // set up the buttons
     Widget cancelButton = TextButton(
         child: Text('generic.action_cancel'.tr()),
-        onPressed: () => Navigator.of(context).pop(false)
+        onPressed: () => Navigator.of(context, rootNavigator: true).pop(false) // Navigator.pop(context, false)
     );
     Widget setAvailableButton = TextButton(
         child: Text('trips.action_set_available'.tr()),
-        onPressed: () => Navigator.of(context).pop(true)
+        onPressed: () => Navigator.of(context, rootNavigator: true).pop(true) // Navigator.pop(context, true)
     );
 
     // set up the AlertDialog
