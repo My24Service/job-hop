@@ -2,3 +2,5 @@
 - added missing fields to profile form
 - order documents are now also visible
 - changed some texts
+- bugfix in settings page
+- added missing translations
