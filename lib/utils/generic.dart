@@ -41,6 +41,17 @@ Future<Locale> getLocale() async {
   return lang2locale(preferedLanguageCode);
 }
 
+Future<String> getLocaleString() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? preferedLanguageCode = prefs.getString('preferedLanguageCode');
+
+  if(preferedLanguageCode == null) {
+    preferedLanguageCode = 'nl';
+  }
+  print('preferedLanguageCode: $preferedLanguageCode');
+  return preferedLanguageCode;
+}
+
 Future<void> setLocale(String langCode) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('preferedLanguageCode', langCode);

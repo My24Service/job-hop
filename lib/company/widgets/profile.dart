@@ -470,7 +470,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 controller: _postalController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'profile.postal'.tr();
+                    return 'profile.validator_postal'.tr();
                   }
                   return null;
                 }),
@@ -484,7 +484,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 controller: _cityController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'profile.city'.tr();
+                    return 'profile.validator_city'.tr();
                   }
                   return null;
                 }),

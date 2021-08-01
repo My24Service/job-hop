@@ -9,6 +9,7 @@
     "action_open": "Open",
     "action_view": "View",
     "action_cancel": "Cancel",
+    "action_continue": "Continue",
     "empty_table": "No results found."
   },
   "home": {
@@ -38,7 +39,9 @@
     "username": "Username",
     "email": "Email",
     "firstName": "First name",
+    "validator_firstName": "Enter your first name",
     "lastName": "Last name",
+    "validator_lastName": "Enter your last name",
     "gender": "Gender",
     "gender_male": "Male",
     "gender_female": "Female",
@@ -53,7 +56,9 @@
     "bsn_empty": "Enter your BSN",
     "address": "Address",
     "postal": "Postcal",
+    "validator_postal": "Enter you postal code",
     "city": "City",
+    "validator_city": "Enter your city",
     "countryCode": "Country",
     "mobile": "Mobile",
     "remarks": "Remarks (referred by)",
@@ -81,6 +86,8 @@
     "drawer_settings": "Settings",
     "drawer_logout": "Log out",
     "drawer_student_orders": "Jobs",
+    "drawer_trips": "Trips",
+    "drawer_availability_list": "Your availability",
     "drawer_profile": "Profile"
   },
   "assigned_orders": {
@@ -132,7 +139,7 @@
       "app_bar_title": "Job details",
       "header_also_assigned": "Also assigned",
       "header_orderlines": "Job lines",
-      "header_documents": "Documents",
+      "header_documents": "Documents"
     }
   },
   "orders": {

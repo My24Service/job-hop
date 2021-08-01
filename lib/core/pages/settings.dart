@@ -23,12 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   _doAsync() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    if (prefs.containsKey('prefered_language_code')) {
-      _preferedLanguageCode = prefs.getString('prefered_language_code')!;
-    }
-
+    _preferedLanguageCode = await getLocaleString();
     setState(() {});
   }
 

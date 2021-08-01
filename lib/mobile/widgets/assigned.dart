@@ -150,7 +150,7 @@ class AssignedWidget extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.view_agenda, color: Colors.red),
             onPressed: () async {
-              String url = coreApi.getUrl(document!.url!);
+              String url = coreApi.getUrl(document.url!);
               launch(url);
             },
           )
