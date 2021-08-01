@@ -14,6 +14,7 @@ class StudentUserProperty {
   final String? driversLicenceType;
   final String? boxTruck;
   final String? bsn;
+  final String? uuid;
 
   StudentUserProperty({
     this.address,
@@ -30,7 +31,8 @@ class StudentUserProperty {
     this.driversLicence,
     this.driversLicenceType,
     this.boxTruck,
-    this.bsn
+    this.bsn,
+    this.uuid,
   });
 
   factory StudentUserProperty.fromJson(Map<String, dynamic> parsedJson) {
@@ -50,6 +52,7 @@ class StudentUserProperty {
       driversLicenceType: parsedJson['drivers_licence_type'],
       boxTruck: parsedJson['box_truck'],
       bsn: parsedJson['bsn'],
+      uuid: parsedJson['uuid'],
     );
   }
 }

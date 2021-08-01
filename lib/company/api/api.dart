@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
-import 'package:encrypt/encrypt.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,7 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/core/api/api.dart';
-import 'package:jobhop/core/secret.dart';
 
 class CompanyApi with ApiMixin {
   // default and setable for tests
