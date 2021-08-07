@@ -32,6 +32,7 @@
   },
   "profile": {
     "app_bar_title": "Your profile",
+    "info_section": "We need some information from you for our administration.\n\nOnly your name, picture and city will be visible on your public profile.",
     "header": "Profile",
     "submit": "Submit",
     "snackbar_saved": "Save profile",

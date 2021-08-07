@@ -264,6 +264,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 child: Column(
                   children: [
                     createHeader('profile.header'.tr()),
+                    _createInfoSection(),
                     _createPictureSection(),
                     _createProfileForm(context),
                     _createSubmitButton(),
@@ -272,6 +273,14 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             )
         )
     );
+  }
+
+  Widget _createInfoSection() {
+    return Center(child: Text(
+        'profile.info_section'.tr(),
+        textAlign: TextAlign.center,
+        style: TextStyle(fontStyle: FontStyle.italic),
+    ));
   }
 
   Widget _createSubmitButton() {

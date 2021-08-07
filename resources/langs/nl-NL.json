@@ -44,6 +44,7 @@
   },
   "profile": {
     "app_bar_title": "Jouw profiel",
+    "info_section": "We hebben wat informatie van je nodig voor onze administratie.\n\nAlleen je naam, foto en woonplaats zijn zichtbaar op je openbaar profiel.",
     "header": "Profiel",
     "submit": "Verstuur",
     "snackbar_saved": "Wijzigingen opgeslagen",
