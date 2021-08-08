@@ -1,6 +1,2 @@
-- fixed bug in closing dialogs
-- added missing fields to profile form
-- order documents are now also visible
-- changed some texts
-- bugfix in settings page
-- added missing translations
+- added info section to profile page
+- sign in with apple now also stores first name and last name (if the user chose to also share their email address)
