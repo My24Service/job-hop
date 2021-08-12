@@ -1,2 +1,4 @@
-- added info section to profile page
+- added "delete my profile" button to profile page
+- added "agree to privacy terms" section
+- added dialog for "sign in apple" to tell the user to share their email address
 - sign in with apple now also stores first name and last name (if the user chose to also share their email address)
