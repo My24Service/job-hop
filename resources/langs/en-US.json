@@ -18,7 +18,9 @@
     "login_error_title": "Error logging in",
     "error_facebook": "Error logging in to Facebook",
     "error_google": "Error logging in to Google",
-    "error_apple": "Error logging in to Apple"
+    "error_apple": "Error logging in to Apple",
+    "apple_notice_title": "Share e-mail address",
+    "apple_notice_content": "You have to check 'Share my e-mail address' later on"
   },
   "login": {
     "app_bar_title": "Login",

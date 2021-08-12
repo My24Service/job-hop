@@ -246,27 +246,60 @@ class _HomeState extends State<Home> {
         SizedBox(height: 20),
         InkWell(
           onTap: () async {
-            _inAsyncCall = true;
-            setState(() {});
-            setIsNotDemo();
-            final bool result = await _apple.login();
+            // set up the button
+            Widget cancelButton = TextButton(
+                child: Text('generic.action_cancel'.tr()),
+                onPressed: () => Navigator.of(context, rootNavigator: true).pop(false) // Navigator.pop(context, false)
+            );
+            Widget deleteButton = TextButton(
+                child: Text('home.continue'.tr()),
+                onPressed: () => Navigator.of(context, rootNavigator: true).pop(true) // Navigator.pop(context, false)
+            );
 
-            if(!result) {
-              _inAsyncCall = false;
-              setState(() {});
-              return displayDialog(
-                  context,
-                  'home.login_error_title'.tr(),
-                  'home.error_apple'.tr()
-              );
-            }
+            // set up the AlertDialog
+            AlertDialog alert = AlertDialog(
+              title: Text('home.apple_notice_title'.tr()),
+              content: Text('home.apple_notice_content'.tr()),
+              actions: [
+                cancelButton,
+                deleteButton,
+              ],
+            );
 
-            // request permissions
-            await requestFCMPermissions();
+            // show the dialog
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              },
+            ).then((dialogResult) async {
+              if (dialogResult == null) return;
 
-            await _setUserToken();
-            _inAsyncCall = false;
-            setState(() {});
+              if (dialogResult) {
+                _inAsyncCall = true;
+                setState(() {});
+                setIsNotDemo();
+                final bool result = await _apple.login();
+
+                if(!result) {
+                  _inAsyncCall = false;
+                  setState(() {});
+                  return displayDialog(
+                      context,
+                      'home.login_error_title'.tr(),
+                      'home.error_apple'.tr()
+                  );
+                }
+
+                // request permissions
+                await requestFCMPermissions();
+
+                await _setUserToken();
+                _inAsyncCall = false;
+                setState(() {});
+              }
+            });
           },
           child: Container(
             child: ClipRRect(

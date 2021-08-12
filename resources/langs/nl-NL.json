@@ -14,10 +14,13 @@
   },
   "home": {
     "welcome": "Welkom {firstName}",
+    "continue": "Ga verder",
     "login_error_title": "Fout bij het aanmelden",
     "error_facebook": "Fout bij het aanmelden met Facebook",
     "error_google": "Fout bij het aanmelden met Google",
-    "error_apple": "Fout bij het aanmelden met Apple"
+    "error_apple": "Fout bij het aanmelden met Apple",
+    "apple_notice_title": "E-mailadres delen",
+    "apple_notice_content": "Je moet straks 'E-mailadres delen' aanvinken"
   },
   "login": {
     "app_bar_title": "Inloggen",
