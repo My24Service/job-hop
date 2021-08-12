@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:jobhop/company/pages/home.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:iban/iban.dart';
@@ -28,6 +29,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   int? userPk;
+  bool _isFirstTimeProfile = true;
+  bool _isAgreed = false;
 
   File? _imagePickedFile;
   Image _defaultImageImage = Image(image: AssetImage('assets/blank-profile-picture.png'));
@@ -76,6 +79,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
 
   _doAsync() async {
     await _fetchUserData();
+    _isFirstTimeProfile = await isFirstTimeProfile();
   }
 
   _fetchUserData() async {
@@ -126,6 +130,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     }
 
     setState(() {
+      if (!_isFirstTimeProfile) {
+        _isAgreed = true;
+      }
       _inAsyncCall = false;
     });
   }
@@ -268,10 +275,46 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     _createPictureSection(),
                     _createProfileForm(context),
                     _createSubmitButton(),
+                    SizedBox(height: 20),
+                    if (_isFirstTimeProfile)
+                      _createIAgreeSection(),
+                    SizedBox(height: 40),
+                    _createDeleteButton()
                   ],
                 )
             )
         )
+    );
+  }
+
+  Widget _createIAgreeSection() {
+    double width = MediaQuery.of(context).size.width*0.8;
+
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      width: width,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Checkbox(
+                value: _isAgreed,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _isAgreed = value!;
+                  });
+                },
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                  child: Text(
+                  'profile.agree_section'.tr(),
+                  style: TextStyle(fontStyle: FontStyle.italic)
+                ))
+            ],
+          )
+        ],
+      )
     );
   }
 
@@ -283,6 +326,49 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     ));
   }
 
+  void _deleteProfile() async {
+    setState(() {
+      _inAsyncCall = true;
+    });
+
+    final result = await companyApi.deleteMe();
+
+    if (result) {
+      createSnackBar(context, 'profile.snackbar_profile_deleted'.tr());
+      final page = JobHopHome();
+      bool loggedOut = await auth.logout();
+      if (loggedOut == true) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => page)
+        );
+        return;
+      }
+    }
+
+    displayDialog(context,
+        'profile.error_deleting_profile_title'.tr(),
+        'profile.error_deleting_profile_content'.tr(),
+    );
+  }
+
+  Widget _createDeleteButton() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red, // background
+          onPrimary: Colors.white, // foreground
+        ),
+        child: Text('profile.delete'.tr()),
+        onPressed: () async {
+          showDeleteDialogWrapper(
+              'profile.delete_dialog_title'.tr(),
+              'profile.delete_dialog_content'.tr(),
+              context,
+              _deleteProfile
+          );
+        }
+    );
+  }
+
   Widget _createSubmitButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -291,6 +377,15 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
       ),
       child: Text('profile.submit'.tr()),
       onPressed: () async {
+        if (!_isAgreed) {
+          displayDialog(context,
+            'profile.not_agreed_title'.tr(),
+            'profile.not_agreed_content'.tr(),
+          );
+
+          return;
+        }
+
         if (this._formKey.currentState!.validate()) {
           this._formKey.currentState!.save();
 

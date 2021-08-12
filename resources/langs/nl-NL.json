@@ -44,7 +44,7 @@
   },
   "profile": {
     "app_bar_title": "Jouw profiel",
-    "info_section": "We hebben wat informatie van je nodig voor onze administratie.\n\nAlleen je naam, foto en woonplaats zijn zichtbaar op je openbaar profiel.",
+    "info_section": "We hebben wat informatie van je nodig voor onze administratie.",
     "header": "Profiel",
     "submit": "Verstuur",
     "snackbar_saved": "Wijzigingen opgeslagen",
@@ -85,7 +85,16 @@
     "mobile_invalid": "Mobiel nummber invalide",
     "mobile_info_text": "Internationale notatie (bijv. +316.. voor NL)",
     "button_choose_image": "Selecteer een foto",
-    "button_take_picture": "Neem een foto"
+    "button_take_picture": "Neem een foto",
+    "delete": "Verwijder mijn profiel",
+    "delete_dialog_title": "Verwijder mijn profiel",
+    "delete_dialog_content": "Wanneer je je profiel verwijdert worden al je gegevens uit onze systemen verwijderd. Je kunt je later altijd nog opnieuw aanmelden.",
+    "snackbar_profile_deleted": "Je profiel is verwijderd",
+    "error_deleting_profile_title": "Fout bij het verwijderen van je profiel",
+    "error_deleting_profile_content": "Er is een fout opgetreden bij het verwijderen van je profiel. Probeer het opnieuw of neem contact met ons op.",
+    "agree_section": "Ik ga akkoord met de privacy voorwaarden van JobHop",
+    "not_agreed_title": "Nog niet akkoord",
+    "not_agreed_content": "Je moet met de voorwaarden akkoord gaan voordat je verder kunt"
   },
   "settings": {
     "info_language_code": "Taal",

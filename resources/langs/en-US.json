@@ -32,7 +32,7 @@
   },
   "profile": {
     "app_bar_title": "Your profile",
-    "info_section": "We need some information from you for our administration.\n\nOnly your name, picture and city will be visible on your public profile.",
+    "info_section": "We need some information from you for our administration.",
     "header": "Profile",
     "submit": "Submit",
     "snackbar_saved": "Save profile",
@@ -73,7 +73,16 @@
     "mobile_invalid": "Mobile not valid",
     "mobile_info_text": "International notation (e.g. +316.. for NL)",
     "button_choose_image": "Select a picture",
-    "button_take_picture": "Take a picture"
+    "button_take_picture": "Take a picture",
+    "delete": "Delete my profile",
+    "delete_dialog_title": "Delete my profile",
+    "delete_dialog_content": "When you delete you profile all your data will be deleted from our systems. You can always choose to sign up again.",
+    "snackbar_profile_deleted": "Your profile has been deleted",
+    "error_deleting_profile_title": "Error deleting your profile",
+    "error_deleting_profile_content": "There was an error deleting your profile. Please try again or contact us.",
+    "agree_section": "I agree to the privacy terms of JobHop",
+    "not_agreed_title": "Not yet agreed",
+    "not_agreed_content": "You have to agree to our privacy terms to continue."
   },
   "settings": {
     "info_language_code": "Language",

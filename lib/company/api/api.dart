@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
+import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,26 @@ class CompanyApi with ApiMixin {
 
   set httpClient(http.Client client) {
     _httpClient = client;
+  }
+
+  Future<bool> deleteMe() async {
+    final int? userPk = await auth.getUserFieldInt('userPk');
+
+    if (userPk == null) {
+      return false;
+    }
+
+    final String url = getUrl('/company/user/delete-me/$userPk/');
+    final response = await _httpClient.delete(
+        Uri.parse(url),
+        headers: await getHeaders()
+    );
+
+    if (response.statusCode == 204) {
+      return true;
+    }
+
+    return false;
   }
 
   Future<StudentUser> fetchStudentUser(int userPk) async {
