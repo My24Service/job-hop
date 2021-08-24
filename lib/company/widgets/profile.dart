@@ -274,10 +274,10 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     _createInfoSection(),
                     _createPictureSection(),
                     _createProfileForm(context),
-                    _createSubmitButton(),
                     SizedBox(height: 20),
                     if (_isFirstTimeProfile)
                       _createIAgreeSection(),
+                    _createSubmitButton(),
                     SizedBox(height: 40),
                     _createDeleteButton()
                   ],

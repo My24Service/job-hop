@@ -113,13 +113,13 @@ class AssignedWidget extends StatelessWidget {
     rows.add(TableRow(
       children: [
         Column(children: [
-          createTableHeaderCell('generic.info_name'.tr())
+          createTableHeaderCell('assigned_orders.detail.info_name'.tr())
         ]),
         Column(children: [
-          createTableHeaderCell('generic.info_description'.tr())
+          createTableHeaderCell('assigned_orders.detail.info_description'.tr())
         ]),
         Column(children: [
-          createTableHeaderCell('generic.info_document'.tr())
+          createTableHeaderCell('assigned_orders.detail.info_document'.tr())
         ]),
         Column(children: [
           createTableHeaderCell('generic.action_open'.tr())

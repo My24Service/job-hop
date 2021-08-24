@@ -36,8 +36,8 @@ class _ActivityWidgetState extends State<ActivityWidget> {
   var _endWorkHourController = TextEditingController();
   var _travelToController = TextEditingController();
   var _travelBackController = TextEditingController();
-  var _distanceToController = TextEditingController();
-  var _distanceBackController = TextEditingController();
+
+  bool _isTrip = true;
 
   String _workStartMin = '00';
   String _workEndMin = '00';
@@ -120,7 +120,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
         ]),
         Column(children: [
           createTableHeaderCell(
-              'assigned_orders.activity.info_distance_to_back'.tr())
+              'assigned_orders.activity.info_distance_fixed_rate_amount'.tr())
         ]),
         Column(children: [createTableHeaderCell('generic.action_delete'.tr())])
       ],
@@ -139,7 +139,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
         ]),
         Column(children: [
           createTableColumnCell(
-              "${activity.distanceTo}/${activity.distanceBack}")
+              activity.distanceFixedRateAmount! > 0 ? "assigned_orders.activity.info_yes".tr() : "assigned_orders.activity.info_no".tr())
         ]),
         Column(children: [
           IconButton(
@@ -391,35 +391,17 @@ class _ActivityWidgetState extends State<ActivityWidget> {
         SizedBox(
           height: 10.0,
         ),
-        Text('assigned_orders.activity.label_distance_to'.tr()),
+        Text('assigned_orders.activity.label_trip'.tr()),
         Container(
           width: 150,
-          child: TextFormField(
-              controller: _distanceToController,
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'assigned_orders.activity.validator_distance_to'.tr();
-                }
-                return null;
-              }),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Text('assigned_orders.activity.label_distance_back'.tr()),
-        Container(
-          width: 150,
-          child: TextFormField(
-              controller: _distanceBackController,
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'assigned_orders.activity.validator_distance_back'
-                      .tr();
-                }
-                return null;
-              }),
+          child: Checkbox(
+            value: _isTrip,
+            onChanged: (bool? value) {
+              setState(() {
+                _isTrip = value!;
+              });
+            },
+          ),
         ),
         SizedBox(
           height: 20.0,
@@ -454,9 +436,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                   _travelToController.text == '0' &&
                   _travelToMin == '00' &&
                   _travelBackController.text == '0' &&
-                  _travelBackMin == '00' &&
-                  _distanceToController.text == '0' &&
-                  _distanceBackController.text == '0') {
+                  _travelBackMin == '00') {
                 FocusScope.of(context).unfocus();
                 return;
               }
@@ -468,8 +448,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
                 workEnd: '${_endWorkHourController.text}:$_workEndMin:00',
                 travelTo: '${_travelToController.text}:$_travelToMin:00',
                 travelBack: '${_travelBackController.text}:$_travelBackMin:00',
-                distanceTo: int.parse(_distanceToController.text),
-                distanceBack: int.parse(_distanceBackController.text),
+                distanceFixedRateAmount: _isTrip ? 1 : 0,
               );
 
               setState(() {

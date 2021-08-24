@@ -121,6 +121,7 @@ class AssignedOrderActivity  {
   final int? odoReadingBackEnd;
   final int? distanceTo;
   final int? distanceBack;
+  final int? distanceFixedRateAmount;
   final String? fullName;
 
   AssignedOrderActivity({
@@ -138,6 +139,7 @@ class AssignedOrderActivity  {
     this.distanceTo,
     this.distanceBack,
     this.fullName,
+    this.distanceFixedRateAmount,
   });
 
   factory AssignedOrderActivity.fromJson(Map<String, dynamic> parsedJson) {
@@ -155,6 +157,7 @@ class AssignedOrderActivity  {
       distanceTo: parsedJson['distance_to'],
       distanceBack: parsedJson['distance_back'],
       fullName: parsedJson['full_name'],
+      distanceFixedRateAmount: parsedJson['distance_fixed_rate_amount'],
     );
   }
 }

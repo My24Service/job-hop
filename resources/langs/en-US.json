@@ -115,7 +115,7 @@
       "delete_dialog_content": "Do you want to remove this activity?",
       "info_work_start_end": "Start/end work",
       "info_travel_to_back": "Travel time to/back",
-      "info_distance_to_back": "Distance to/back",
+      "info_distance_fixed_rate_amount": "A trip?",
       "header_new_activity": "New activity",
       "info_header_table": "Activity",
       "info_hours": "hours",
@@ -127,6 +127,7 @@
       "validator_travel_to_hours": "Enter travel time to",
       "label_travel_back": "Travel time back",
       "validator_travel_back_hours": "Enter travel time back",
+      "label_trip": "Is this a trip?",
       "label_distance_to": "Distance to",
       "validator_distance_to": "Enter distance to",
       "label_distance_back": "Distance back",
@@ -136,7 +137,9 @@
       "snackbar_added": "Activity added",
       "error_dialog_content": "Error adding activity",
       "error_deleting_dialog_content": "Error removing activity",
-      "app_bar_title": "Activity"
+      "app_bar_title": "Activity",
+      "info_yes": "Yes",
+      "info_no": "No"
     },
     "detail": {
       "exception_fetch": "Error loading job",
@@ -151,7 +154,10 @@
       "app_bar_title": "Job details",
       "header_also_assigned": "Also assigned",
       "header_orderlines": "Job lines",
-      "header_documents": "Documents"
+      "header_documents": "Documents",
+      "info_name": "Name",
+      "info_description": "Description",
+      "info_document": "Document"
     }
   },
   "orders": {

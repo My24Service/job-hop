@@ -215,35 +215,35 @@ class _HomeState extends State<Home> {
             ),),
         ),
         SizedBox(height: 20),
-        InkWell(
-          onTap: () async {
-            _inAsyncCall = true;
-            setState(() {});
-            setIsNotDemo();
-            final bool result = await _google.login();
-
-            if (!result) {
-              _inAsyncCall = false;
-              setState(() {});
-              return displayDialog(context,
-                  'home.login_error_title'.tr(),
-                  'home.error_google'.tr()
-              );
-            }
-
-            // request permissions
-            await requestFCMPermissions();
-
-            await _setUserToken();
-            _inAsyncCall = false;
-            setState(() {});
-          },
-          child: Container(
-            child: ClipRRect(
-              child: Image(image: AssetImage('assets/buttons/btn_google_signin_dark_normal_web@2x.png')),
-            ),),
-        ),
-        SizedBox(height: 20),
+        // InkWell(
+        //   onTap: () async {
+        //     _inAsyncCall = true;
+        //     setState(() {});
+        //     setIsNotDemo();
+        //     final bool result = await _google.login();
+        //
+        //     if (!result) {
+        //       _inAsyncCall = false;
+        //       setState(() {});
+        //       return displayDialog(context,
+        //           'home.login_error_title'.tr(),
+        //           'home.error_google'.tr()
+        //       );
+        //     }
+        //
+        //     // request permissions
+        //     await requestFCMPermissions();
+        //
+        //     await _setUserToken();
+        //     _inAsyncCall = false;
+        //     setState(() {});
+        //   },
+        //   child: Container(
+        //     child: ClipRRect(
+        //       child: Image(image: AssetImage('assets/buttons/btn_google_signin_dark_normal_web@2x.png')),
+        //     ),),
+        // ),
+        // SizedBox(height: 20),
         InkWell(
           onTap: () async {
             // set up the button

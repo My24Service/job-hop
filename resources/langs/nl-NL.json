@@ -128,7 +128,7 @@
       "delete_dialog_content": "Wilt u deze activiteit verwijderen?",
       "info_work_start_end": "Start/eind werk",
       "info_travel_to_back": "Reistijd heen/terug",
-      "info_distance_to_back": "Afstand heen/terug",
+      "info_distance_fixed_rate_amount": "Rit?",
       "header_new_activity": "Nieuwe activiteit",
       "info_header_table": "Activity",
       "info_hours": "uren",
@@ -140,6 +140,7 @@
       "validator_travel_to_hours": "Voer reistijd heen uren in",
       "label_travel_back": "Reistijd terug",
       "validator_travel_back_hours": "Voer reistijd terug uren in",
+      "label_trip": "Is dit een rit?",
       "label_distance_to": "Afstand heen",
       "validator_distance_to": "Voer afstand heen in",
       "label_distance_back": "Afstand terug",
@@ -149,7 +150,9 @@
       "snackbar_added": "Activiteit toegevoegd",
       "error_dialog_content": "Fout bij het toevoegen van de activiteit",
       "error_deleting_dialog_content": "Fout bij het verwijderen van de activiteit",
-      "app_bar_title": "Activiteit"
+      "app_bar_title": "Activiteit",
+      "info_yes": "Ja",
+      "info_no": "Nee"
     },
     "detail": {
       "exception_fetch": "Fout bij het laden van de job",
@@ -164,7 +167,10 @@
       "app_bar_title": "Job details",
       "header_also_assigned": "Ook toegewezen",
       "header_orderlines": "Job regels",
-      "header_documents": "Documenten"
+      "header_documents": "Documenten",
+      "info_name": "Naam",
+      "info_description": "Omschrijving",
+      "info_document": "Document"
     }
   },
   "orders": {

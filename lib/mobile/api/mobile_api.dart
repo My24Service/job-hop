@@ -113,12 +113,11 @@ class MobileApi with ApiMixin {
     final Map body = {
       'activity_date': activity.activityDate,
       'assigned_order': assignedorderPk,
-      'distance_to': activity.distanceTo,
-      'distance_back': activity.distanceBack,
       'travel_to': activity.travelTo,
       'travel_back': activity.travelBack,
       'work_start': activity.workStart,
       'work_end': activity.workEnd,
+      'distance_fixed_rate_amount': activity.distanceFixedRateAmount,
     };
 
     final response = await _httpClient.post(
