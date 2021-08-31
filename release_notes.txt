@@ -1,4 +1,1 @@
-- implemented fixed distance amount
-- added some missing translations
-- google_sign_in package upgrade
-- disabled google_sign_in for now because of errors
+removed social login buttons for now
