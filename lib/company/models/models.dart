@@ -1,5 +1,7 @@
 class StudentUserProperty {
-  final String? address;
+  final String? street;
+  final String? houseNumber;
+  final String? houseNumberAddition;
   final String? postal;
   final String? city;
   final String? countryCode;
@@ -17,7 +19,9 @@ class StudentUserProperty {
   final String? uuid;
 
   StudentUserProperty({
-    this.address,
+    this.street,
+    this.houseNumber,
+    this.houseNumberAddition,
     this.postal,
     this.city,
     this.countryCode,
@@ -37,7 +41,9 @@ class StudentUserProperty {
 
   factory StudentUserProperty.fromJson(Map<String, dynamic> parsedJson) {
     return StudentUserProperty(
-      address: parsedJson['address'],
+      street: parsedJson['street'],
+      houseNumber: parsedJson['house_number'],
+      houseNumberAddition: parsedJson['house_number_addition'],
       postal: parsedJson['postal'],
       city: parsedJson['city'],
       countryCode: parsedJson['country_code'],

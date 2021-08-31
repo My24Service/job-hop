@@ -50,7 +50,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   String _boxTruck = 'profile.no'.tr();
   var _bsnController = TextEditingController();
 
-  var _addressController = TextEditingController();
+  var _streetController = TextEditingController();
+  var _houseNumberController = TextEditingController();
+  var _houseNumberAdditionController = TextEditingController();
   var _cityController = TextEditingController();
   var _postalController = TextEditingController();
   var _mobileController = TextEditingController();
@@ -95,7 +97,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     _emailController.text = user.email;
     _firstNameController.text = user.firstName ?? '';
     _lastNameController.text = user.lastName ?? '';
-    _addressController.text = user.studentUser!.address ?? '';
+    _streetController.text = user.studentUser!.street ?? '';
+    _houseNumberController.text = user.studentUser!.houseNumber ?? '';
+    _houseNumberAdditionController.text = user.studentUser!.houseNumberAddition ?? '';
     _postalController.text = user.studentUser!.postal ?? '';
     _cityController.text = user.studentUser!.city ?? '';
     _countryCode = user.studentUser!.countryCode ?? 'NL';
@@ -395,7 +399,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
 
           // save profile model
           StudentUserProperty studentUserProperty = StudentUserProperty(
-              address: _addressController.text,
+              street: _streetController.text,
+              houseNumber: _houseNumberController.text,
+              houseNumberAddition: _houseNumberAdditionController.text,
               postal: _postalController.text,
               city: _cityController.text,
               countryCode: _countryCode,
@@ -565,6 +571,45 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 ),
               ]
           ),
+          TableRow(children: [
+            Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('profile.street'.tr(),
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            TextFormField(
+                controller: _streetController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'profile.validator_street'.tr();
+                  }
+                  return null;
+                }),
+          ]),
+          TableRow(children: [
+            Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('profile.house_number'.tr(),
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            TextFormField(
+                controller: _houseNumberController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'profile.validator_house_number'.tr();
+                  }
+                  return null;
+                }),
+          ]),
+          TableRow(children: [
+            Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('profile.house_number_addition'.tr(),
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            TextFormField(
+                controller: _houseNumberAdditionController,
+                validator: (value) {
+                  return null;
+                }),
+          ]),
           TableRow(children: [
             Padding(
                 padding: EdgeInsets.only(top: 16),

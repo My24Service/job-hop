@@ -3,9 +3,10 @@ import 'package:jobhop/company/pages/login.dart';
 import 'package:jobhop/company/widgets/profile.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
@@ -60,7 +61,9 @@ class JobHopHomeState extends State<JobHopHome> {
           appBar: AppBar(
             title: const Text('Job-Hop'),
           ),
-          body: Home()
+          body: UpgradeAlert(
+            child: Home()
+          )
         )
     );
   }

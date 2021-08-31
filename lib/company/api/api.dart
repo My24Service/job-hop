@@ -58,7 +58,9 @@ class CompanyApi with ApiMixin {
     final String url = getUrl('/company/studentuser/$userPk/');
 
     final Map studentUserBody = {
-      'address': user.studentUser!.address,
+      'street': user.studentUser!.street,
+      'house_number': user.studentUser!.houseNumber,
+      'house_number_addition': user.studentUser!.houseNumberAddition,
       'postal': user.studentUser!.postal,
       'city': user.studentUser!.city,
       'country_code': user.studentUser!.countryCode,
