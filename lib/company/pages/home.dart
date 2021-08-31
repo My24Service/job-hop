@@ -11,18 +11,18 @@ import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
 import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/auth.dart';
-import 'package:jobhop/utils/google.dart';
-import 'package:jobhop/utils/apple.dart';
-import 'package:jobhop/utils/facebook.dart';
+// import 'package:jobhop/utils/google.dart';
+// import 'package:jobhop/utils/apple.dart';
+// import 'package:jobhop/utils/facebook.dart';
 import 'package:jobhop/core/widgets/widgets.dart';
 
 GetIt getIt = GetIt.instance;
 
-GoogleSignIn googleSignIn = GoogleSignIn(
-  scopes: <String>[
-    'email',
-  ],
-);
+// GoogleSignIn googleSignIn = GoogleSignIn(
+//   scopes: <String>[
+//     'email',
+//   ],
+// );
 
 
 class JobHopHome extends StatefulWidget {
@@ -73,9 +73,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Apple _apple = Apple();
-  Facebook _facebook = Facebook();
-  Google _google = Google(googleSignIn);
+  // Apple _apple = Apple();
+  // Facebook _facebook = Facebook();
+  // Google _google = Google(googleSignIn);
   String? _token;
   bool _inAsyncCall = false;
   bool _isFirstTimeProfile = true;
@@ -86,10 +86,10 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      _google.handleAccountLogin(account);
-    });
-    googleSignIn.signInSilently();
+    // googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+    //   _google.handleAccountLogin(account);
+    // });
+    // googleSignIn.signInSilently();
 
     _doAsync();
   }
@@ -167,146 +167,17 @@ class _HomeState extends State<Home> {
       );
     }
 
-    return ListView(
-      shrinkWrap: false,
-      padding: EdgeInsets.all(0.0),
-      children: [
-        Image(image: AssetImage('assets/logo-big.png')),
-        SizedBox(height: 20),
-        _showButtons(),
-      ]
-    );
+    return _showButtons();
   }
 
   Widget _showButtons() {
-    const facebookKey = Key('facebookButton');
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        InkWell(
-          key: facebookKey,
-          onTap: () async {
-            _inAsyncCall = true;
-            setState(() {});
-            setIsNotDemo();
-            final bool result = await _facebook.login();
-
-            if(!result) {
-              _inAsyncCall = false;
-              setState(() {});
-              return displayDialog(
-                  context,
-                  'home.login_error_title'.tr(),
-                  'home.error_facebook'.tr()
-              );
-            }
-
-            // request permissions
-            await requestFCMPermissions();
-
-            await _setUserToken();
-            _inAsyncCall = false;
-            setState(() {});
-          },
-          child: Container(
-            child: ClipRRect(
-              child: Image(image: AssetImage('assets/buttons/facebook-sign-in.png')),
-            ),),
-        ),
-        SizedBox(height: 20),
-        // InkWell(
-        //   onTap: () async {
-        //     _inAsyncCall = true;
-        //     setState(() {});
-        //     setIsNotDemo();
-        //     final bool result = await _google.login();
-        //
-        //     if (!result) {
-        //       _inAsyncCall = false;
-        //       setState(() {});
-        //       return displayDialog(context,
-        //           'home.login_error_title'.tr(),
-        //           'home.error_google'.tr()
-        //       );
-        //     }
-        //
-        //     // request permissions
-        //     await requestFCMPermissions();
-        //
-        //     await _setUserToken();
-        //     _inAsyncCall = false;
-        //     setState(() {});
-        //   },
-        //   child: Container(
-        //     child: ClipRRect(
-        //       child: Image(image: AssetImage('assets/buttons/btn_google_signin_dark_normal_web@2x.png')),
-        //     ),),
-        // ),
-        // SizedBox(height: 20),
-        InkWell(
-          onTap: () async {
-            // set up the button
-            Widget cancelButton = TextButton(
-                child: Text('generic.action_cancel'.tr()),
-                onPressed: () => Navigator.of(context, rootNavigator: true).pop(false) // Navigator.pop(context, false)
-            );
-            Widget deleteButton = TextButton(
-                child: Text('home.continue'.tr()),
-                onPressed: () => Navigator.of(context, rootNavigator: true).pop(true) // Navigator.pop(context, false)
-            );
-
-            // set up the AlertDialog
-            AlertDialog alert = AlertDialog(
-              title: Text('home.apple_notice_title'.tr()),
-              content: Text('home.apple_notice_content'.tr()),
-              actions: [
-                cancelButton,
-                deleteButton,
-              ],
-            );
-
-            // show the dialog
-            showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (BuildContext context) {
-                return alert;
-              },
-            ).then((dialogResult) async {
-              if (dialogResult == null) return;
-
-              if (dialogResult) {
-                _inAsyncCall = true;
-                setState(() {});
-                setIsNotDemo();
-                final bool result = await _apple.login();
-
-                if(!result) {
-                  _inAsyncCall = false;
-                  setState(() {});
-                  return displayDialog(
-                      context,
-                      'home.login_error_title'.tr(),
-                      'home.error_apple'.tr()
-                  );
-                }
-
-                // request permissions
-                await requestFCMPermissions();
-
-                await _setUserToken();
-                _inAsyncCall = false;
-                setState(() {});
-              }
-            });
-          },
-          child: Container(
-            child: ClipRRect(
-              child: Image(image: AssetImage('assets/buttons/apple-id-sign-in-with.png')),
-            ),),
-        ),
-        SizedBox(height: 20),
+        Image(image: AssetImage('assets/logo-big.png')),
+        Spacer(),
+        SizedBox(height: 100),
         InkWell(
           onTap: () async {
             setState(() {});
@@ -322,7 +193,7 @@ class _HomeState extends State<Home> {
               child: Image(image: AssetImage('assets/buttons/jobhop-sign-in.png')),
             ),),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 100),
       ],
     );
   }
