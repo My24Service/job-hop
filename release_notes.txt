@@ -1,1 +1,1 @@
-removed social login buttons for now
+replaced address with street/housenumber & addition; implemented Upgrader package
