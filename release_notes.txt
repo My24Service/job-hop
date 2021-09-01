@@ -1,1 +1,2 @@
-replaced address with street/housenumber & addition; implemented Upgrader package
+Notify backend when the user completed his/her profile for the first time
+
