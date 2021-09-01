@@ -415,6 +415,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               driversLicenceType: _driversLicenceTypeController.text,
               boxTruck: _yesNoToInternal(_boxTruck),
               bsn: _bsnController.text,
+              isFirstTimeProfile: _isFirstTimeProfile,
           );
 
           if (_imagePickedFile != null) {

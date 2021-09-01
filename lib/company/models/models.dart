@@ -17,6 +17,7 @@ class StudentUserProperty {
   final String? boxTruck;
   final String? bsn;
   final String? uuid;
+  final bool? isFirstTimeProfile;
 
   StudentUserProperty({
     this.street,
@@ -37,6 +38,7 @@ class StudentUserProperty {
     this.boxTruck,
     this.bsn,
     this.uuid,
+    this.isFirstTimeProfile,
   });
 
   factory StudentUserProperty.fromJson(Map<String, dynamic> parsedJson) {

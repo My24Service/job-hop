@@ -74,6 +74,7 @@ class CompanyApi with ApiMixin {
       'drivers_licence_type': user.studentUser!.driversLicenceType,
       'box_truck': user.studentUser!.boxTruck,
       'bsn': user.studentUser!.bsn,
+      'first_time_profile': user.studentUser!.isFirstTimeProfile,
       if (user.studentUser!.picture != null)
         'picture': user.studentUser!.picture,
     };
