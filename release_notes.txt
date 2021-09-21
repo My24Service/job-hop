@@ -1,2 +1,1 @@
-Notify backend when the user completed his/her profile for the first time
-
+Fixed bug in profile (saving profile when already agreed to terms)
