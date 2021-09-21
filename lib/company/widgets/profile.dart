@@ -82,6 +82,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   _doAsync() async {
     await _fetchUserData();
     _isFirstTimeProfile = await isFirstTimeProfile();
+    if (!_isFirstTimeProfile) {
+      _isAgreed = true;
+    }
   }
 
   _fetchUserData() async {
@@ -134,9 +137,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     }
 
     setState(() {
-      if (!_isFirstTimeProfile) {
-        _isAgreed = true;
-      }
       _inAsyncCall = false;
     });
   }
