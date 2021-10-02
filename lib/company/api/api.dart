@@ -75,6 +75,7 @@ class CompanyApi with ApiMixin {
       'box_truck': user.studentUser!.boxTruck,
       'bsn': user.studentUser!.bsn,
       'first_time_profile': user.studentUser!.isFirstTimeProfile,
+      'vaccinated': user.studentUser!.vaccinated,
       if (user.studentUser!.picture != null)
         'picture': user.studentUser!.picture,
     };

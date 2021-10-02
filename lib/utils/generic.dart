@@ -150,3 +150,39 @@ void createCalendarEvent(TripOrder tripOrder) {
 
   Add2Calendar.addEvent2Cal(event);
 }
+
+bool isNumeric(String? s) {
+  if(s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
+}
+
+bool isValidBsn(String bsn) {
+  /*
+    Validator based on a variation of the Dutch check-digit validation used for checking IBAN.
+    This variation is used for BSN.
+    For more information visit https://nl.wikipedia.org/wiki/Elfproef#Burgerservicenummer
+    :param value: customer service number (BSN), must be 9 digits
+    :return: True if valid, False if invalid
+    */
+  int bsnLen = bsn.length;
+  if (bsnLen != 9 || !isNumeric(bsn)) {
+    return false;
+  }
+
+  int total = 0;
+  for (int index=0; index<8; index++) {
+    String t = bsn[index];
+    total += int.parse(t) * (9 - index);
+  }
+
+  int lastNumber = int.parse(bsn[8]);
+
+  // Validate if the remainder of the total divided by 11 is equal to the last number in the BSN
+  if (total % 11 != lastNumber) {
+    return false;
+  }
+
+  return true;
+}

@@ -17,6 +17,7 @@ class StudentUserProperty {
   final String? boxTruck;
   final String? bsn;
   final String? uuid;
+  final String? vaccinated;
   final bool? isFirstTimeProfile;
 
   StudentUserProperty({
@@ -38,6 +39,7 @@ class StudentUserProperty {
     this.boxTruck,
     this.bsn,
     this.uuid,
+    this.vaccinated,
     this.isFirstTimeProfile,
   });
 
@@ -60,6 +62,7 @@ class StudentUserProperty {
       driversLicenceType: parsedJson['drivers_licence_type'],
       boxTruck: parsedJson['box_truck'],
       bsn: parsedJson['bsn'],
+      vaccinated: parsedJson['vaccinated'],
       uuid: parsedJson['uuid'],
     );
   }

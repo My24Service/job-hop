@@ -170,15 +170,23 @@ class _HomeState extends State<Home> {
       );
     }
 
-    return _showButtons();
+    return _showLogoLogin();
   }
 
-  Widget _showButtons() {
+  Widget _showLogoLogin() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      mainAxisSize: MainAxisSize.min,
+      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+      // mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Image(image: AssetImage('assets/logo-big.png')),
+        Container(
+          color: Color.fromRGBO(38, 34, 97, 1),
+          child: Row(
+            children: [
+              Image(image: AssetImage('assets/logo-big.png'), width: 350),
+            ],
+          ),
+        ),
+
         Spacer(),
         SizedBox(height: 100),
         InkWell(
@@ -196,7 +204,7 @@ class _HomeState extends State<Home> {
               child: Image(image: AssetImage('assets/buttons/jobhop-sign-in.png')),
             ),),
         ),
-        SizedBox(height: 100),
+        SizedBox(height: 30),
       ],
     );
   }

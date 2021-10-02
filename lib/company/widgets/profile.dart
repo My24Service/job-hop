@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -46,6 +47,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   String _gender = 'profile.gender_male'.tr();
   DateTime _dayOfBirth = DateTime.now();
   String _driversLicence = 'profile.no'.tr();
+  String _vaccinated = 'profile.yes'.tr();
   var _driversLicenceTypeController = TextEditingController();
   String _boxTruck = 'profile.no'.tr();
   var _bsnController = TextEditingController();
@@ -111,8 +113,10 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     _ibanController.text = user.studentUser!.iBan ?? '';
     _infoController.text = user.studentUser!.info ?? '';
     _gender = _genderToApp(user.studentUser!.gender ?? 'M');
+    _vaccinated = _yesNoBlankToApp(user.studentUser!.vaccinated ?? '');
+    print('$_vaccinated, ${user.studentUser!.vaccinated}');
 
-    if (user.studentUser!.dayOfBirth != null) {
+    if (user.studentUser!.dayOfBirth != null && user.studentUser!.dayOfBirth != '') {
       _dayOfBirth = DateFormat('yyyy-M-d').parse('${user.studentUser!.dayOfBirth!}');
     }
 
@@ -195,6 +199,38 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     }
 
     throw('Help unknown yes/no: $valIn');
+  }
+
+  _yesNoBlankToInternal(String valIn) {
+    if (valIn == 'profile.yes'.tr()) {
+      return 'Y';
+    }
+
+    if (valIn == 'profile.no'.tr()) {
+      return 'N';
+    }
+
+    if (valIn == 'profile.rather_not_say'.tr()) {
+      return '';
+    }
+
+    throw('Help unknown yes/no/blank: $valIn');
+  }
+
+  _yesNoBlankToApp(String valIn) {
+    if (valIn == 'Y') {
+      return 'profile.yes'.tr();
+    }
+
+    if (valIn == 'N') {
+      return 'profile.no'.tr();
+    }
+
+    if (valIn == '') {
+      return 'profile.rather_not_say'.tr();
+    }
+
+    throw('Help unknown yes/no/blank: $valIn');
   }
 
   _openImageCamera() async {
@@ -393,6 +429,15 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
         if (this._formKey.currentState!.validate()) {
           this._formKey.currentState!.save();
 
+          if (getAge(_dayOfBirth) < 18) {
+            displayDialog(context,
+              'profile.minimal_age_header'.tr(),
+              'profile.minimal_age_content'.tr(),
+            );
+
+            return;
+          }
+
           setState(() {
             _inAsyncCall = true;
           });
@@ -415,6 +460,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               driversLicenceType: _driversLicenceTypeController.text,
               boxTruck: _yesNoToInternal(_boxTruck),
               bsn: _bsnController.text,
+              vaccinated: _yesNoBlankToInternal(_vaccinated),
               isFirstTimeProfile: _isFirstTimeProfile,
           );
 
@@ -466,6 +512,20 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
         }
       },
     );
+  }
+
+  int getAge(DateTime birthday) {
+      final now = new DateTime.now();
+
+      int years = now.year - birthday.year;
+      int months = now.month - birthday.month;
+      int days = now.day - birthday.day;
+
+      if (months < 0 || (months == 0 && days < 0)) {
+        years--;
+      }
+
+      return years;
   }
 
   Widget _createProfileForm(BuildContext context) {
@@ -714,6 +774,10 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     return 'profile.bsn_empty'.tr();
                   }
 
+                  if (!isValidBsn(value)) {
+                    return 'profile.bsn_not_valid'.tr();
+                  }
+
                   return null;
                 }),
           ]),
@@ -768,6 +832,26 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               onChanged: (newValue) {
                 setState(() {
                   _boxTruck = newValue!;
+                });
+              },
+            )
+          ]),
+          TableRow(children: [
+            Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('profile.vaccinated'.tr(),
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            DropdownButtonFormField<String>(
+              value: _vaccinated,
+              items: ['profile.yes'.tr(), 'profile.no'.tr(), 'profile.rather_not_say'.tr()].map((String value) {
+                return new DropdownMenuItem<String>(
+                  child: new Text(value),
+                  value: value,
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _vaccinated = newValue!;
                 });
               },
             )
