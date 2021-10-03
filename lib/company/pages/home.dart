@@ -3,28 +3,18 @@ import 'package:jobhop/company/pages/login.dart';
 import 'package:jobhop/company/widgets/profile.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:jobhop/company/models/models.dart';
+import 'package:jobhop/company/api/api.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
 import 'package:jobhop/utils/state.dart';
 import 'package:jobhop/utils/auth.dart';
-// import 'package:jobhop/utils/google.dart';
-// import 'package:jobhop/utils/apple.dart';
-// import 'package:jobhop/utils/facebook.dart';
 import 'package:jobhop/core/widgets/widgets.dart';
 
 GetIt getIt = GetIt.instance;
-
-// GoogleSignIn googleSignIn = GoogleSignIn(
-//   scopes: <String>[
-//     'email',
-//   ],
-// );
-
 
 class JobHopHome extends StatefulWidget {
   @override
@@ -76,9 +66,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // Apple _apple = Apple();
-  // Facebook _facebook = Facebook();
-  // Google _google = Google(googleSignIn);
   String? _token;
   bool _inAsyncCall = false;
   bool _isFirstTimeProfile = true;
@@ -88,12 +75,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-
-    // googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-    //   _google.handleAccountLogin(account);
-    // });
-    // googleSignIn.signInSilently();
-
     _doAsync();
   }
 
@@ -101,6 +82,9 @@ class _HomeState extends State<Home> {
     await _initState();
     await Future.delayed(Duration(milliseconds: 100));
     _isLoaded = true;
+
+    // post device token
+    await companyApi.postDeviceToken();
 
     setState(() {});
   }
