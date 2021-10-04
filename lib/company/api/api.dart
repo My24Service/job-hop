@@ -109,8 +109,12 @@ class CompanyApi with ApiMixin {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final int userPk = prefs.getInt('userPk')!;
-    final bool isAllowed = prefs.getBool('fcm_allowed')!;
+    final int? userPk = prefs.getInt('userPk');
+    final bool? isAllowed = prefs.getBool('fcm_allowed');
+
+    if (userPk == null || isAllowed == null) {
+      return false;
+    }
 
     if (!isAllowed) {
       return false;
