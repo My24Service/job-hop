@@ -1,23 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:jobhop/company/api/api.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/utils/state.dart';
-import 'apple.dart';
-import 'facebook.dart';
 import 'generic.dart';
-import 'google.dart';
 
 GetIt getIt = GetIt.instance;
-
-GoogleSignIn googleSignIn = GoogleSignIn(
-  scopes: <String>[
-    'email',
-  ],
-);
 
 class Auth {
   Future<int?> getUserFieldInt(String whichField) async {
@@ -109,27 +99,12 @@ class Auth {
 
   Future<bool> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? _backend = await getBackend();
 
     prefs.remove('userPk');
     prefs.remove('email');
     prefs.remove('username');
     prefs.remove('token');
     prefs.remove('isFirstTimeProfile');
-
-    switch(_backend) {
-      case 'apple':
-        Apple _apple = Apple();
-        await _apple.logOut();
-        break;
-      case 'facebook':
-        Facebook _facebook = Facebook();
-        await _facebook.logOut();
-        break;
-      case 'google':
-        Google _google = Google(googleSignIn);
-        await _google.logOut();
-    }
 
     return true;
   }
