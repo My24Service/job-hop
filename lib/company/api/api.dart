@@ -51,7 +51,7 @@ class CompanyApi with ApiMixin {
       return StudentUser.fromJson(json.decode(response.body));
     }
 
-    throw Exception('company.exception_fetch'.tr());
+    throw Exception('generic.exception_fetch'.tr());
   }
 
   Future<bool> updateStudentUser(StudentUser user, int userPk) async {
@@ -188,6 +188,39 @@ class CompanyApi with ApiMixin {
     final response = await _httpClient.post(
       Uri.parse(url),
       body: json.encode({}),
+      headers: await getHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<UserSettings> getUserSettings() async {
+    final url = getUrl('/company/user-settings/');
+
+    final response = await _httpClient.get(
+      Uri.parse(url),
+      headers: await getHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      return UserSettings.fromJson(json.decode(response.body));
+    }
+
+    throw Exception('User settings could not be loaded');
+  }
+
+  Future<bool> updateUserSettings(Map<String, dynamic> settings) async {
+    final url = getUrl('/company/user-settings/');
+
+    final response = await _httpClient.put(
+      Uri.parse(url),
+      body: json.encode({
+        'settings': settings
+      }),
       headers: await getHeaders(),
     );
 

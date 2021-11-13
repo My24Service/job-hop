@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/mobile/blocs/trip_bloc.dart';
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/core/widgets/widgets.dart';
+import 'package:jobhop/order/models/models.dart';
 
 class TripListWidget extends StatelessWidget {
   final List<Trip> tripList;
@@ -117,14 +118,18 @@ class TripListWidget extends StatelessWidget {
                   'orders.info_location'.tr(),
                   '${order.countryCode}-${order.postal} ${order.city}'),
           ),
-          TableRow(
-              children: [
-                Divider(),
-                Divider(),
-              ]
-          ),
         ],
       ));
+
+      ordersColumn.add(
+          SizedBox(height: 10)
+      );
+
+      ordersColumn.add(
+          _getJoblines(order.orderLines)
+      );
+
+      ordersColumn.add(Divider());
     }
 
     if (trip.userTripIsAvailable) {
@@ -153,6 +158,60 @@ class TripListWidget extends StatelessWidget {
     return Column(
       children: ordersColumn,
     );
+  }
+
+  Widget _getJoblines(List<Orderline> orderLines) {
+    List<TableRow> rows = [];
+
+    // header
+    rows.add(TableRow(
+      children: [
+        Column(
+            children:[
+              createTableHeaderCell('orders.info_equipment'.tr())
+            ]
+        ),
+        Column(
+            children:[
+              createTableHeaderCell('orders.info_location'.tr())
+            ]
+        ),
+        Column(
+            children:[
+              createTableHeaderCell('orders.info_remarks'.tr())
+            ]
+        )
+      ],
+
+    ));
+
+    for (int i = 0; i < orderLines.length; ++i) {
+      Orderline orderline = orderLines[i];
+
+      rows.add(
+          TableRow(
+              children: [
+                Column(
+                    children:[
+                      createTableColumnCell(orderline.product!)
+                    ]
+                ),
+                Column(
+                    children:[
+                      createTableColumnCell(orderline.location!)
+                    ]
+                ),
+                Column(
+                    children:[
+                      createTableColumnCell(orderline.remarks!)
+                    ]
+                ),
+              ]
+          )
+      );
+    }
+
+    return createTable(rows);
   }
 
   _showSetAvailableDialog(int tripPk, BuildContext context) {

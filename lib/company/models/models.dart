@@ -104,3 +104,20 @@ class StudentUser {
     );
   }
 }
+
+class UserSettings {
+  int? user;
+  Map<String, dynamic>? settings;
+
+  UserSettings({
+    this.user,
+    this.settings
+  });
+
+  factory UserSettings.fromJson(Map<String, dynamic> parsedJson) {
+    return UserSettings(
+        user: parsedJson['user'],
+        settings: parsedJson['settings']
+    );
+  }
+}

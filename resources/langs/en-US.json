@@ -10,7 +10,8 @@
     "action_view": "View",
     "action_cancel": "Cancel",
     "action_continue": "Continue",
-    "empty_table": "No results found."
+    "empty_table": "No results found.",
+    "exception_fetch": "Error fetching data"
   },
   "home": {
     "welcome": "Welcome {firstName}",
@@ -102,9 +103,18 @@
     "button_save": "Save settings",
     "snackbar_saved": "Settings saved"
   },
+  "user_settings": {
+    "info_notify_push_day_before_order_starts": "Receive push notificatie day before job starts (beta)",
+    "app_bar_title": "User settings",
+    "header_settings": "User settings",
+    "button_save": "Save settings",
+    "snackbar_saved": "Settings saved",
+    "snackbar_error_saving": "Error saving settings"
+  },
   "core": {
     "drawer_options": "Options",
     "drawer_settings": "Settings",
+    "drawer_user_settings": "User settings",
     "drawer_logout": "Log out",
     "drawer_student_orders": "Jobs",
     "drawer_trips": "Trips",

@@ -199,6 +199,7 @@ class TripOrder {
   final String date;
   final DateTime startDate;
   final DateTime endDate;
+  final List<Orderline> orderLines;
 
   TripOrder({
     required this.id,
@@ -211,6 +212,7 @@ class TripOrder {
     required this.date,
     required this.startDate,
     required this.endDate,
+    required this.orderLines,
   });
 
   factory TripOrder.fromJson(Map<String, dynamic> parsedJson) {
@@ -218,6 +220,15 @@ class TripOrder {
     final parsedStartTime = parsedJson['start_time'];
     final parsedEndDate = parsedJson['end_date'];
     final parsedEndTime = parsedJson['end_time'];
+
+    // order lines
+    List<Orderline> orderlines = [];
+    if (parsedJson.containsKey('orderlines')) {
+      var parsedOrderlines = parsedJson['orderlines'] as List;
+
+      orderlines =
+          parsedOrderlines.map((i) => Orderline.fromJson(i)).toList();
+    }
 
     DateTime startDate = DateFormat('yyyy-M-d H:m:s').parse('1970-01-01 00:00:00');
     if (parsedStartDate != null && parsedStartTime != null) {
@@ -240,6 +251,7 @@ class TripOrder {
       date: parsedJson['date'],
       startDate: startDate,
       endDate: endDate,
+      orderLines: orderlines
     );
   }
 }

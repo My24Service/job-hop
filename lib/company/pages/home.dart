@@ -90,17 +90,26 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _initState() async {
-    final StudentUser? user = await auth.initState(context);
+    try {
+      final StudentUser? user = await auth.initState(context);
 
-    if (user != null && user.id != null) {
-      _token = user.token;
-      _firstName = getIt<AppModel>().user!.firstName ?? 'guest';
+      if (user != null && user.id != null) {
+        _token = user.token;
+        _firstName = getIt<AppModel>().user!.firstName ?? 'guest';
+      }
+
+      _isFirstTimeProfile = await isFirstTimeProfile();
+      print('_isFirstTimeProfile: $_isFirstTimeProfile');
+
+      setState(() {});
+    } catch(e) {
+      displayDialog(context,
+          'generic.error_dialog_title'.tr(),
+          e.toString()
+      );
+
+      return;
     }
-
-    _isFirstTimeProfile = await isFirstTimeProfile();
-    print('_isFirstTimeProfile: $_isFirstTimeProfile');
-
-    setState(() {});
   }
 
   Future<String?> _setUserToken() async {

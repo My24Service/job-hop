@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/company/pages/profile.dart';
 
 import 'package:jobhop/core/pages/settings.dart';
+import 'package:jobhop/core/pages/user_settings.dart';
 import 'package:jobhop/mobile/pages/availability.dart';
 import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/mobile/pages/assigned_list.dart';
@@ -28,6 +29,21 @@ ListTile listTileSettings(context) {
 
   return ListTile(
     title: Text('core.drawer_settings'.tr()),
+    onTap: () {
+      // close the drawer and navigate
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => page)
+      );
+    }, // onTap
+  );
+}
+
+ListTile listTileUserSettings(context) {
+  final page = UserSettingsPage();
+
+  return ListTile(
+    title: Text('core.drawer_user_settings'.tr()),
     onTap: () {
       // close the drawer and navigate
       Navigator.pop(context);
@@ -130,6 +146,7 @@ Widget createDrawer(BuildContext context) {
         Divider(),
         listTileProfile(context),
         listTileSettings(context),
+        listTileUserSettings(context),
         listTileLogout(context),
       ],
     ),

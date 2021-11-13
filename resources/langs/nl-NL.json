@@ -10,7 +10,8 @@
     "action_view": "Bekijk",
     "action_cancel": "Annuleer",
     "action_continue": "Ga verder",
-    "empty_table": "Geen resultaten gevonden."
+    "empty_table": "Geen resultaten gevonden.",
+    "exception_fetch": "Fout bij het ophalen van de data"
   },
   "home": {
     "welcome": "Welkom {firstName}",
@@ -115,9 +116,18 @@
     "button_save": "Instellingen opslaan",
     "snackbar_saved": "Instellingen opgeslagen"
   },
+  "user_settings": {
+    "info_notify_push_day_before_order_starts": "Push notificatie ontvangen dag voor aanvang job (beta)",
+    "app_bar_title": "Gebruikersinstellingen",
+    "header_settings": "Gebruikersinstellingen",
+    "button_save": "Instellingen opslaan",
+    "snackbar_saved": "Instellingen opgeslagen",
+    "snackbar_error_saving": "Fout bij het opslaan"
+  },
   "core": {
     "drawer_options": "Opties",
     "drawer_settings": "Instellingen",
+    "drawer_user_settings": "Gebruikersinstellingen",
     "drawer_logout": "Uitloggen",
     "drawer_student_orders": "Jobs",
     "drawer_trips": "Trips",
