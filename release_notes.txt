@@ -1,3 +1,2 @@
-- added is vaccinated field to profile
-- added birthday check
-- added BSN check
+- added user settings page
+- added orderlines in trip order list
