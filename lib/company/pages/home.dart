@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jobhop/company/pages/login.dart';
 import 'package:jobhop/company/widgets/profile.dart';
+import 'package:jobhop/core/api/api.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -99,22 +100,21 @@ class _HomeState extends State<Home> {
       }
 
       _isFirstTimeProfile = await isFirstTimeProfile();
-      print('_isFirstTimeProfile: $_isFirstTimeProfile');
 
       setState(() {});
+    } on JobhopInvalidTokenException {
+      print('invalid token');
+      _token = null;
     } catch(e) {
       displayDialog(context,
           'generic.error_dialog_title'.tr(),
           e.toString()
       );
 
+      _isLoaded = true;
+
       return;
     }
-  }
-
-  Future<String?> _setUserToken() async {
-    _token = await auth.getUserFieldString('token');
-    setState(() {});
   }
 
   @override

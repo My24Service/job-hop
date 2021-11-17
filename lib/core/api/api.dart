@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:jobhop/utils/auth.dart';
 import 'package:jobhop/utils/generic.dart';
 import 'package:jobhop/core/app_config.dart';
 import 'package:get_it/get_it.dart';
@@ -67,6 +66,11 @@ class CoreApi with ApiMixin {
     return result;
   }
 
+}
+
+class JobhopInvalidTokenException implements Exception {
+  String cause;
+  JobhopInvalidTokenException(this.cause);
 }
 
 CoreApi coreApi = CoreApi();

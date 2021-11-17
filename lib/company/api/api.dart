@@ -51,7 +51,13 @@ class CompanyApi with ApiMixin {
       return StudentUser.fromJson(json.decode(response.body));
     }
 
-    throw Exception('generic.exception_fetch'.tr());
+    if (response.statusCode == 401) {
+      throw JobhopInvalidTokenException('invalid token');
+    }
+
+    String error = '${response.statusCode}, ${response.body}';
+
+    throw Exception("${'generic.exception_fetch'.tr()} ($error)");
   }
 
   Future<bool> updateStudentUser(StudentUser user, int userPk) async {

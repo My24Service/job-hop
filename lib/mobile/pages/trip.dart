@@ -118,6 +118,7 @@ class _TripListPageState extends State<TripListPage> {
                       }
 
                       if (state is TripErrorState) {
+                        print('error state: ${state.message}');
                         return errorNoticeWithReload(
                             state.message,
                             bloc,

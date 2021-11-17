@@ -29,32 +29,16 @@ class Auth {
   Future<StudentUser?> initState(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final bool isFirstTime = await isFirstTimeProfile();
+    final int? userPk = prefs.getInt('userPk');
+    final String? email = prefs.getString('email');
+    final String? username = prefs.getString('username');
+    final String? token = prefs.getString('token');
 
-    if (isFirstTime) {
-      final int? id = prefs.getInt('userPk');
-      final String? email = prefs.getString('email');
-      final String? username = prefs.getString('username');
-      final String? token = prefs.getString('token');
-
-      if (id == null || email == null || username == null || token == null) {
-        return null;
-      }
-
-      StudentUser user = StudentUser(
-        id: id,
-        email: email,
-        username: username,
-      );
-
-      getIt<AppModel>().setUserBasic(user, token);
-
-      return getIt<AppModel>().user;
+    if (userPk == null || email == null || username == null || token == null) {
+      return null;
     }
 
     // fetch from backend and store in state
-    final int userPk = prefs.getInt('userPk')!;
-    final String token = prefs.getString('token')!;
     StudentUser user = await companyApi.fetchStudentUser(userPk);
 
     getIt<AppModel>().setUserFull(user, token);

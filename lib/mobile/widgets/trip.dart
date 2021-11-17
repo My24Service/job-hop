@@ -57,6 +57,7 @@ class TripListWidget extends StatelessWidget {
   }
 
   Widget _createTripTitle(Trip trip) {
+    final String distance = trip.distance == -1 ? 'trips.info_trip_distance_unknown'.tr() : '${trip.distance} km';
     Table tripInfo = Table(
       children: [
         TableRow(
@@ -65,11 +66,19 @@ class TripListWidget extends StatelessWidget {
         ),
         TableRow(
             children: createTableRowPair(
-                'trips.info_number_required'.tr(), '${trip.requiredUsers}')
+                'trips.info_trip_distance'.tr(), '$distance')
         ),
         TableRow(
             children: createTableRowPair(
-                'trips.info_number_still_available'.tr(), '${trip.numberStillAvailable}')
+                'trips.info_number_required_still_available'.tr(), '${trip.requiredUsers}/${trip.numberStillAvailable}')
+        ),
+        TableRow(
+            children: createTableRowPair(
+                'trips.info_trip_start'.tr(), '${trip.startName}, ${trip.startAddress}, ${trip.startCity} (${trip.startCountryCode})')
+        ),
+        TableRow(
+            children: createTableRowPair(
+                'trips.info_trip_end'.tr(), '${trip.endName}, ${trip.endAddress}, ${trip.endCity} (${trip.endCountryCode})')
         ),
         TableRow(
             children: [

@@ -265,6 +265,17 @@ class Trip {
   final String endDate;
   final String endTime;
   final String tripDate;
+  final num distance;
+  final String startName;
+  final String endName;
+  final String startAddress;
+  final String endAddress;
+  final String startPostal;
+  final String endPostal;
+  final String startCity;
+  final String endCity;
+  final String startCountryCode;
+  final String endCountryCode;
   final bool userTripIsAvailable;  // if the user has already set this trip as being available
   final String requiredAssigned;  // text field with num_assigned, required_users, and a percentage of those
   final int assignedUserCount;  // the number of users already assigned to this trip
@@ -282,6 +293,17 @@ class Trip {
     required this.endDate,
     required this.endTime,
     required this.tripDate,
+    required this.distance,
+    required this.startName,
+    required this.endName,
+    required this.startAddress,
+    required this.endAddress,
+    required this.startPostal,
+    required this.endPostal,
+    required this.startCity,
+    required this.endCity,
+    required this.startCountryCode,
+    required this.endCountryCode,
     required this.userTripIsAvailable,
     required this.requiredAssigned,
     required this.assignedUserCount,
@@ -304,6 +326,17 @@ class Trip {
       endDate: parsedJson['end_date'],
       endTime: parsedJson['end_time'],
       tripDate: parsedJson['trip_date'],
+      startName: parsedJson['start_name'] != null ? parsedJson['start_name'] : '',
+      endName: parsedJson['end_name'] != null ? parsedJson['end_name'] : '',
+      startAddress: parsedJson['start_address'] != null ? parsedJson['start_address'] : '',
+      endAddress: parsedJson['end_address'] != null ? parsedJson['end_address'] : '',
+      startPostal: parsedJson['start_postal'] != null ? parsedJson['start_postal'] : '',
+      endPostal: parsedJson['end_postal'] != null ? parsedJson['end_postal'] : '',
+      startCity: parsedJson['start_city'] != null ? parsedJson['start_city'] : '',
+      endCity: parsedJson['end_city'] != null ? parsedJson['end_city'] : '',
+      startCountryCode: parsedJson['start_country_code'] != null ? parsedJson['start_country_code'] : '',
+      endCountryCode: parsedJson['end_country_code'] != null ? parsedJson['end_country_code'] : '',
+      distance: parsedJson['distance'] != null ? parsedJson['distance'].round() : -1,
       userTripIsAvailable: parsedJson['user_trip_is_available'],
       requiredAssigned: parsedJson['required_assigned'],
       assignedUserCount: parsedJson['assigned_user_count'],
