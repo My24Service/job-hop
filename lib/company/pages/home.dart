@@ -105,6 +105,7 @@ class _HomeState extends State<Home> {
     } on JobhopInvalidTokenException {
       print('invalid token');
       _token = null;
+      _isLoaded = true;
     } catch(e) {
       displayDialog(context,
           'generic.error_dialog_title'.tr(),
