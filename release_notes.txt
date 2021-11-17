@@ -1,2 +1,2 @@
-- added user settings page
-- added orderlines in trip order list
+- bugfix in home screen when not logged in
+- trip list layout changes
