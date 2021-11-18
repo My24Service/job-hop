@@ -91,10 +91,7 @@ class _HomeState extends State<Home> {
       print('invalid token in postDeviceToken');
       _token = null;
     } catch(e) {
-      displayDialog(context,
-          'generic.error_dialog_title'.tr(),
-          e.toString()
-      );
+      print(e.toString());
     }
 
     setState(() {});
@@ -115,10 +112,6 @@ class _HomeState extends State<Home> {
     } on JobhopInvalidTokenException {
       _isLoaded = true;
     } catch(e) {
-      displayDialog(context,
-          'generic.error_dialog_title'.tr(),
-          e.toString()
-      );
       _isLoaded = true;
     }
   }
@@ -147,10 +140,7 @@ class _HomeState extends State<Home> {
         try {
           return ProfileFormWidget();
         } catch(e) {
-          displayDialog(context,
-              'generic.error_dialog_title'.tr(),
-              e.toString()
-          );
+          print(e.toString());
 
           return _showLogoLogin();
         }
