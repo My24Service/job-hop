@@ -85,7 +85,17 @@ class _HomeState extends State<Home> {
     _isLoaded = true;
 
     // post device token
-    await companyApi.postDeviceToken();
+    try {
+      await companyApi.postDeviceToken();
+    } on JobhopInvalidTokenException {
+      print('invalid token in postDeviceToken');
+      _token = null;
+    } catch(e) {
+      displayDialog(context,
+          'generic.error_dialog_title'.tr(),
+          e.toString()
+      );
+    }
 
     setState(() {});
   }
@@ -103,18 +113,13 @@ class _HomeState extends State<Home> {
 
       setState(() {});
     } on JobhopInvalidTokenException {
-      print('invalid token');
-      _token = null;
       _isLoaded = true;
     } catch(e) {
       displayDialog(context,
           'generic.error_dialog_title'.tr(),
           e.toString()
       );
-
       _isLoaded = true;
-
-      return;
     }
   }
 
@@ -139,7 +144,16 @@ class _HomeState extends State<Home> {
     if (_token != null) {
       // first time let the user enter their full profile
       if(_isFirstTimeProfile) {
-        return ProfileFormWidget();
+        try {
+          return ProfileFormWidget();
+        } catch(e) {
+          displayDialog(context,
+              'generic.error_dialog_title'.tr(),
+              e.toString()
+          );
+
+          return _showLogoLogin();
+        }
       }
 
       // show welcome and continue button

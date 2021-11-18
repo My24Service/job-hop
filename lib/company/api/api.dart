@@ -147,7 +147,13 @@ class CompanyApi with ApiMixin {
       return true;
     }
 
-    return false;
+    if (response.statusCode == 401) {
+      throw JobhopInvalidTokenException('invalid token');
+    }
+
+    String error = '${response.statusCode}, ${response.body}';
+
+    throw Exception("${'generic.exception_fetch'.tr()} ($error)");
   }
 
   Future<Map<String, dynamic>?> createDemoUser() async {
