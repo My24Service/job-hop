@@ -1,2 +1,2 @@
-- bugfix in home screen when not logged in
-- trip list layout changes
+- minimum age to 16 years
+- jobs are now ended with 'no workorder'
