@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -429,7 +428,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
         if (this._formKey.currentState!.validate()) {
           this._formKey.currentState!.save();
 
-          if (getAge(_dayOfBirth) < 18) {
+          if (getAge(_dayOfBirth) < 16) {
             displayDialog(context,
               'profile.minimal_age_header'.tr(),
               'profile.minimal_age_content'.tr(),

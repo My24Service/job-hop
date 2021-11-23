@@ -72,6 +72,25 @@ class MobileApi with ApiMixin {
     return false;
   }
 
+  Future<bool> reportNoWorkorderFinished(int assignedorderPk) async {
+    final String url = getUrl('/mobile/assignedorder/$assignedorderPk/no_workorder_finished/');
+
+    final Map body = {};
+
+    final response = await _httpClient.post(
+      Uri.parse(url),
+      body: json.encode(body),
+      headers: await getHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // TODO check if we can lose this method
   Future<bool> reportEndCode(EndCode endCode, int assignedorderPk) async {
     final String url = getUrl('/mobile/assignedorder/$assignedorderPk/report_statuscode/');
 

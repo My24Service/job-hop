@@ -279,8 +279,7 @@ class AssignedWidget extends StatelessWidget {
           final bloc = BlocProvider.of<AssignedOrderBloc>(context);
           bloc.add(AssignedOrderEvent(status: AssignedOrderEventStatus.DO_ASYNC));
           bloc.add(AssignedOrderEvent(
-              status: AssignedOrderEventStatus.REPORT_ENDCODE,
-              code: endCode,
+              status: AssignedOrderEventStatus.REPORT_NOWORKORDER,
               value: assignedOrder.id
           ));
         },

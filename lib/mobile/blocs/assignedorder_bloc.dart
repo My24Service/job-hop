@@ -12,6 +12,7 @@ enum AssignedOrderEventStatus {
   FETCH_DETAIL,
   REPORT_STARTCODE,
   REPORT_ENDCODE,
+  REPORT_NOWORKORDER,
 }
 
 class AssignedOrderEvent {
@@ -71,5 +72,15 @@ class AssignedOrderBloc extends Bloc<AssignedOrderEvent, AssignedOrderState> {
         yield AssignedOrderErrorState(message: e.toString());
       }
     }
+
+    if (event.status == AssignedOrderEventStatus.REPORT_NOWORKORDER) {
+      try {
+        final dynamic result = await localMobileApi.reportNoWorkorderFinished(event.value);
+        yield AssignedOrderReportNoWorkorderFinishedState(result: result);
+      } catch (e) {
+        yield AssignedOrderErrorState(message: e.toString());
+      }
+    }
+
   }
 }
