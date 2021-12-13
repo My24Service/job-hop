@@ -1,2 +1,2 @@
-- minimum age to 16 years
-- jobs are now ended with 'no workorder'
+bugfix in trip list
+
