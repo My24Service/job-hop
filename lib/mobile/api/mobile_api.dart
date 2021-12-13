@@ -167,7 +167,7 @@ class MobileApi with ApiMixin {
   }
 
   Future<Trips> fetchTrips() async {
-    final String url = getUrl('/mobile/trip/');
+    final String url = getUrl('/mobile/trip/?page_size=500');
 
     final response = await _httpClient.get(
         Uri.parse(url),

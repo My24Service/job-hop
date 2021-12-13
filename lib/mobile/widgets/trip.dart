@@ -202,17 +202,17 @@ class TripListWidget extends StatelessWidget {
               children: [
                 Column(
                     children:[
-                      createTableColumnCell(orderline.product!)
+                      createTableColumnCell(orderline.product == null ? '' : orderline.product)
                     ]
                 ),
                 Column(
                     children:[
-                      createTableColumnCell(orderline.location!)
+                      createTableColumnCell(orderline.location == null ? '' : orderline.location)
                     ]
                 ),
                 Column(
                     children:[
-                      createTableColumnCell(orderline.remarks!)
+                      createTableColumnCell(orderline.remarks == null ? '' : orderline.remarks)
                     ]
                 ),
               ]
