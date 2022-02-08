@@ -13,7 +13,7 @@ mixin ApiMixin {
   String getUrl(String path) {
     final isDemo = getIt<AppModel>().isDemo;
     final String baseUrl = isDemo ? config.demoApiBaseUrl : config.apiBaseUrl;
-    return "https://$baseUrl$path";
+    return "https://$baseUrl/api$path";
   }
 
   Future<Map<String, String>> getHeaders() async {
