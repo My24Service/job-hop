@@ -29,7 +29,7 @@ void main() {
     // return result with a 200
     final String availabilitiesResponse = '{"next": null,"previous": null,"count": 1,"num_pages": 1,"results": [{"id": 8,"user": {"id": 231,"email": "henk@gmail.com","username": "henk@gmail.com","last_login": "2021-06-14T13:23:54.701566","date_joined": "2021-06-12T08:28:19.161935","first_name": "Richard","last_name": "Jansen","full_name": "Henk Jansen","student_user": {"address": "sdf, sdf, sdf","rating_avg": null,"info": "sdf","picture": "","wp_image": null,"iban": "NL71ABNA1245679854","external_id": null}},"trip": 9,"is_accepted": false,"description": "tets","trip_date": "21/06/2021 12:15 - 23/06/2021 13:00","created": "14/06/2021 11:32","modified": "14/06/2021 11:32"}]}';
     when(client.get(
-        Uri.parse('https://jobhop.my24service-dev.com/mobile/user-trip-availability/'),
+        Uri.parse('https://jobhop.my24service-dev.com/api/mobile/user-trip-availability/'),
         headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(availabilitiesResponse, 200));
 
@@ -57,7 +57,7 @@ void main() {
 
     // return result with a 204
     when(client.delete(
-        Uri.parse('https://jobhop.my24service-dev.com/mobile/user-trip-availability/1/'),
+        Uri.parse('https://jobhop.my24service-dev.com/api/mobile/user-trip-availability/1/'),
         headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response('', 204));
 

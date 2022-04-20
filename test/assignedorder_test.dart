@@ -35,7 +35,7 @@ void main() {
     // return assigned orders request with a 200
     final assignedOrdersData = '{"next":null,"previous":null,"count":1,"num_pages":1,"results":[{"id":229,"engineer":null,"student_user":215,"order":{"id":62,"customer_id":"1001","order_id":"10062","service_number":"","order_reference":"","order_type":"Rijdende Kerstmarkt","customer_remarks":"","description":null,"start_date":"15/06/2021","start_time":null,"end_date":"15/06/2021","end_time":null,"order_date":"15/06/2021","last_status":"toegewezen aan henk@gmail.com","order_name":"De Kerstmarktspecialist","order_address":"Metaalweg 4","order_postal":"3751 LS","order_city":"Bunschoten","order_country_code":"NL","order_tel":"033-2474013","order_mobile":"","order_email":"info@kerstmarktspecialist.nl","order_contact":"H. Buitenhuis","last_status_full":"15/06/2021 09:45 toegewezen aan henk@gmail.com","required_users":5,"created":"2021/06/13 10:12","total_price_purchase":"0.00","total_price_selling":"0.00", "documents": []},"started":"-","ended":"-"}]}';
     when(client.get(
-      Uri.parse('https://jobhop.my24service-dev.com/mobile/assignedorder/list_app/'),
+      Uri.parse('https://jobhop.my24service-dev.com/api/mobile/assignedorder/list_app/'),
       headers: anyNamed('headers'))
     ).thenAnswer((_) async => http.Response(assignedOrdersData, 200));
 
@@ -63,7 +63,7 @@ void main() {
     // return assigned order request with a 200
     final assignedOrderData = '{"id": 7183,"engineer": 22,"student_user": null,"order": {"id": 6484,"customer_id": "1018","order_id": "19416","total_price_purchase": "0.00","total_price_selling": "0.00", "documents": []},"started": "-","ended": "-"}';
     when(client.get(
-        Uri.parse('https://jobhop.my24service-dev.com/mobile/assignedorder/1/detail_device/'),
+        Uri.parse('https://jobhop.my24service-dev.com/api/mobile/assignedorder/1/detail_device/'),
         headers: anyNamed('headers'))
     ).thenAnswer((_) async => http.Response(assignedOrderData, 200));
 
@@ -91,7 +91,7 @@ void main() {
 
     // return start order request with a 200
     when(client.post(
-        Uri.parse('https://jobhop.my24service-dev.com/mobile/assignedorder/1/report_statuscode/'),
+        Uri.parse('https://jobhop.my24service-dev.com/api/mobile/assignedorder/1/report_statuscode/'),
         headers: anyNamed('headers'), body: anyNamed('body'))
     ).thenAnswer((_) async => http.Response('', 200));
 
@@ -124,7 +124,7 @@ void main() {
 
     // return end order request with a 200
     when(client.post(
-        Uri.parse('https://jobhop.my24service-dev.com/mobile/assignedorder/1/report_statuscode/'),
+        Uri.parse('https://jobhop.my24service-dev.com/api/mobile/assignedorder/1/report_statuscode/'),
         headers: anyNamed('headers'), body: anyNamed('body'))
     ).thenAnswer((_) async => http.Response('', 200));
 
