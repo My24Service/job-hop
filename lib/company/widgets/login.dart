@@ -112,12 +112,12 @@ class _LoginViewState extends State<LoginView> {
   }
 
   _passwordReset () async {
-    final url = companyApi.getUrl('/company/users/password-reset/#users/reset-password');
+    final url = companyApi.getUrl('/frontend/#/reset-password');
     launch(url);
   }
 
   _register () async {
-    final url = companyApi.getUrl('/company/users/student/register/');
+    final url = companyApi.getUrl('/old/company/users/student/register/');
     launch(url);
   }
 
