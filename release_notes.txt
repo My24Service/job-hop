@@ -1,2 +1,1 @@
-bugfix in trip list
-
+registration & password reset links fix
