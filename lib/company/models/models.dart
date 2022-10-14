@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class StudentUserProperty {
   final String? street;
   final String? houseNumber;
@@ -118,6 +120,42 @@ class UserSettings {
     return UserSettings(
         user: parsedJson['user'],
         settings: parsedJson['settings']
+    );
+  }
+}
+
+class SlidingToken {
+  final String? token;
+  Map<String, dynamic>? raw;
+  bool? isValid;
+  bool? isExpired;
+
+  SlidingToken({
+    this.token,
+    this.isValid,
+    this.isExpired,
+    this.raw,
+  });
+
+  Map<String, dynamic> getPayload() {
+    var parts = token!.split(".");
+    return json.decode(ascii.decode(base64.decode(base64.normalize(parts[1]))));
+  }
+
+  int getUserPk() {
+    var payload = getPayload();
+    return payload['user_id'];
+  }
+
+  void checkIsTokenValid() {
+    var parts = token!.split(".");
+    isValid = parts.length == 3 ? true : false;
+  }
+
+  factory SlidingToken.fromJson(Map<String, dynamic> parsedJson) {
+    return SlidingToken(
+      token: parsedJson['token'],
+      raw: parsedJson,
     );
   }
 }

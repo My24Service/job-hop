@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobhop/company/api/api.dart';
+import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/company/pages/home.dart';
 import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/utils/auth.dart';
@@ -126,9 +127,9 @@ class _LoginViewState extends State<LoginView> {
       _saving = true;
     });
 
-    Map<String, dynamic>? result = await coreApi.attemptLogIn(_username, _password);
+    SlidingToken? token = await coreApi.attemptLogIn(_username, _password);
 
-    if (result == null) {
+    if (token == null) {
       setState(() {
         _saving = false;
       });
@@ -141,7 +142,12 @@ class _LoginViewState extends State<LoginView> {
       return;
     }
 
-    await auth.storeUser(result);
+    // fetch user info and determine type
+    var userData = await coreApi.getUserInfo();
+    var userInfo = userData['user'];
+    userInfo['token'] = token.token;
+
+    await auth.storeUser(userInfo);
     await auth.storeBackend('jobhop');
 
     // request permissions

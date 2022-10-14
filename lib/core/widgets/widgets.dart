@@ -39,11 +39,7 @@ createSnackBar(BuildContext context, String content) {
     duration: Duration(seconds: 1),
   );
 
-  try {
-    Scaffold.of(context).showSnackBar(snackBar);
-  } catch(e) {
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
 Widget errorNotice(String message) {
