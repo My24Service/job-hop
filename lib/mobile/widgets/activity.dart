@@ -444,7 +444,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
               AssignedOrderActivity activity = AssignedOrderActivity(
                 activityDate: formatDate(_activityDate),
                 workStart:
-                    '${_startWorkHourController.text}:$_workStartMin:00}',
+                    '${_startWorkHourController.text}:$_workStartMin:00',
                 workEnd: '${_endWorkHourController.text}:$_workEndMin:00',
                 travelTo: '${_travelToController.text}:$_travelToMin:00',
                 travelBack: '${_travelBackController.text}:$_travelBackMin:00',

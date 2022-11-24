@@ -10,7 +10,7 @@ import 'package:jobhop/order/models/models.dart';
 
 
 class MobileApi with ApiMixin {
-  // default and setable for tests
+  // default and settable for tests
   http.Client _httpClient = new http.Client();
 
   set httpClient(http.Client client) {
