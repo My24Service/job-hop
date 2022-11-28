@@ -261,9 +261,9 @@ class Trip {
   final String description;
   final int requiredUsers;
   final String startDate;
-  final String startTime;
+  final String? startTime;
   final String endDate;
-  final String endTime;
+  final String? endTime;
   final String tripDate;
   final num distance;
   final String startName;
@@ -289,9 +289,9 @@ class Trip {
     required this.description,
     required this.requiredUsers,
     required this.startDate,
-    required this.startTime,
+    this.startTime,
     required this.endDate,
-    required this.endTime,
+    this.endTime,
     required this.tripDate,
     required this.distance,
     required this.startName,

@@ -1,1 +1,1 @@
-bugfix in register activity
+bugfix in trip list
