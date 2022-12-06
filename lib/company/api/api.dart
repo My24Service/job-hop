@@ -13,7 +13,7 @@ import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/core/api/api.dart';
 
 class CompanyApi with ApiMixin {
-  // default and setable for tests
+  // default and settable for tests
   http.Client _httpClient = new http.Client();
 
   set httpClient(http.Client client) {
@@ -40,8 +40,8 @@ class CompanyApi with ApiMixin {
     return false;
   }
 
-  Future<StudentUser> fetchStudentUser(int userPk) async {
-    final String url = getUrl('/company/studentuser/$userPk/');
+  Future<StudentUser> fetchStudentUserMe() async {
+    final String url = getUrl('/company/users/student/profile/me/');
     final response = await _httpClient.get(
         Uri.parse(url),
         headers: await getHeaders()
@@ -60,8 +60,8 @@ class CompanyApi with ApiMixin {
     throw Exception("${'generic.exception_fetch'.tr()} ($error)");
   }
 
-  Future<bool> updateStudentUser(StudentUser user, int userPk) async {
-    final String url = getUrl('/company/studentuser/$userPk/');
+  Future<bool> updateStudentUserMe(StudentUser user) async {
+    final String url = getUrl('/company/users/student/profile/me/');
 
     final Map studentUserBody = {
       'street': user.studentUser!.street,
@@ -103,7 +103,7 @@ class CompanyApi with ApiMixin {
       return true;
     }
 
-    throw Exception('orders.assign.exception_fetch_engineers'.tr());
+    throw Exception("Error updating info");
   }
 
   Future<bool> postDeviceToken() async {
@@ -130,11 +130,11 @@ class CompanyApi with ApiMixin {
 
     await Firebase.initializeApp();
     FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String? messageingToken = await messaging.getToken();
+    String? messagingToken = await messaging.getToken();
 
     final Map body = {
       "user": userPk,
-      "device_token": messageingToken
+      "device_token": messagingToken
     };
 
     final response = await _httpClient.post(
@@ -175,10 +175,10 @@ class CompanyApi with ApiMixin {
 
     await Firebase.initializeApp();
     FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String? messageingToken = await messaging.getToken();
+    String? messagingToken = await messaging.getToken();
 
     final Map body = {
-      "secret": encryptText(messageingToken!)
+      "secret": encryptText(messagingToken!)
     };
 
     final response = await _httpClient.post(

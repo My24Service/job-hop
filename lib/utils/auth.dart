@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:jobhop/company/api/api.dart';
 import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/utils/state.dart';
-import 'generic.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -39,7 +38,7 @@ class Auth {
     }
 
     // fetch from backend and store in state
-    StudentUser user = await companyApi.fetchStudentUser(userPk);
+    StudentUser user = await companyApi.fetchStudentUserMe();
 
     getIt<AppModel>().setUserFull(user, token);
 

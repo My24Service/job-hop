@@ -95,7 +95,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
       _inAsyncCall = true;
     });
 
-    StudentUser user = await companyApi.fetchStudentUser(userPk!);
+    StudentUser user = await companyApi.fetchStudentUserMe();
 
     _usernameController.text = user.username;
     _emailController.text = user.email;
@@ -476,7 +476,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
           );
 
           try {
-            final bool result = await companyApi.updateStudentUser(user, userPk!);
+            final bool result = await companyApi.updateStudentUserMe(user);
 
             setState(() {
               _inAsyncCall = false;
