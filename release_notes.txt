@@ -1,1 +1,1 @@
-bugfix in trip list
+Security fixes
