@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/mobile/blocs/activity_bloc.dart';
@@ -156,19 +155,17 @@ class _ActivityWidgetState extends State<ActivityWidget> {
   }
 
   _selectActivityDate(BuildContext context) async {
-    DatePicker.showDatePicker(context,
-        showTitleActions: true,
-        theme: DatePickerTheme(
-            headerColor: Colors.orange,
-            backgroundColor: Colors.blue,
-            itemStyle: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-            doneStyle: TextStyle(color: Colors.white, fontSize: 16)),
-        onChanged: (date) {}, onConfirm: (date) {
-      setState(() {
-        _activityDate = date;
-      });
-    }, currentTime: DateTime.now(), locale: LocaleType.en);
+    DateTime now = DateTime.now();
+    final pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(now.year - 1),
+        lastDate: DateTime(now.year + 2)
+    );
+
+    setState(() {
+      _activityDate = pickedDate!;
+    });
   }
 
   _buildWorkStartMinutes() {

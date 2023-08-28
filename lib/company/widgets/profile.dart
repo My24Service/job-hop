@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:jobhop/company/pages/home.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -269,30 +268,22 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   }
 
   _selectDayOfBirth(BuildContext context) async {
-    DatePicker.showDatePicker(context,
-        showTitleActions: true,
-        maxTime: DateTime.now(),
-        theme: DatePickerTheme(
-            headerColor: Colors.blueAccent,
-            backgroundColor: Colors.blue,
-            itemStyle: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-            doneStyle: TextStyle(color: Colors.white, fontSize: 16)
-        ),
-        onChanged: (date) {
-        }, onConfirm: (date) {
-          setState(() {
-            _dayOfBirth = date;
-          });
-        },
-        currentTime: _dayOfBirth,
-        locale: LocaleType.en
+    DateTime now = DateTime.now();
+    final pickedDate = await showDatePicker(
+        context: context,
+        initialDate: _dayOfBirth,
+        firstDate: DateTime(1950),
+        lastDate: DateTime(now.year)
     );
+
+    setState(() {
+      _dayOfBirth = pickedDate!;
+    });
   }
 
   String? validateMobile(String value) {
-    String patttern = r'(^\+[0-9]{11}$)';
-    RegExp regExp = new RegExp(patttern);
+    String pattern = r'(^\+[0-9]{11}$)';
+    RegExp regExp = new RegExp(pattern);
 
     if (!regExp.hasMatch(value)) {
       return 'profile.mobile_invalid'.tr();
