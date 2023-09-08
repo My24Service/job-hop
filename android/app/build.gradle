@@ -42,7 +42,7 @@ android {
     defaultConfig {
         applicationId "com.jobhop.app.jobhop"
         minSdkVersion 19
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled = true
