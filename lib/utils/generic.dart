@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:add_2_calendar/add_2_calendar.dart';
@@ -96,33 +96,33 @@ Future<void> setIsNotDemo() async {
   getIt<AppModel>().setIsDemo(false);
 }
 
-Future<void> requestFCMPermissions() async {
-  // request permissions
-  SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-  if (!_prefs.containsKey('fcm_allowed')) {
-    bool isAllowed = false;
-
-    await Firebase.initializeApp();
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      sound: true,
-      announcement: false,
-      badge: false,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-    );
-
-    // are we allowed?
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      isAllowed = true;
-    }
-
-    _prefs.setBool('fcm_allowed', isAllowed);
-  }
-}
+// Future<void> requestFCMPermissions() async {
+//   // request permissions
+//   SharedPreferences _prefs = await SharedPreferences.getInstance();
+//
+//   if (!_prefs.containsKey('fcm_allowed')) {
+//     bool isAllowed = false;
+//
+//     await Firebase.initializeApp();
+//     FirebaseMessaging messaging = FirebaseMessaging.instance;
+//     NotificationSettings settings = await messaging.requestPermission(
+//       alert: true,
+//       sound: true,
+//       announcement: false,
+//       badge: false,
+//       carPlay: false,
+//       criticalAlert: false,
+//       provisional: false,
+//     );
+//
+//     // are we allowed?
+//     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+//       isAllowed = true;
+//     }
+//
+//     _prefs.setBool('fcm_allowed', isAllowed);
+//   }
+// }
 
 String encryptText(String text) {
   final key = encrypt.Key.fromUtf8(secret.key);

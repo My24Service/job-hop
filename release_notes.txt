@@ -1,1 +1,2 @@
-Fix: fill out profile once per app install
+Fixes:
+- fill profile once per app install

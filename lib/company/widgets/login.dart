@@ -4,7 +4,7 @@ import 'package:jobhop/company/models/models.dart';
 import 'package:jobhop/company/pages/home.dart';
 import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/utils/auth.dart';
-import 'package:jobhop/utils/generic.dart';
+// import 'package:jobhop/utils/generic.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -151,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
     await auth.storeBackend('jobhop');
 
     // request permissions
-    await requestFCMPermissions();
+    // await requestFCMPermissions();
 
     // navigate to home
     final page = JobHopHome();

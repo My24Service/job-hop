@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 
 import 'package:jobhop/utils/auth.dart';
-import 'package:jobhop/utils/generic.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:jobhop/utils/generic.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jobhop/company/models/models.dart';
@@ -107,109 +107,110 @@ class CompanyApi with ApiMixin {
   }
 
   Future<bool> postDeviceToken() async {
-    final Map<String, String> envVars = Platform.environment;
-
-    if (envVars['TESTING'] != null) {
-      return true;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final int? userPk = prefs.getInt('userPk');
-    final bool? isAllowed = prefs.getBool('fcm_allowed');
-
-    if (userPk == null || isAllowed == null) {
-      return false;
-    }
-
-    if (!isAllowed) {
-      return false;
-    }
-
-    final url = getUrl('/company/user-device-token/');
-
-    await Firebase.initializeApp();
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String? messagingToken = await messaging.getToken();
-
-    final Map body = {
-      "user": userPk,
-      "device_token": messagingToken
-    };
-
-    final response = await _httpClient.post(
-      Uri.parse(url),
-      body: json.encode(body),
-      headers: await getHeaders(),
-    );
-
-    if (response.statusCode == 200) {
-      return true;
-    }
-
-    if (response.statusCode == 401) {
-      throw JobhopInvalidTokenException('invalid token');
-    }
-
-    String error = '${response.statusCode}, ${response.body}';
-
-    throw Exception("${'generic.exception_fetch'.tr()} ($error)");
+    return true;
+    // final Map<String, String> envVars = Platform.environment;
+    //
+    // if (envVars['TESTING'] != null) {
+    //   return true;
+    // }
+    //
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    //
+    // final int? userPk = prefs.getInt('userPk');
+    // final bool? isAllowed = prefs.getBool('fcm_allowed');
+    //
+    // if (userPk == null || isAllowed == null) {
+    //   return false;
+    // }
+    //
+    // if (!isAllowed) {
+    //   return false;
+    // }
+    //
+    // final url = getUrl('/company/user-device-token/');
+    //
+    // await Firebase.initializeApp();
+    // FirebaseMessaging messaging = FirebaseMessaging.instance;
+    // String? messagingToken = await messaging.getToken();
+    //
+    // final Map body = {
+    //   "user": userPk,
+    //   "device_token": messagingToken
+    // };
+    //
+    // final response = await _httpClient.post(
+    //   Uri.parse(url),
+    //   body: json.encode(body),
+    //   headers: await getHeaders(),
+    // );
+    //
+    // if (response.statusCode == 200) {
+    //   return true;
+    // }
+    //
+    // if (response.statusCode == 401) {
+    //   throw JobhopInvalidTokenException('invalid token');
+    // }
+    //
+    // String error = '${response.statusCode}, ${response.body}';
+    //
+    // throw Exception("${'generic.exception_fetch'.tr()} ($error)");
   }
 
-  Future<Map<String, dynamic>?> createDemoUser() async {
-    final Map<String, String> envVars = Platform.environment;
-
-    if (envVars['TESTING'] != null) {
-      return null;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final bool isAllowed = prefs.getBool('fcm_allowed')!;
-
-    if (!isAllowed) {
-      return null;
-    }
-
-    final url = getUrl('/company/setup-demo-user-temps/');
-
-    await Firebase.initializeApp();
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    String? messagingToken = await messaging.getToken();
-
-    final Map body = {
-      "secret": encryptText(messagingToken!)
-    };
-
-    final response = await _httpClient.post(
-      Uri.parse(url),
-      body: json.encode(body),
-      headers: await getHeaders(),
-    );
-
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    }
-
-    return null;
-  }
-
-  Future<bool> createDemoEnvironment() async {
-    final url = getUrl('/company/setup-demo-environment-temps/');
-
-    final response = await _httpClient.post(
-      Uri.parse(url),
-      body: json.encode({}),
-      headers: await getHeaders(),
-    );
-
-    if (response.statusCode == 200) {
-      return true;
-    }
-
-    return false;
-  }
-
+  // Future<Map<String, dynamic>?> createDemoUser() async {
+  //   final Map<String, String> envVars = Platform.environment;
+  //
+  //   if (envVars['TESTING'] != null) {
+  //     return null;
+  //   }
+  //
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //
+  //   final bool isAllowed = prefs.getBool('fcm_allowed')!;
+  //
+  //   if (!isAllowed) {
+  //     return null;
+  //   }
+  //
+  //   final url = getUrl('/company/setup-demo-user-temps/');
+  //
+  //   await Firebase.initializeApp();
+  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //   String? messagingToken = await messaging.getToken();
+  //
+  //   final Map body = {
+  //     "secret": encryptText(messagingToken!)
+  //   };
+  //
+  //   final response = await _httpClient.post(
+  //     Uri.parse(url),
+  //     body: json.encode(body),
+  //     headers: await getHeaders(),
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     return json.decode(response.body);
+  //   }
+  //
+  //   return null;
+  // }
+  //
+  // Future<bool> createDemoEnvironment() async {
+  //   final url = getUrl('/company/setup-demo-environment-temps/');
+  //
+  //   final response = await _httpClient.post(
+  //     Uri.parse(url),
+  //     body: json.encode({}),
+  //     headers: await getHeaders(),
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     return true;
+  //   }
+  //
+  //   return false;
+  // }
+  //
   Future<UserSettings> getUserSettings() async {
     final url = getUrl('/company/user-settings/');
 
