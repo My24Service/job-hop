@@ -87,7 +87,6 @@ class Auth {
     prefs.remove('email');
     prefs.remove('username');
     prefs.remove('token');
-    prefs.remove('isFirstTimeProfile');
 
     return true;
   }
