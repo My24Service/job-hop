@@ -1,2 +1,3 @@
 Fixes:
 - fill profile once per app install
+- push notifications fixes
