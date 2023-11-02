@@ -153,6 +153,9 @@ class _LoginViewState extends State<LoginView> {
     // request permissions
     await requestFCMPermissions();
 
+    // post token
+    await companyApi.postDeviceToken();
+
     // navigate to home
     final page = JobHopHome();
 
