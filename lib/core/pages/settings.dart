@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:jobhop/core/widgets/widgets.dart';
@@ -14,7 +14,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String _preferedLanguageCode = 'nl';
+  late String _preferredLanguageCode = 'nl';
 
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   _doAsync() async {
-    _preferedLanguageCode = await getLocaleString();
+    _preferredLanguageCode = await getLocaleString();
     setState(() {});
   }
 
@@ -60,7 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: <Widget>[
           Text('settings.info_language_code'.tr()),
           DropdownButton<String>(
-            value: _preferedLanguageCode,
+            value: _preferredLanguageCode,
             items: <String>['nl', 'en'].map((String value) {
               return new DropdownMenuItem<String>(
                 child: new Text(value),
@@ -69,7 +69,7 @@ class _SettingsPageState extends State<SettingsPage> {
             }).toList(),
             onChanged: (newValue) {
               setState(() {
-                _preferedLanguageCode = newValue!;
+                _preferredLanguageCode = newValue!;
               });
             },
           ),
@@ -78,19 +78,19 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // background
-                onPrimary: Colors.white, // foreground
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
               ),
               child: Text('settings.button_save'.tr()),
               onPressed: () async {
                 if (this._formKey.currentState!.validate()) {
                   this._formKey.currentState!.save();
 
-                  await setLocale(_preferedLanguageCode);
+                  await setLocale(_preferredLanguageCode);
 
                   createSnackBar(context, 'settings.snackbar_saved'.tr());
 
-                  context.locale = lang2locale(_preferedLanguageCode);
+                  context.setLocale(lang2locale(_preferredLanguageCode));
 
                   Navigator.pushReplacement(context,
                       new MaterialPageRoute(builder: (context) => JobHopHome())

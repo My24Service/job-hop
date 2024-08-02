@@ -125,8 +125,8 @@ Widget buildEmptyListFeedback() {
 ElevatedButton createBlueElevatedButton(String text, Function callback, { primaryColor=Colors.blue, onPrimary=Colors.white}) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      primary: primaryColor, // background
-      onPrimary: onPrimary, // foreground
+      backgroundColor: primaryColor, // background
+      foregroundColor: onPrimary, // foreground
     ),
     child: new Text(text),
     onPressed: () => callback(),

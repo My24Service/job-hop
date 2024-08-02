@@ -145,8 +145,8 @@ class TripListWidget extends StatelessWidget {
       ordersColumn.add(
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.red, // background
-              onPrimary: Colors.white, // foreground
+              backgroundColor: Colors.red, // background
+              foregroundColor: Colors.white, // foreground
             ),
             child: new Text('trips.button_set_available'.tr()),
             onPressed: () => _showSetAvailableDialog(trip.id, context),

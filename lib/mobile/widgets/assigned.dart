@@ -8,7 +8,8 @@ import 'package:jobhop/core/widgets/widgets.dart';
 import 'package:jobhop/mobile/blocs/assignedorder_bloc.dart';
 import 'package:jobhop/mobile/models/models.dart';
 import 'package:jobhop/order/models/models.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../../utils/generic.dart';
 
 
 class AssignedWidget extends StatelessWidget {
@@ -151,7 +152,7 @@ class AssignedWidget extends StatelessWidget {
             icon: Icon(Icons.view_agenda, color: Colors.red),
             onPressed: () async {
               String url = coreApi.getUrl(document.url!);
-              launch(url);
+              launchURL(url);
             },
           )
         ]),
@@ -230,8 +231,8 @@ class AssignedWidget extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // background
-                onPrimary: Colors.white, // foreground
+                backgroundColor: Colors.blue, // background
+                foregroundColor: Colors.white, // foreground
               ),
               child: new Text(startCode.description!),
               onPressed: () {
@@ -253,8 +254,8 @@ class AssignedWidget extends StatelessWidget {
       // started, show 'Register time/km' and 'Finish order'
       ElevatedButton activityButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue, // background
-          onPrimary: Colors.white, // foreground
+          backgroundColor: Colors.blue, // background
+          foregroundColor: Colors.white, // foreground
         ),
         child: new Text('assigned_orders.detail.button_register_time_km'.tr()),
         onPressed: () {
@@ -271,8 +272,8 @@ class AssignedWidget extends StatelessWidget {
 
       ElevatedButton finishButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue, // background
-          onPrimary: Colors.white, // foreground
+          backgroundColor: Colors.blue, // background
+          foregroundColor: Colors.white, // foreground
         ),
         child: new Text(endCode.description!),
         onPressed: () {

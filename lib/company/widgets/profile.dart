@@ -384,8 +384,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   Widget _createDeleteButton() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.red, // background
-          onPrimary: Colors.white, // foreground
+          foregroundColor: Colors.red, backgroundColor: Colors.white
         ),
         child: Text('profile.delete'.tr()),
         onPressed: () async {
@@ -402,8 +401,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   Widget _createSubmitButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.blue, // background
-        onPrimary: Colors.white, // foreground
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
       ),
       child: Text('profile.submit'.tr()),
       onPressed: () async {

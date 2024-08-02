@@ -119,8 +119,8 @@ class AvailabilityListWidget extends StatelessWidget {
         table,
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.red, // background
-            onPrimary: Colors.white, // foreground
+            backgroundColor: Colors.red, // background
+            foregroundColor: Colors.white, // foreground
           ),
           child: new Text('availability.button_delete'.tr()),
           onPressed: () => _showDeleteDialog(context, availability.id),

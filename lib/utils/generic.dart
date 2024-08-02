@@ -10,6 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:jobhop/core/secret.dart';
 import 'package:jobhop/utils/state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -27,6 +28,19 @@ Locale lang2locale(String lang) {
 
 String formatDate(DateTime date) {
   return "${date.toLocal()}".split(' ')[0];
+}
+
+launchURL(String url) async {
+  if (url == '') {
+    return;
+  }
+
+  Uri uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
 
 Future<Locale> getLocale() async {

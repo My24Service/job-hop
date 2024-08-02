@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jobhop/company/api/api.dart';
 import 'package:jobhop/company/models/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:jobhop/core/widgets/widgets.dart';
-import 'package:jobhop/utils/generic.dart';
-import 'package:jobhop/company/pages/home.dart';
+// import 'package:jobhop/utils/generic.dart';
+// import 'package:jobhop/company/pages/home.dart';
 
 class UserSettingsPage extends StatefulWidget {
   @override
@@ -77,8 +77,8 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // background
-                onPrimary: Colors.white, // foreground
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
               ),
               child: Text('user_settings.button_save'.tr()),
               onPressed: () async {

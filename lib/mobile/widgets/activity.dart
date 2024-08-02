@@ -417,8 +417,8 @@ class _ActivityWidgetState extends State<ActivityWidget> {
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.blue, // background
-            onPrimary: Colors.white, // foreground
+            backgroundColor: Colors.blue, // background
+            foregroundColor: Colors.white, // foreground
           ),
           child: Text('assigned_orders.activity.button_add_activity'.tr()),
           onPressed: () async {
