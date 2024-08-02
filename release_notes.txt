@@ -1,5 +1,3 @@
-dev build
-
 - updates for new Android build system
 - updates for current iOS versions
 - updates for current flutter version
